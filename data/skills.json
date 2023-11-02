@@ -1,0 +1,26 @@
+{
+    "ATK Up": {
+        "Name": "Increase ATK",
+        "Description": "Increase damage to enemys by any means",
+        "Menu_Description": "Increases attack by {}% for {} seconds",
+        "Effects": [
+            {
+                "Id": 126,
+                "Time": 20.0,
+                "Multiplier": 1.0
+            }
+        ]
+    },
+    "NP Strength Up": {
+        "Name": "Increase NP damage",
+        "Description": "Increases Noble Phantasm damage",
+        "Menu_Description": "Increases Noble Phantasm damage by {}% for {} time(-s)",
+        "Effects": [
+            {
+                "Id": 138,
+                "Times": 1,
+                "Multiplier": 1.0
+            }
+        ]
+    }
+}
