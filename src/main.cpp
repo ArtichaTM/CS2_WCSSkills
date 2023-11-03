@@ -27,9 +27,8 @@ void testEvents() {
     
     auto* multiplier = new float(1);
     auto e = shared_ptr<Event>(new Event({2, 3}));
-    //Event e = shared_ptr<Event>({2, 3});
     e->setData<false>("mult", multiplier);
-    std::cout << "Before event: " << std::to_string(*multiplier) << std::endl;
+    std::cout << "\n\nBefore event: " << std::to_string(*multiplier) << std::endl;
     manager->fireEvent(e);
     std::cout << "After event: " << std::to_string(*multiplier) << std::endl;
     //delete e;
@@ -38,7 +37,6 @@ void testEvents() {
 void testManager() {
     using namespace managers;
     InfoManager* manager = InfoManager::getManager();
-    //InfoManager::deleteManager();
 }
 
 template<typename T>
@@ -112,14 +110,15 @@ void testLinkedList() {
 
 void testFuncManager() {
     auto* funcManager = functions::Functions::get();
-    std::cout << "Size: " << (*funcManager)->size() << "\n";
+    std::cout << "\n\nSize: " << (*funcManager)->size() << "\n";
     assert(!(*funcManager)->empty());
     for (auto& funcs : **funcManager) {
         std::cout << "Name " + funcs.first << "\n";
     }
 }
 
-int main() {
+
+int main() {/*
     events::EventManager::init();
     functions::Functions::init();
     managers::InfoManager::init();
@@ -128,6 +127,6 @@ int main() {
     testEvents();
     events::EventManager::close();
     functions::Functions::close();
-    managers::InfoManager::close();
+    managers::InfoManager::close();*/
     return 0;
 }

@@ -41,6 +41,7 @@ namespace managers {
     class SkillSE {
     public:
         explicit SkillSE(se_map&, json&);
+        ~SkillSE();
         const std::shared_ptr<SEInfo> seInfo;
         const dataStorage::DataStorage arguments;
 
@@ -51,6 +52,7 @@ namespace managers {
     class SkillInfo {
     public:
         explicit SkillInfo(se_map&, json&);
+        ~SkillInfo();
         const std::string name;
         const std::string description;
         const std::string menu_description;

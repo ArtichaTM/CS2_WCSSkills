@@ -16,7 +16,16 @@ template<> _type* dataStorage::EData::getData<_type>() const \
 
 #define EDATA_SIMPLE_DELETEDATA(_type, _datatype) \
 template<> void dataStorage::EData::deleteData<_type>() \
-{ assert(dtype == _datatype); delete (_type*) data; }
+{ \
+    if (dtype != _datatype) { \
+        throw WrongType("Trying to delete data from EData passing wrong type");\
+    } \
+    if (dtype == dataStorage::DataType::None) { \
+        throw DeletingEmptyEData("Trying to delete empty EData. May be you repeating .deleteData() method?"); \
+    } \
+    delete (_type*) data; \
+    dtype = dataStorage::DataType::None; \
+}
 
 
 #define EDATA_SIMPLE_DEFINE(_type, _datatype)\
@@ -33,6 +42,7 @@ EDATA_SIMPLE_SETDATA_CONST(_type, _datatype)
 
 namespace dataStorage {
     class WrongType : public CustomException { using CustomException::CustomException; };
+    class DeletingEmptyEData : public CustomException { using CustomException::CustomException; };
     enum DataType {
         None, Bool,
         Short, UnsignedShort,

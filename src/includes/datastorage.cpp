@@ -85,6 +85,7 @@ namespace dataStorage {
                 break;
             }
         }
+        dtype = dataStorage::None;
     }
 
     EData::EData(bool _deleteOnFree) : deleteOnFree(_deleteOnFree) {}
@@ -188,22 +189,27 @@ namespace dataStorage {
             }
             case value_t::boolean: {
                 storage->push_back(*make(deleteOnFree, new bool(element)));
+                break;
             }
             case value_t::string: {
                 storage->push_back(*make(deleteOnFree, new string(element)));
+                break;
             }
             case value_t::array: {
                 storage->push_back(*make(deleteOnFree,
                                          make<VectorStorage>(deleteOnFree, element)
                 ));
+                break;
             }
             case value_t::object: {
                 storage->push_back(*make(deleteOnFree,
                                          make<DataStorage>(deleteOnFree, element)
                 ));
+                break;
             }
             default: {
                 throw WrongType();
+                break;
             }
         }
         return storage;
@@ -223,7 +229,7 @@ EDATA_SIMPLE_DEFINE(float, Float)
 EDATA_SIMPLE_DEFINE(double, Double)
 EDATA_SIMPLE_DEFINE(long double, LongDouble)
 EDATA_SIMPLE_DEFINE(string, String)
-EDATA_SIMPLE_DEFINE(dataStorage::DataStorage, DataS)
-EDATA_SIMPLE_DEFINE_CONST(dataStorage::DataStorage, DataS)
-EDATA_SIMPLE_DEFINE(dataStorage::VectorStorage, DataS)
-EDATA_SIMPLE_DEFINE_CONST(dataStorage::VectorStorage, DataS)
+//EDATA_SIMPLE_DEFINE(dataStorage::DataStorage, DataS)
+//EDATA_SIMPLE_DEFINE_CONST(dataStorage::DataStorage, DataS)
+//EDATA_SIMPLE_DEFINE(dataStorage::VectorStorage, DataS)
+//EDATA_SIMPLE_DEFINE_CONST(dataStorage::VectorStorage, DataS)

@@ -85,6 +85,9 @@ namespace managers {
         }
     }
 
+    SkillInfo::~SkillInfo(){
+    }
+
     template<bool force>
     events::ReturnEvent SkillInfo::applySkill(WCSPlayer* target) {
         auto* evManager = events::EventManager::getManager();
@@ -109,6 +112,9 @@ namespace managers {
     SkillSE::SkillSE(se_map& se, json& info)
         : seInfo(se.at(info.at("Id"))),
         arguments(*make<DataStorage>(true, info)) {}
+
+    SkillSE::~SkillSE() {
+    }
 
     SEInfo::SEInfo(json& info) 
         : id(info[0].get<unsigned int>()),

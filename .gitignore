@@ -3,8 +3,6 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-data/sqlite
-
 
 # User-specific files
 *.rsuser
@@ -365,3 +363,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+
+# Custom ignores
+src/data/sqlite
+src/out
+tests/out
