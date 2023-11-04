@@ -136,7 +136,14 @@ namespace managers {
 
     functions::function SEInfo::function_init(json& info) {
         auto* funcManager = functions::Functions::get();
-        assert(info.is_string());
+#ifdef DEBUG
+		if (!info.is_string()) {
+			throw CustomException("Wrong info type")
+		}
+		if (!(*funcManager)->contains(func_name)) {
+			throw CustomException("Can't find specific function in functions list")
+		}
+#endif
         const std::string func_name = info.get<std::string>();
         assert((*funcManager)->contains(func_name));
         return (*funcManager)->at(func_name);
