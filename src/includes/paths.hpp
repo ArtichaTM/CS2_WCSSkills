@@ -2,7 +2,6 @@
 #define WCSSKILLS_PATHS
 
 #include <string>
-#include <filesystem>
 
 
 namespace paths {
