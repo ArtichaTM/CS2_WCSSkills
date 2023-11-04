@@ -31,6 +31,13 @@ TEST(EData, repeat_delete) {
 	ASSERT_THROW(ed.deleteData<float>(), dataStorage::WrongType);
 }
 
+TEST(EData, change_data_lambda) {
+	auto ed = dataStorage::EData(true);
+	float* value = new float(50.0);
+	ed.setData(value);
+	//ed.changeData([&](float& value) {});
+}
+
 int main(int argc, char** argv)
 {
 	::testing::InitGoogleTest(&argc, argv);
