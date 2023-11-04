@@ -366,6 +366,5 @@ FodyWeavers.xsd
 
 
 # Custom ignores
-src/data/sqlite
-src/out
-tests/out
+data/sqlite
+out

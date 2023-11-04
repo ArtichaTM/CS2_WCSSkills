@@ -35,7 +35,12 @@ namespace functions {
     }
 
     Functions* Functions::get() {
-        assert(instance);
+#ifdef DEBUG
+        if (!instance) {
+            throw CustomException("There's no functions manager instance."
+                "May be Functions::init() function call missing?");
+        }
+#endif
         return instance;
     }
 } // functions
