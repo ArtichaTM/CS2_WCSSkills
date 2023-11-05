@@ -33,10 +33,11 @@ namespace managers {
 	 * • function: function that will be called on event, that contains ALL activation_traits or more
 	 */
 	class SEInfo {
+		friend InfoManager;
 		static traits::tr_set traits_init(json&);
 		static functions::function function_init(json&);
-	public:
 		explicit SEInfo(json&);
+	public:
 		~SEInfo();
 		const unsigned int id;
 		const traits::tr_set traits;
@@ -59,8 +60,9 @@ namespace managers {
 	 * not described in se.json
 	 */
 	class SkillSE {
-	public:
+		friend SkillInfo;
 		explicit SkillSE(se_map&, json&);
+	public:
 		~SkillSE();
 		const std::shared_ptr<SEInfo> seInfo;
 		const dataStorage::DataStorage arguments;
@@ -79,8 +81,9 @@ namespace managers {
 	 * • effects: Information about buff applied on user (can be on party, on enemy, on map, ...)
 	 */
 	class SkillInfo {
-	public:
+		friend InfoManager;
 		explicit SkillInfo(se_map&, json&);
+	public:
 		~SkillInfo();
 		const std::string name;
 		const std::string description;
