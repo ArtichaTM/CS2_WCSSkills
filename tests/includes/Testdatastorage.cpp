@@ -37,10 +37,3 @@ TEST(EData, change_data_lambda) {
 	ed.setData(value);
 	//ed.changeData([&](float& value) {});
 }
-
-int main(int argc, char** argv)
-{
-	::testing::InitGoogleTest(&argc, argv);
-
-	return RUN_ALL_TESTS();
-}

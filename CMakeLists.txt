@@ -71,6 +71,7 @@ set(tests tests)
 
 set(includes
     ${tests}/includes/Testdatastorage.cpp
+    ${tests}/includes/Testdolili.cpp
 )
 
 set(TestWCSSkills_compile
