@@ -177,9 +177,6 @@ namespace managers {
 } // skills
 
 
-EDATA_SIMPLE_DEFINE(managers::SEInfo, SEInfo)
 EDATA_SIMPLE_DEFINE_CONST(managers::SEInfo, SEInfo)
-EDATA_SIMPLE_DEFINE(managers::SkillSE, SkillSE)
 EDATA_SIMPLE_DEFINE_CONST(managers::SkillSE, SkillSE)
-EDATA_SIMPLE_DEFINE(managers::SkillInfo, SkillInfo)
 EDATA_SIMPLE_DEFINE_CONST(managers::SkillInfo, SkillInfo)
