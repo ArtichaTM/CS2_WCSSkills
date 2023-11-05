@@ -3,12 +3,16 @@
 
 #include <unordered_map>
 #include <unordered_set>
+#include <vector>
 
 class WCSPlayer;
 
+#ifndef SKILLS_MAX
+#define SKILLS_MAX 6
+#endif
+
 #include "../includes/doublelinkedlist.hpp"
 #include "../traits/traits.hpp"
-#include "../status_effects/skill.hpp"
 #include "../status_effects/se.hpp"
 #include "../status_effects/leftovers.hpp"
 #include "../events/event.hpp"
@@ -22,8 +26,7 @@ public:
 	traits::tr_set traits;
 	float level;
 	std::unordered_multimap<unsigned int, std::shared_ptr<stateff::StatusEffect>> status_effects;
-	std::unordered_map<std::string, stateff::Skill*> skills;
-	std::unordered_map<unsigned short, managers::SkillInfo*> skillsSelected;
+	managers::SkillInfo* skills_selected[SKILLS_MAX];
 	dataStorage::DoubleLinkedList<stateff::Leftover> leftovers;
 	
 	[[nodiscard]] events::ReturnEvent activateSkills(std::shared_ptr<events::Event> const&);

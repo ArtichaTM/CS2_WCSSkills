@@ -63,7 +63,8 @@ void tests() {
 	auto* skill2 = infomanager->skills.at("ATK Up");
 	WCSPlayer* wcsp = new WCSPlayer(10.0, { skill1, skill2 });
 	
-	//wcsp->activateSkills();
+	shared_ptr<Event> e = shared_ptr<Event>(new Event({ 246 }));
+	ReturnEvent answer = wcsp->activateSkills(e);
 }
 
 

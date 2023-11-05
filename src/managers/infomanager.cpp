@@ -88,7 +88,7 @@ namespace managers {
 	}
 
 	template<bool force>
-	ReturnEvent SkillInfo::applySkill(WCSPlayer* target) {
+	ReturnEvent SkillInfo::applySkill(WCSPlayer* target, unsigned short& index) {
 		auto* evManager = EventManager::getManager();
 		auto skillActivateE = make_shared<Event>(traits::tr_set{247});
 		
@@ -112,8 +112,8 @@ namespace managers {
 		return skillActivateE->result;
 	}
 
-	template ReturnEvent SkillInfo::applySkill<false>(WCSPlayer* target);
-	template ReturnEvent SkillInfo::applySkill<true>(WCSPlayer* target);
+	template ReturnEvent SkillInfo::applySkill<false>(WCSPlayer*, unsigned short&);
+	template ReturnEvent SkillInfo::applySkill<true >(WCSPlayer*, unsigned short&);
 
 	SkillSE::SkillSE(se_map& se, json& info)
 		: seInfo(se.at(info.at("Id"))),
