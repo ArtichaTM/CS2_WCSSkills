@@ -23,10 +23,9 @@ public:
     std::unordered_map<unsigned short, managers::SkillInfo*> skillsSelected;
     dataStorage::DoubleLinkedList<stateff::Leftover> leftovers;
     
-    events::ReturnEvent activateSkills(std::shared_ptr<events::Event> const&);
-    events::ReturnEvent deactivateSkills(std::shared_ptr<events::Event> const&);
-    events::ReturnEvent spawn(std::shared_ptr<events::Event> const&);
-    
+    [[nodiscard]] events::ReturnEvent activateSkills(std::shared_ptr<events::Event> const&);
+    [[nodiscard]] events::ReturnEvent deactivateSkills(std::shared_ptr<events::Event> const&);
+    [[nodiscard]] events::ReturnEvent spawn(std::shared_ptr<events::Event> const&);
 };
 
 

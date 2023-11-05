@@ -67,8 +67,8 @@ namespace managers {
 		const std::shared_ptr<SEInfo> seInfo;
 		const dataStorage::DataStorage arguments;
 
-		template<bool force>
-		events::ReturnEvent applyStatusEffect(WCSPlayer*);
+		template<bool force = false>
+		[[nodiscard]] events::ReturnEvent applyStatusEffect(WCSPlayer*);
 	};
 
 	/**
@@ -92,7 +92,7 @@ namespace managers {
 		std::vector<std::shared_ptr<SkillSE>> effects;
 
 		template<bool force>
-		events::ReturnEvent applySkill(WCSPlayer*);
+		[[nodiscard]] events::ReturnEvent applySkill(WCSPlayer*);
 	};
 	
 
