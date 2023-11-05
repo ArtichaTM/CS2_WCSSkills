@@ -30,5 +30,4 @@ events::ReturnEvent WCSPlayer::spawn(const std::shared_ptr<events::Event>& e) {
 }
 
 
-EDATA_SIMPLE_DEFINE(WCSPlayer, WCSP)
 EDATA_SIMPLE_DEFINE_CONST(WCSPlayer, WCSP)
