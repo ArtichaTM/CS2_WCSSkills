@@ -44,6 +44,7 @@ namespace events {
 		bool initialEvent = false;
 		events::ReturnEvent result = PASS;
 		
+		Event(Event const&) = delete;
 		Event(traits::tr_set);
 		Event(std::initializer_list<traits::Trait>);
 		Event(traits::tr_set, dataStorage::DataStorage*);
