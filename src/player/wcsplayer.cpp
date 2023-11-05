@@ -7,7 +7,7 @@ using stateff::Skill;
 using stateff::Leftover;
 
 
-WCSPlayer::WCSPlayer(float level, std::vector<managers::SkillInfo> selected_skills) :
+WCSPlayer::WCSPlayer(float level, std::vector<managers::SkillInfo*> selected_skills) :
 	traits(),
 	level(level),
 	status_effects(),
@@ -15,7 +15,8 @@ WCSPlayer::WCSPlayer(float level, std::vector<managers::SkillInfo> selected_skil
 	skillsSelected(),
 	leftovers()
 {
-
+	skillsSelected.reserve(6);
+	skills.reserve(6);
 }
 
 WCSPlayer::~WCSPlayer() {

@@ -8,6 +8,7 @@
 using namespace std;
 using namespace traits;
 using namespace events;
+using namespace managers;
 
 class IntValue {
 public:
@@ -56,11 +57,21 @@ void testFuncManager() {
 }
 
 
+void tests() {
+	InfoManager* infomanager = InfoManager::getManager();
+	auto* skill1 = infomanager->skills.at("NP Strength Up");
+	auto* skill2 = infomanager->skills.at("ATK Up");
+	WCSPlayer* wcsp = new WCSPlayer(10.0, { skill1, skill2 });
+	
+	//wcsp->activateSkills();
+}
+
 
 int main() {
 	events::EventManager::init();
 	functions::Functions::init();
 	managers::InfoManager::init();
+	tests();
 	events::EventManager::close();
 	functions::Functions::close();
 	managers::InfoManager::close();
