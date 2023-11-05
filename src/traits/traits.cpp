@@ -30,15 +30,3 @@ std::size_t std::hash<traits::tr_set>::operator()(const traits::tr_set &s) const
     }
     return hashcode;
 }
-
-inline tr_set make(json const& info) {
-    return make(info.get<std::unordered_set<unsigned int>>());
-}
-
-inline tr_set make(unordered_set<inner_type> const& set) {
-    return {set.begin(), set.end()};
-}
-
-inline tr_set make(unordered_set<inner_type>&& set) {
-    return {set.begin(), set.end()};
-}
