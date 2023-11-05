@@ -171,7 +171,6 @@ namespace dataStorage {
 				break;
 			}
 		}
-		std::cout << "Hello";
 		return storage;
 	}
 

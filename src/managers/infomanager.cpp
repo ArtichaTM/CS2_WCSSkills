@@ -113,7 +113,11 @@ namespace managers {
 		: seInfo(se.at(info.at("Id"))),
 		arguments(make<DataStorage>(false, info)) {}
 
-	SkillSE::~SkillSE() {}
+	SkillSE::~SkillSE() {
+		for (auto& [key, value] : this->arguments) {
+			delete value;
+		}
+	}
 
 	SEInfo::SEInfo(json& info) 
 		: id(info[0].get<unsigned int>()),

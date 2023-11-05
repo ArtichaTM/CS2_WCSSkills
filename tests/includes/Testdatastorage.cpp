@@ -1,3 +1,7 @@
+/*
+Tests valid only with DEBUG defined!
+*/
+
 #include <gtest/gtest.h>
 #include "../../src/includes/datastorage.hpp"
 
@@ -35,5 +39,10 @@ TEST(EData, change_data_lambda) {
 	auto ed = dataStorage::EData(true);
 	float* value = new float(50.0);
 	ed.setData(value);
-	//ed.changeData([&](float& value) {});
+	ASSERT_FLOAT_EQ(*ed.getData<float>(), 50.);
+	std::function<void(float&)> func = [](float& value) mutable -> void {
+		value *= 2.;
+	};
+	ed.changeData(func);
+	ASSERT_FLOAT_EQ(*ed.getData<float>(), 100.);
 }
