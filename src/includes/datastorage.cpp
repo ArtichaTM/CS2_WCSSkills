@@ -17,11 +17,24 @@ namespace dataStorage {
 
 	void EData::clearData() {
 		switch (dtype) {
-			case None:
-			case WCSP:
-			case SEInfo:
-			case SkillSE:
+			case None: {
+				throw DeletingConstData();
+				break;
+			}
+			case WCSP: {
+				throw DeletingConstData();
+				break;
+			}
+			case SEInfo: {
+				throw DeletingConstData();
+				break;
+			}
+			case SkillSE: {
+				throw DeletingConstData();
+				break;
+			}
 			case SkillInfo: {
+				throw DeletingConstData();
 				break;
 			}
 			case Bool: {

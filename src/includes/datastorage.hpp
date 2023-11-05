@@ -71,6 +71,7 @@ EDATA_SIMPLE_SETDATA_CONST(_type, _datatype)
 namespace dataStorage {
 	class WrongType : public CustomException { using CustomException::CustomException; };
 	class DeletingEmptyEData : public CustomException { using CustomException::CustomException; };
+	class DeletingConstData : public CustomException { using CustomException::CustomException; };
 	enum DataType {
 		None, Bool,
 		Short, UnsignedShort,
