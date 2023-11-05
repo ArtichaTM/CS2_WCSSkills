@@ -15,17 +15,19 @@ class WCSPlayer;
 
 
 class WCSPlayer {
+	WCSPlayer(float level, std::vector<managers::SkillInfo> selected_skills);
 public:
-    traits::tr_set traits;
-    float level;
-    std::unordered_multimap<unsigned int, stateff::StatusEffect*> status_effects;
-    std::unordered_map<std::string, stateff::Skill*> skills;
-    std::unordered_map<unsigned short, managers::SkillInfo*> skillsSelected;
-    dataStorage::DoubleLinkedList<stateff::Leftover> leftovers;
-    
-    [[nodiscard]] events::ReturnEvent activateSkills(std::shared_ptr<events::Event> const&);
-    [[nodiscard]] events::ReturnEvent deactivateSkills(std::shared_ptr<events::Event> const&);
-    [[nodiscard]] events::ReturnEvent spawn(std::shared_ptr<events::Event> const&);
+	~WCSPlayer();
+	traits::tr_set traits;
+	float level;
+	std::unordered_multimap<unsigned int, std::shared_ptr<stateff::StatusEffect>> status_effects;
+	std::unordered_map<std::string, stateff::Skill*> skills;
+	std::unordered_map<unsigned short, managers::SkillInfo*> skillsSelected;
+	dataStorage::DoubleLinkedList<stateff::Leftover> leftovers;
+	
+	[[nodiscard]] events::ReturnEvent activateSkills(std::shared_ptr<events::Event> const&);
+	[[nodiscard]] events::ReturnEvent deactivateSkills(std::shared_ptr<events::Event> const&);
+	[[nodiscard]] events::ReturnEvent spawn(std::shared_ptr<events::Event> const&);
 };
 
 

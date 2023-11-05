@@ -11,6 +11,8 @@ using nlohmann::json;
 using nlohmann::detail::value_t;
 using dataStorage::DataStorage;
 using dataStorage::make;
+using stateff::StatusEffect;
+
 
 namespace managers {
 	InfoManager* InfoManager::instance = nullptr;
@@ -85,29 +87,33 @@ namespace managers {
 		}
 	}
 
-	SkillInfo::~SkillInfo(){
-	}
-
 	template<bool force>
-	events::ReturnEvent SkillInfo::applySkill(WCSPlayer* target) {
-		auto* evManager = events::EventManager::getManager();
-		auto skillActivateE = std::make_shared<Event>(traits::tr_set{247});
+	ReturnEvent SkillInfo::applySkill(WCSPlayer* target) {
+		auto* evManager = EventManager::getManager();
+		auto skillActivateE = make_shared<Event>(traits::tr_set{247});
 		
-		skillActivateE->setData<false>("target", target         );
-		skillActivateE->setData<false>("skill",  this           );
-		skillActivateE->setData<true >("force",  new bool(force));
+		skillActivateE->setConstData<false>("target", target         );
+		skillActivateE->setConstData<false>("skill",  this           );
+		if constexpr (force) {
+			skillActivateE->setData<true>("force", new bool(true));
+		}
 		
 		evManager->fireEvent(skillActivateE);
-		if (skillActivateE->result == BLOCK and !force) {
-			return BLOCK;
+		if constexpr (!force) {
+			if (skillActivateE->result != ReturnEvent::PASS) {
+				return skillActivateE->result;
+			}
 		}
 		
-		for (SkillSE* const& sse : effects) {
-			sse->applyStatusEffect<force>(target);
+		for (shared_ptr<SkillSE> const& sse : effects) {
+			ReturnEvent output = sse->applyStatusEffect<force>(target);
 		}
 		
-		return PASS;
+		return skillActivateE->result;
 	}
+
+	template ReturnEvent SkillInfo::applySkill<false>(WCSPlayer* target);
+	template ReturnEvent SkillInfo::applySkill<true>(WCSPlayer* target);
 
 	SkillSE::SkillSE(se_map& se, json& info)
 		: seInfo(se.at(info.at("Id"))),
@@ -139,7 +145,7 @@ namespace managers {
 
 	functions::function SEInfo::function_init(json& info) {
 		auto* funcManager = functions::Functions::get();
-		const std::string func_name = info.get<std::string>();
+		const std::string& func_name = info.get<std::string>();
 #ifdef DEBUG
 		if (!info.is_string()) {
 			throw CustomException("Wrong info type");
@@ -156,22 +162,26 @@ namespace managers {
 		auto* eventManager = EventManager::getManager();
 		
 		auto event = std::make_shared<Event>(traits::tr_set{248});
-		event->setData<false>("target", wcsp);
-		event->setData<true>("force", new bool(force));
+		event->setConstData<false>("target", wcsp);
+		if constexpr (force) {
+			event->setData<true>("force", new bool(true));
+		}
 		eventManager->fireEvent(event);
-		if (event->result == BLOCK and !force) {
-			return BLOCK;
+		if constexpr (!force) {
+			if (event->result != ReturnEvent::PASS) {
+				return event->result;
+			}
 		}
 		
 		wcsp->status_effects.insert({
 			this->seInfo->id,
-			std::make_shared<stateff::StatusEffect>(
+			std::make_shared<StatusEffect>(
 					wcsp,
 					this->seInfo,
 					&this->arguments)
 		});
 		
-		return PASS;
+		return event->result;
 	}
 
 } // skills

@@ -12,7 +12,7 @@
 
 namespace events {
 	enum ReturnEvent {
-		BLOCK, PASS, GUARD, NO_EFFECT
+		PASS, GUARD, NO_EFFECT, MISSED
 	};
 	class NoSuchReceiver;
 	class SettingsModify : public CustomException { using CustomException::CustomException; };
@@ -62,6 +62,20 @@ namespace events {
 #endif
 			auto* eData = new dataStorage::EData(autoDelete);
 			eData->setData(value);
+			this->data->insert(std::pair(key, eData));
+		}
+
+		template<bool autoDelete, typename T>
+		void setConstData(std::string const& key, T const* value) {
+#ifdef DEBUG
+			if (this->data->contains(key)) {
+				char message[] = "Trying to \"setData\" already existing key."
+					"Use \"changeData\" instead";
+				throw SetDataModify(message);
+			}
+#endif
+			auto* eData = new dataStorage::EData(autoDelete);
+			eData->setConstData(value);
 			this->data->insert(std::pair(key, eData));
 		}
 		

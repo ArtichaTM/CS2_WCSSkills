@@ -45,7 +45,7 @@ namespace managers {
 		const functions::function function;
 	};
 	
-	typedef std::unordered_map<int, std::shared_ptr<SEInfo>> se_map;
+	typedef std::unordered_map<int, SEInfo*> se_map;
 
 	/**
 	 * Contains information about buff/debuff applied by Skill on activation
@@ -64,7 +64,7 @@ namespace managers {
 		explicit SkillSE(se_map&, json&);
 	public:
 		~SkillSE();
-		const std::shared_ptr<SEInfo> seInfo;
+		const SEInfo* seInfo;
 		const dataStorage::DataStorage arguments;
 
 		template<bool force = false>
@@ -84,7 +84,7 @@ namespace managers {
 		friend InfoManager;
 		explicit SkillInfo(se_map&, json&);
 	public:
-		~SkillInfo();
+		~SkillInfo() = default;
 		const std::string name;
 		const std::string description;
 		const std::string menu_description;

@@ -70,7 +70,7 @@ namespace events {
 			vectorofEventReceivers functions = this->registered_events->at(event->activation_traits);
 			for (const eventReceiver& eventF : functions) {
 				eventF.operator()(event);
-				if (event->result == BLOCK) {
+				if (event->result != events::ReturnEvent::PASS) {
 					continue;
 				}
 			}

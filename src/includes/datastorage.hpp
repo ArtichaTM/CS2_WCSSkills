@@ -54,10 +54,18 @@ EDATA_SIMPLE_GETDATA(_type, _datatype)\
 EDATA_SIMPLE_DELETEDATA(_type, _datatype)
 
 #define EDATA_SIMPLE_SETDATA_CONST(_type, _datatype) \
-template<> void dataStorage::EData::setData<_type>(_type const* v) \
+template<> void dataStorage::EData::setConstData<_type>(_type const* v) \
 { this->setData((void*)v, dataStorage::DataType::_datatype); }
 
+
+#define EDATA_SIMPLE_GETDATA_CONST(_type, _datatype) \
+template<> _type* dataStorage::EData::getData<_type>() const \
+{   \
+	return (_type*)this->getData<void>(dataStorage::DataType::_datatype); \
+}
+
 #define EDATA_SIMPLE_DEFINE_CONST(_type, _datatype)\
+EDATA_SIMPLE_GETDATA_CONST(_type, _datatype)\
 EDATA_SIMPLE_SETDATA_CONST(_type, _datatype)
 
 namespace dataStorage {
@@ -110,7 +118,7 @@ namespace dataStorage {
 		
 		template<typename T>               void setData   (T*);
 		template<typename T> [[nodiscard]] T*   getData   () const;
-		template<typename T>               void setData   (const T*);
+		template<typename T>               void setConstData   (const T*);
 		template<typename T>               void deleteData();
 		template<typename T> void changeData(std::function<void(T&)> func) { func(*(T*)data); }
 	};

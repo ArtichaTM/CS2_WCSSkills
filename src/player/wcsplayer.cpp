@@ -1,32 +1,50 @@
 #include "wcsplayer.hpp"
 
-events::ReturnEvent WCSPlayer::deactivateSkills(std::shared_ptr<events::Event> const& e) {
-    for (auto& n : skills) {
-        delete n.second;
-    }
-    skills.clear();
-    traits.clear();
-    return events::ReturnEvent::PASS;
+using std::shared_ptr;
+using events::Event;
+using events::ReturnEvent;
+using stateff::Skill;
+using stateff::Leftover;
+
+
+WCSPlayer::WCSPlayer(float level, std::vector<managers::SkillInfo> selected_skills) :
+	traits(),
+	level(level),
+	status_effects(),
+	skills(),
+	skillsSelected(),
+	leftovers()
+{
+
 }
 
-events::ReturnEvent WCSPlayer::activateSkills(std::shared_ptr<events::Event> const& e) {
-    for (auto [_, skillInfo] : skillsSelected) {
-        skills[skillInfo->name] = new stateff::Skill(this, skillInfo);
-    }
-    return events::ReturnEvent::PASS;
+WCSPlayer::~WCSPlayer() {
+	for (auto& [_, value] : skills) {
+		delete value;
+	}
 }
 
-events::ReturnEvent WCSPlayer::spawn(const std::shared_ptr<events::Event>& e) {
-    if (e->activation_traits.contains(246)) {
-        // Spawn on round start
-        e->setData<true>("roundStart", new bool(true));
-        activateSkills(e);
-    } else {
-        // Spawn during round
-        e->setData<true>("roundStart", new bool(false));
-        activateSkills(e);
-    }
-    return events::ReturnEvent::PASS;
+ReturnEvent WCSPlayer::deactivateSkills(shared_ptr<Event> const& e) {
+	for (auto& [_, value] : skills) {
+		delete value;
+	}
+	skills.clear();
+	traits.clear();
+	return ReturnEvent::PASS;
+}
+
+ReturnEvent WCSPlayer::activateSkills(shared_ptr<Event> const& e) {
+	for (auto& [_, skillInfo] : skillsSelected) {
+		skills[skillInfo->name] = new Skill(this, skillInfo);
+	}
+	return ReturnEvent::PASS;
+}
+
+ReturnEvent WCSPlayer::spawn(const shared_ptr<events::Event>& e) {
+	for (auto const& [id, skill_info] : skillsSelected) {
+		ReturnEvent answer = skill_info->applySkill<false>(this);
+	}
+	return ReturnEvent::PASS;
 }
 
 

@@ -103,7 +103,7 @@ namespace dataStorage {
 	}
 
 	template<typename T>
-	void EData::setData(const T *) {
+	void EData::setConstData(const T *) {
 		throw WrongType("No specialization created for type " + to_string(*typeid(T).name()) + '.');
 	}
 	

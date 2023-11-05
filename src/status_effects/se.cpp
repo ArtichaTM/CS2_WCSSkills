@@ -30,8 +30,8 @@ namespace stateff {
         auto* evmanager = EventManager::getManager();
         auto effect_execute_event = std::make_shared<Event>(info->traits);
         
-        effect_execute_event->setData<false>("target", owner);
-        effect_execute_event->setData<false>("status_effect", info);
+        effect_execute_event->setConstData<false>("target", owner);
+        effect_execute_event->setConstData<false>("status_effect", info);
         effect_execute_event->setData<false>("arguments", arguments);
         
         evmanager->fireEvent(effect_execute_event);
