@@ -113,7 +113,7 @@ namespace managers {
 		static void init();
 		static void close();
 		
-		std::unordered_map<std::string, std::shared_ptr<SkillInfo>> skills;
+		std::unordered_map<std::string, SkillInfo*> skills;
 		se_map se;
 		std::unordered_map<int, std::string*> traits;
 		
