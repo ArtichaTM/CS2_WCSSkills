@@ -46,11 +46,11 @@ namespace stateff {
     }
     
     bool StatusEffect::is_unremovable() const noexcept {
-        auto parameter = arguments->find("unremovable");
-        if (parameter == arguments->end()) {
+        try {
+            dataStorage::EData* parameter = arguments->at("unremovable");
+            return parameter->getData<bool>();
+        } catch (std::out_of_range) {
             return false;
-        } else {
-            return *(*parameter).second.getData<bool>();
         }
     }
 } // stateff

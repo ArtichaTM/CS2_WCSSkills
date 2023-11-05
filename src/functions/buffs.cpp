@@ -6,11 +6,11 @@ using namespace dataStorage;
 
 namespace functions::buffs {
     ReturnEvent upAtk(shared_ptr<Event> e, DataStorage& arguments) {
-        float damageIncrease = *arguments.at("multiplier").getData<float>();
+        float* damageIncrease = arguments.at("multiplier")->getData<float>();
         
         std::function<void(float&)> func = 
                 [&](float& value) mutable -> void
-                { value *= damageIncrease; };
+                { value *= *damageIncrease; };
         
         e->changeData("multiplier", func);
 //        e->setData<false>("multiplier", e->getData<float>("multiplier"));

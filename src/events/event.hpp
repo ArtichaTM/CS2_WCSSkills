@@ -62,16 +62,16 @@ namespace events {
 #endif
 			auto* eData = new dataStorage::EData(autoDelete);
 			eData->setData(value);
-			this->data->insert(std::pair(key, *eData));
+			this->data->insert(std::pair(key, eData));
 		}
 		
 		template<typename T>
 		T* getData(std::string const& key) {
-			return this->data->at(key).getData<T>();
+			return this->data->at(key)->getData<T>();
 		}
 
 		template<typename T> void changeData(std::string const& key, std::function<void(T&)>& func) {
-			this->data->at(key).changeData(func);
+			this->data->at(key)->changeData(func);
 		}
 
 		template<typename T> void changeData(std::string const& key, std::function<void(T&&)>& func) {

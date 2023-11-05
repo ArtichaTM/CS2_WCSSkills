@@ -76,8 +76,8 @@ namespace dataStorage {
 	};
 	
 	class EData;
-	typedef std::unordered_map<std::basic_string<char>, dataStorage::EData> DataStorage;
-	typedef std::vector<dataStorage::EData> VectorStorage;
+	typedef std::unordered_map<std::basic_string<char>, dataStorage::EData*> DataStorage;
+	typedef std::vector<dataStorage::EData*> VectorStorage;
 }
 
 namespace dataStorage {

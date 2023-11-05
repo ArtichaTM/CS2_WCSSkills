@@ -135,33 +135,33 @@ namespace dataStorage {
 		auto storage = DataStorage(info.size());
 		for (auto& [key, element]: info.items()) switch (element.type()) {
 			case value_t::number_float: {
-				storage.emplace(key, *makeED(deleteOnFree, element.template get<float>()));
+				storage.emplace(key, makeED(deleteOnFree, element.template get<float>()));
 				break;
 			}
 			case value_t::number_unsigned: {
-				storage.emplace(key, *makeED(deleteOnFree, element.template get<unsigned int>()));
+				storage.emplace(key, makeED(deleteOnFree, element.template get<unsigned int>()));
 				break;
 			}
 			case value_t::number_integer: {
-				storage.emplace(key, *makeED(deleteOnFree, element.template get<int>()));
+				storage.emplace(key, makeED(deleteOnFree, element.template get<int>()));
 				break;
 			}
 			case value_t::boolean: {
-				storage.emplace(key, *makeED(deleteOnFree, element.template get<bool>()));
+				storage.emplace(key, makeED(deleteOnFree, element.template get<bool>()));
 				break;
 			}
 			case value_t::string: {
-				storage.emplace(key, *makeED(deleteOnFree, element.template get<string>()));
+				storage.emplace(key, makeED(deleteOnFree, element.template get<string>()));
 				break;
 			}
 			case value_t::array: {
-				storage.emplace(key, *makeED(deleteOnFree,
+				storage.emplace(key, makeED(deleteOnFree,
 					make<VectorStorage>(deleteOnFree, element)
 				));
 				break;
 			}
 			case value_t::object: {
-				storage.emplace(key, *makeED(deleteOnFree,
+				storage.emplace(key, makeED(deleteOnFree,
 					make<DataStorage>(deleteOnFree, element)
 				));
 				break;
@@ -181,33 +181,33 @@ namespace dataStorage {
 		auto storage = VectorStorage(info.size());
 		for (auto &element: info) switch (element.type()) {
 			case value_t::number_float: {
-				storage.push_back(*makeED(deleteOnFree, element.template get<float>()));
+				storage.push_back(makeED(deleteOnFree, element.template get<float>()));
 				break;
 			}
 			case value_t::number_unsigned: {
-				storage.push_back(*makeED(deleteOnFree, element.template get<unsigned int>()));
+				storage.push_back(makeED(deleteOnFree, element.template get<unsigned int>()));
 				break;
 			}
 			case value_t::number_integer: {
-				storage.push_back(*makeED(deleteOnFree, element.template get<int>()));
+				storage.push_back(makeED(deleteOnFree, element.template get<int>()));
 				break;
 			}
 			case value_t::boolean: {
-				storage.push_back(*makeED(deleteOnFree, element.template get<bool>()));
+				storage.push_back(makeED(deleteOnFree, element.template get<bool>()));
 				break;
 			}
 			case value_t::string: {
-				storage.push_back(*makeED(deleteOnFree, element.template get<string>()));
+				storage.push_back(makeED(deleteOnFree, element.template get<string>()));
 				break;
 			}
 			case value_t::array: {
-				storage.push_back(*makeED(deleteOnFree,
+				storage.push_back(makeED(deleteOnFree,
 										 make<VectorStorage>(deleteOnFree, element)
 				));
 				break;
 			}
 			case value_t::object: {
-				storage.push_back(*makeED(deleteOnFree,
+				storage.push_back(makeED(deleteOnFree,
 										 make<DataStorage>(deleteOnFree, element)
 				));
 				break;
@@ -234,7 +234,7 @@ EDATA_SIMPLE_DEFINE(float, Float)
 EDATA_SIMPLE_DEFINE(double, Double)
 EDATA_SIMPLE_DEFINE(long double, LongDouble)
 EDATA_SIMPLE_DEFINE(string, String)
-//EDATA_SIMPLE_DEFINE(dataStorage::DataStorage, DataS)
-//EDATA_SIMPLE_DEFINE_CONST(dataStorage::DataStorage, DataS)
-//EDATA_SIMPLE_DEFINE(dataStorage::VectorStorage, DataS)
-//EDATA_SIMPLE_DEFINE_CONST(dataStorage::VectorStorage, DataS)
+EDATA_SIMPLE_DEFINE(dataStorage::DataStorage, DataS)
+EDATA_SIMPLE_DEFINE_CONST(dataStorage::DataStorage, DataS)
+EDATA_SIMPLE_DEFINE(dataStorage::VectorStorage, DataS)
+EDATA_SIMPLE_DEFINE_CONST(dataStorage::VectorStorage, DataS)
