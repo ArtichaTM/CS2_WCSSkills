@@ -83,6 +83,16 @@ namespace dataStorage {
 namespace dataStorage {
 	
 	class EData {
+		/*
+		Stores value with undefiend type. Usage:
+		1. Create instance with autodelete paremeter
+		1.1. Autodelete enabled: value deleted on EData delete
+		1.2. Autodelete disabled: value remains in memory after EData delete
+		2. Use ONCE .setData method, which sets type and value for EData
+		3. Use .changeData() with function/lambda to change value inside EData
+		4. Get data by setData() if necessary (EData contains pointer to original value)
+		5. Free memory with delete EData sentence
+		*/
 	protected:
 		void* data = nullptr;
 		DataType dtype = DataType::None;
