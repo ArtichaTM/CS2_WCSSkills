@@ -16,8 +16,8 @@ class WCSPlayer;
 
 class WCSPlayer {
 public:
-	WCSPlayer(float level, std::vector<managers::SkillInfo*> selected_skills);
 	WCSPlayer(WCSPlayer const&) = delete;
+	WCSPlayer(float level, std::vector<managers::SkillInfo*> selected_skills);
 	~WCSPlayer();
 	traits::tr_set traits;
 	float level;
