@@ -92,8 +92,8 @@ namespace managers {
 		auto* evManager = EventManager::getManager();
 		auto skillActivateE = make_shared<Event>(traits::tr_set{247});
 		
-		skillActivateE->setConstData<false>("target", target         );
-		skillActivateE->setConstData<false>("skill",  this           );
+		skillActivateE->setConstData("target", target         );
+		skillActivateE->setConstData("skill",  this           );
 		if constexpr (force) {
 			skillActivateE->setData<true>("force", new bool(true));
 		}
@@ -162,7 +162,7 @@ namespace managers {
 		auto* eventManager = EventManager::getManager();
 		
 		auto event = std::make_shared<Event>(traits::tr_set{248});
-		event->setConstData<false>("target", wcsp);
+		event->setConstData("target", wcsp);
 		if constexpr (force) {
 			event->setData<true>("force", new bool(true));
 		}

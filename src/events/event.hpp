@@ -66,7 +66,7 @@ namespace events {
 			this->data->insert(std::pair(key, eData));
 		}
 
-		template<bool autoDelete, typename T>
+		template<typename T>
 		void setConstData(std::string const& key, T const* value) {
 #ifdef DEBUG
 			if (this->data->contains(key)) {
@@ -75,7 +75,7 @@ namespace events {
 				throw SetDataModify(message);
 			}
 #endif
-			auto* eData = new dataStorage::EData(autoDelete);
+			auto* eData = new dataStorage::EData(false);
 			eData->setConstData(value);
 			this->data->insert(std::pair(key, eData));
 		}
