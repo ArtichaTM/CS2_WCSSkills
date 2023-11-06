@@ -1,9 +1,13 @@
-#ifndef TEST_LEAKS
-#define TEST_LEAKS
+
+#ifndef WCSS_TEST_LEAKS
+#define WCSS_TEST_LEAKS
 #include "gtest/gtest.h"
+#if defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
 #include <crtdbg.h>
+#endif // Windows check
 
 class MemoryLeakDetector {
+#if defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
 public:
     MemoryLeakDetector() {
         _CrtMemCheckpoint(&memState_);
@@ -21,5 +25,6 @@ private:
         FAIL() << "Memory leak of " << unfreedBytes << " byte(s) detected.";
     }
     _CrtMemState memState_;
+#endif // Windows check
 };
-#endif
+#endif // TEST_LEAKS
