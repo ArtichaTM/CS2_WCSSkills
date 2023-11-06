@@ -124,10 +124,16 @@ namespace dataStorage {
 		template<typename T> void changeData(std::function<void(T&)> func) { func(*(T*)data); }
 	};
 
-	template<typename T>
+	template<bool copy = false, typename T>
 	EData* makeED(bool _deleteOnFree, T object_data) {
 		auto* eData = new EData(_deleteOnFree);
-		eData->setData(&object_data);
+		T* object_ptr;
+		if constexpr (copy) {
+			object_ptr = new T(object_data);
+		} else {
+			object_ptr = &object_data;
+		}
+		eData->setData(object_ptr);
 		return eData;
 	}
 	
