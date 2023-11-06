@@ -68,24 +68,21 @@ add_executable(WCSSkills
 
 set(tests tests)
 
-set(includes
-    ${tests}/includes/Testdatastorage.cpp
-    ${tests}/includes/Testdolili.cpp
+set(t_includes
+	${tests}/includes/datastorage.cpp
+	${tests}/includes/dolili.cpp
 )
 
 set(TestWCSSkills_compile
     ${WCSSkills_compile}
-    ${includes}
+	${t_includes}
 )
 
 add_executable(TestWCSSkills
     ${TestWCSSkills_compile}
 )
 
-target_link_libraries(
-  TestWCSSkills
-  GTest::gtest_main
-)
+target_link_libraries(TestWCSSkills GTest::gtest_main)
 
 include(GoogleTest)
 gtest_discover_tests(TestWCSSkills)
