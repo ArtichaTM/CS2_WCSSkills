@@ -91,7 +91,7 @@ namespace managers {
 		traits::tr_set traits;
 		std::vector<std::shared_ptr<SkillSE>> effects;
 
-		template<bool force>
+		template<bool force = false>
 		[[nodiscard]] events::ReturnEvent applySkill(WCSPlayer*, unsigned short&);
 	};
 	

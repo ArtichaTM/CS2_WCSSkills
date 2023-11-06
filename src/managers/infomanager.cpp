@@ -12,6 +12,7 @@ using nlohmann::detail::value_t;
 using dataStorage::DataStorage;
 using dataStorage::make;
 using stateff::StatusEffect;
+using functions::Functions;
 
 
 namespace managers {
@@ -89,16 +90,17 @@ namespace managers {
 
 	template<bool force>
 	ReturnEvent SkillInfo::applySkill(WCSPlayer* target, unsigned short& index) {
-		auto* evManager = EventManager::getManager();
 		auto skillActivateE = make_shared<Event>(traits::tr_set{247});
 		
 		skillActivateE->setConstData("target", target         );
 		skillActivateE->setConstData("skill",  this           );
+		skillActivateE->setData<true>("slot", new unsigned short(index));
+
 		if constexpr (force) {
 			skillActivateE->setData<true>("force", new bool(true));
 		}
 		
-		evManager->fireEvent(skillActivateE);
+		EventManager::getManager()->fireEvent(skillActivateE);
 		if constexpr (!force) {
 			if (skillActivateE->result != ReturnEvent::PASS) {
 				return skillActivateE->result;
@@ -144,7 +146,7 @@ namespace managers {
 	}
 
 	functions::function SEInfo::function_init(json& info) {
-		auto* funcManager = functions::Functions::get();
+		auto* funcManager = Functions::get();
 		const std::string& func_name = info.get<std::string>();
 #ifdef DEBUG
 		if (!info.is_string()) {
@@ -161,8 +163,11 @@ namespace managers {
 	events::ReturnEvent SkillSE::applyStatusEffect(WCSPlayer* wcsp) {
 		auto* eventManager = EventManager::getManager();
 		
-		auto event = std::make_shared<Event>(traits::tr_set{248});
+		// Effect apply event
+		auto event = std::make_shared<Event>(tr_set{248});
 		event->setConstData("target", wcsp);
+		event->setConstData("seinfo", this->seInfo);
+		event->setData<true>("multiplier", new float(1.));
 		if constexpr (force) {
 			event->setData<true>("force", new bool(true));
 		}
@@ -176,9 +181,11 @@ namespace managers {
 		wcsp->status_effects.insert({
 			this->seInfo->id,
 			std::make_shared<StatusEffect>(
-					wcsp,
-					this->seInfo,
-					&this->arguments)
+				wcsp,
+				this->seInfo,
+				&this->arguments,
+				event->getData<float>("multiplier")
+			)
 		});
 		
 		return event->result;

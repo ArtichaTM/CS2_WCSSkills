@@ -13,7 +13,11 @@ WCSPlayer::WCSPlayer(float level, std::vector<managers::SkillInfo*> selected_ski
 	status_effects(),
 	leftovers()
 {
-	for (unsigned short i = 0; i < SKILLS_MAX; i++) {
+	unsigned short i = 0;
+	for (; i < selected_skills.size(); i++) {
+		skills_selected[i] = selected_skills[i];
+	}
+	for (; i < SKILLS_MAX; i++) {
 		skills_selected[i] = nullptr;
 	}
 }
@@ -30,6 +34,9 @@ ReturnEvent WCSPlayer::deactivateSkills(shared_ptr<Event> const& e) {
 ReturnEvent WCSPlayer::activateSkills(shared_ptr<Event> const& e) {
 	for (unsigned short i = 0; i < SKILLS_MAX; i++) {
 		SkillInfo* skill_info = skills_selected[i];
+		if (skill_info) {
+			ReturnEvent answer = skill_info->applySkill(this, i);
+		}
 	}
 	return ReturnEvent::PASS;
 }
@@ -40,7 +47,7 @@ ReturnEvent WCSPlayer::spawn(const shared_ptr<events::Event>& e) {
 		if (!skill_info) {
 			break;
 		}
-		ReturnEvent _ = skill_info->applySkill<false>(this, i);
+		ReturnEvent _ = skill_info->applySkill(this, i);
 	}
 	return ReturnEvent::PASS;
 }
