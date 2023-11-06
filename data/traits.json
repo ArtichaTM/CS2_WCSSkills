@@ -1,12 +1,15 @@
 {
-    "3000": "Attack Physical",
-    "3004": "Buff Positive Effect",
-    "3005": "Buff Negative Effect",
-    "3006": "Buff Increase Damage",
-    "3010": "Buff Mental Effect",
-    "3027": "Buff Atk Up",
-    "3030": "Buff Np Damage Up",
-    "3045": "Buff Immobilize",
-    "3066": "Buff Sleep",
-    "4007": "Noble Phantasm"
+	"246": "Player spawn",
+	"247": "Skill apply",
+	"248": "Status effect apply",
+	"3000": "Attack Physical",
+	"3004": "Buff Positive Effect",
+	"3005": "Buff Negative Effect",
+	"3006": "Buff Increase Damage",
+	"3010": "Buff Mental Effect",
+	"3027": "Buff Atk Up",
+	"3030": "Buff Np Damage Up",
+	"3045": "Buff Immobilize",
+	"3066": "Buff Sleep",
+	"4007": "Noble Phantasm"
 }
