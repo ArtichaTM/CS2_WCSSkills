@@ -115,7 +115,7 @@ namespace managers {
 		
 		std::unordered_map<std::string, SkillInfo*> skills;
 		se_map se;
-		std::unordered_map<int, std::string*> traits;
+		std::unordered_map<traits::Trait, std::string*> traits;
 		
 		static InfoManager* getManager();
 	};

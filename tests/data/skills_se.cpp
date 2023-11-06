@@ -4,31 +4,39 @@
 #include "../../src/managers/infomanager.hpp"
 
 using std::shared_ptr;
+using traits::Trait;
 using managers::InfoManager;
 using dataStorage::DataStorage;
 
 namespace data_jsons {
-	TEST(effect_apply, general) {
+	TEST(skills, general) {
 		InfoManager* manager = InfoManager::getManager();
-		for (auto& [key, skill_info] : manager->skills) {
+		for (auto const& [key, skill_info] : manager->skills) {
 
-			// skill should contain at least 1 effect
-			ASSERT_GE(skill_info->effects.size(), 1);
+			ASSERT_GE(skill_info->effects.size(), 1)
+				<< "Skill "
+				<< key
+				<< " doesn't contain at least one effect, which required";
 			
 			// Checking arguments
 			for (shared_ptr<managers::SkillSE> info : skill_info->effects) {
 				DataStorage const* arguments = info->arguments;
 
-				// Every effect on skill must contain multiplier
-				ASSERT_TRUE(arguments->contains("Multiplier"));
+				ASSERT_TRUE(arguments->contains("Multiplier"))
+					<< "Skill "
+					<< key
+					<< " doesn't contain \"Multiplier\" argument, which required";
 
-				// Every effect on skill must contain Id
-				ASSERT_TRUE(arguments->contains("Id"));
+				ASSERT_TRUE(arguments->contains("Id"))
+					<< "Skill "
+					<< key
+					<< " doesn't contain \"Id\" argument, which required";
 
-				// Every effect on skill must contain Times or Duration
-				ASSERT_TRUE(arguments->contains("Times") || arguments->contains("Duration"));
+				ASSERT_TRUE(arguments->contains("Times") || arguments->contains("Duration"))
+					<< "Skill "
+					<< key
+					<< " doesn't contain \"Times\" or \"Duration\" argument, which required ";
 
-				// Effect ID should be described in se.json
 				unsigned int* effect_id = arguments->at("Id")->getData<unsigned int>();
 				ASSERT_TRUE(manager->se.contains(*effect_id))
 					<< "Skill "
@@ -36,6 +44,18 @@ namespace data_jsons {
 					<< " have effect with id "
 					<< *effect_id
 					<< ", but this effect doesn't described in se.json";
+			}
+		}
+	}
+	
+	TEST(se_traits, general) {
+		InfoManager* manager = InfoManager::getManager();
+		for (auto const& [key, seinfo] : manager->se) {
+			for (Trait const& trait : seinfo->activation_traits) {
+				ASSERT_TRUE(manager->traits.contains(trait));
+			}
+			for (Trait const& trait : seinfo->traits) {
+				ASSERT_TRUE(manager->traits.contains(trait));
 			}
 		}
 	}
