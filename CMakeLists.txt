@@ -17,52 +17,52 @@ FetchContent_MakeAvailable(googletest)
 set(src src)
 
 set(traits 
-    ${src}/traits/traits.cpp
+	${src}/traits/traits.cpp
 )
 
 set(events
-    ${src}/events/event.cpp
+	${src}/events/event.cpp
 )
 
 set(functions
-    ${src}/functions/buffs.cpp
-    ${src}/functions/debuffs.cpp
-    ${src}/functions/instant.cpp
-    ${src}/functions/all.cpp
+	${src}/functions/buffs.cpp
+	${src}/functions/debuffs.cpp
+	${src}/functions/instant.cpp
+	${src}/functions/all.cpp
 )
 
 set(includes
-    ${src}/includes/exceptions.cpp
-    ${src}/includes/datastorage.cpp
+	${src}/includes/exceptions.cpp
+	${src}/includes/datastorage.cpp
 )
 
 set(status_effects
-    ${src}/status_effects/se.cpp
-    ${src}/status_effects/leftovers.cpp
+	${src}/status_effects/se.cpp
+	${src}/status_effects/leftovers.cpp
 )
 
 set(managers
-    ${src}/managers/infomanager.cpp
+	${src}/managers/infomanager.cpp
 )
 
 set(player
-    ${src}/player/wcsplayer.cpp
+	${src}/player/wcsplayer.cpp
 )
 
 set(WCSSkills_compile
-    ${functions}
-    ${includes}
-    ${traits}
-    ${events}
-    ${managers}
-    ${status_effects}
-    ${skills}
-    ${player}
+	${functions}
+	${includes}
+	${traits}
+	${events}
+	${managers}
+	${status_effects}
+	${skills}
+	${player}
 )
 
 add_executable(WCSSkills
-    ${WCSSkills_compile}
-    ${src}/main.cpp
+	${WCSSkills_compile}
+	${src}/main.cpp
 )
 
 
@@ -73,13 +73,19 @@ set(t_includes
 	${tests}/includes/dolili.cpp
 )
 
+
+set(t_status_effects
+	${tests}/status_effects/effect_apply.cpp
+)
+
 set(TestWCSSkills_compile
-    ${WCSSkills_compile}
+	${WCSSkills_compile}
 	${t_includes}
+	${t_status_effects}
 )
 
 add_executable(TestWCSSkills
-    ${TestWCSSkills_compile}
+	${TestWCSSkills_compile}
 )
 
 target_link_libraries(TestWCSSkills GTest::gtest_main)
