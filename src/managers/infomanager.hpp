@@ -14,7 +14,7 @@ namespace managers {
 
 #include <vector>
 #include <unordered_map>
-#include "../includes/json.hpp"
+#include <nlohmann/json.hpp>
 #include "../traits/traits.hpp"
 #include "../player/wcsplayer.hpp"
 #include "../functions/all.hpp"

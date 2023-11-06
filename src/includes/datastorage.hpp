@@ -3,8 +3,8 @@
 
 #include <functional>
 #include <vector>
+#include <nlohmann/json.hpp>
 #include "exceptions.hpp"
-#include "json.hpp"
 
 #ifdef DEBUG
 #define EDATA_SIMPLE_SETDATA(_type, _datatype) \
