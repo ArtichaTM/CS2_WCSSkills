@@ -8,11 +8,9 @@ int main(int argc, char** argv)
 	events::EventManager::init();
 	functions::Functions::init();
 	managers::InfoManager::init();
-	try {
-		return RUN_ALL_TESTS();
-	} catch (CustomException& exception) {}
-	
+	auto value = RUN_ALL_TESTS();
 	events::EventManager::close();
 	functions::Functions::close();
 	managers::InfoManager::close();
+	return value;
 }

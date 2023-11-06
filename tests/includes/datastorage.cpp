@@ -5,7 +5,7 @@ Tests valid only with DEBUG defined!
 #include <gtest/gtest.h>
 #include "../../src/includes/datastorage.hpp"
 
-
+namespace dataStorage {
 void testEData2(dataStorage::EData& ed) {
 	int* integer = ed.getData<int>();
 	*integer = (*integer) + 1;
@@ -45,4 +45,5 @@ TEST(EData, change_data_lambda) {
 	};
 	ed.changeData(func);
 	ASSERT_FLOAT_EQ(*ed.getData<float>(), 100.);
+}
 }

@@ -45,7 +45,7 @@ namespace managers {
 		const functions::function function;
 	};
 	
-	typedef std::unordered_map<int, SEInfo*> se_map;
+	typedef std::unordered_map<unsigned int, SEInfo*> se_map;
 
 	/**
 	 * Contains information about buff/debuff applied by Skill on activation
@@ -65,7 +65,7 @@ namespace managers {
 	public:
 		~SkillSE();
 		const SEInfo* seInfo;
-		const dataStorage::DataStorage arguments;
+		const dataStorage::DataStorage* arguments;
 
 		template<bool force = false>
 		[[nodiscard]] events::ReturnEvent applyStatusEffect(WCSPlayer*);

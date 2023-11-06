@@ -132,9 +132,9 @@ namespace dataStorage {
 	}
 	
 	template<typename T>
-	T make(bool deleteOnFree, nlohmann::json&);
-	template<> DataStorage   make<DataStorage  >(bool deleteOnFree, nlohmann::json& info);
-	template<> VectorStorage make<VectorStorage>(bool deleteOnFree, nlohmann::json& info);
+	T* make(bool deleteOnFree, nlohmann::json&);
+	template<> DataStorage*   make<DataStorage  >(bool deleteOnFree, nlohmann::json& info);
+	template<> VectorStorage* make<VectorStorage>(bool deleteOnFree, nlohmann::json& info);
 }
 
 

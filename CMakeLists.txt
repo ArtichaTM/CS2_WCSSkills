@@ -81,7 +81,7 @@ set(t_data
 set(TestWCSSkills_compile
 	${WCSSkills_compile}
 	${t_includes}
-	${t_status_effects}
+	${t_data}
 	${tests}/main.cpp
 )
 

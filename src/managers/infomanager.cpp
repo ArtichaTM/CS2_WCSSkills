@@ -122,7 +122,7 @@ namespace managers {
 		arguments(make<DataStorage>(false, info)) {}
 
 	SkillSE::~SkillSE() {
-		for (auto& [key, value] : this->arguments) {
+		for (auto& [key, value] : *(this->arguments)) {
 			delete value;
 		}
 	}
@@ -183,7 +183,7 @@ namespace managers {
 			std::make_shared<StatusEffect>(
 				wcsp,
 				this->seInfo,
-				&this->arguments,
+				this->arguments,
 				event->getData<float>("multiplier")
 			)
 		});
