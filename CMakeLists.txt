@@ -74,14 +74,15 @@ set(t_includes
 )
 
 
-set(t_status_effects
-	${tests}/status_effects/effect_apply.cpp
+set(t_data
+	${tests}/data/skills_se.cpp
 )
 
 set(TestWCSSkills_compile
 	${WCSSkills_compile}
 	${t_includes}
 	${t_status_effects}
+	${tests}/main.cpp
 )
 
 add_executable(TestWCSSkills

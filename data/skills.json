@@ -6,7 +6,7 @@
 				"Effects": [
 						{
 								"Id": 126,
-								"Time": 20.0,
+								"Duration": 20.0,
 								"Multiplier": 1.0
 						}
 				]
