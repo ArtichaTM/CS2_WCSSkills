@@ -52,10 +52,16 @@ namespace data_jsons {
 		InfoManager* manager = InfoManager::getManager();
 		for (auto const& [key, seinfo] : manager->se) {
 			for (Trait const& trait : seinfo->activation_traits) {
-				ASSERT_TRUE(manager->traits.contains(trait));
+				ASSERT_TRUE(manager->traits.contains(trait)) <<
+					"Trait #" << trait.id <<
+					" contains in se.json as activation trait for se #" << key <<
+					" but doesn't described in file traits.json";
 			}
 			for (Trait const& trait : seinfo->traits) {
-				ASSERT_TRUE(manager->traits.contains(trait));
+				ASSERT_TRUE(manager->traits.contains(trait)) <<
+					"Trait #" << trait.id <<
+					" contains in se.json as se trait for se #" << key <<
+					" but doesn't described in file traits.json";
 			}
 		}
 	}
