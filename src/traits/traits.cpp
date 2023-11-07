@@ -6,20 +6,39 @@ using namespace traits;
 using namespace nlohmann;
 using std::unordered_set;
 
+namespace traits {
+    Trait::Trait(inner_type id) : id(id) {}
 
-Trait::Trait(inner_type id): id(id) {}
+    bool Trait::operator==(inner_type _id) const {
+        return this->id == _id;
+    }
 
-bool Trait::operator==(inner_type _id) const {
-    return this->id == _id;
-}
-
-bool Trait::operator==(Trait other) const {
+    bool Trait::operator==(Trait other) const {
         return this->id == other.id;
     }
 
-Trait::Trait(std::initializer_list<inner_type>& list) : id(*list.begin()) {}
+    Trait::Trait(std::initializer_list<inner_type>& list) : id(*list.begin()) {}
 
-std::size_t std::hash<traits::Trait>::operator()(const traits::Trait &s) const noexcept {
+
+    tr_set make(nlohmann::json const& info) {
+        tr_set values;
+        for (auto& value : info) {
+            values.insert(value. template get<unsigned int>());
+        }
+        return values;
+    }
+
+    tr_set make(std::unordered_set<inner_type> const& info) {
+        tr_set values;
+        for (inner_type const& value : info) {
+            values.insert(value);
+        }
+        return values;
+
+    }
+}
+
+std::size_t std::hash<traits::Trait>::operator()(const traits::Trait& s) const noexcept {
     return s.id;
 }
 

@@ -59,9 +59,9 @@ namespace managers {
 		f = std::ifstream(paths::TRAITS);
 		basicInfo = json::parse(f);
 		traits.reserve(basicInfo.size());
-		for (auto& [key, value] : basicInfo.items()) {
-			std::string* char_ptr = new std::string(value);
-			traits[std::stoi(key)] = char_ptr;
+		for (auto& [key2, value] : basicInfo.items()) {
+			traits::Trait key = traits::Trait(std::stoi(key2));
+			traits[key] = new TraitInfo(key, value);
 		}
 		f.close();
 	}
@@ -190,6 +190,12 @@ namespace managers {
 		
 		return event->result;
 	}
+
+	TraitInfo::TraitInfo(traits::Trait _id, json& info) :
+		id(_id)
+		, name(info["name"])
+		, counter_traits(traits::make(info["counter_traits"]))
+	{}
 
 } // skills
 

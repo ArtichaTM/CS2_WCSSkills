@@ -21,8 +21,18 @@ namespace managers {
 
 using nlohmann::json;
 
-namespace managers {    
+namespace managers {
 	class InfoManagerRecreating : public std::exception {};
+
+	class TraitInfo {
+		friend InfoManager;
+		explicit TraitInfo(traits::Trait, json&);
+	public:
+		TraitInfo(TraitInfo const&) = delete;
+		const traits::Trait id;
+		const std::string name;
+		const traits::tr_set counter_traits;
+	};
 	
 	/**
 	 * Contains information about specific buff/debuff/instant effects.
@@ -115,7 +125,7 @@ namespace managers {
 		
 		std::unordered_map<std::string, SkillInfo*> skills;
 		se_map se;
-		std::unordered_map<traits::Trait, std::string*> traits;
+		std::unordered_map<traits::Trait, TraitInfo*> traits;
 		
 		static InfoManager* getManager();
 	};

@@ -1,15 +1,54 @@
 {
-	"246": "Player spawn",
-	"247": "Skill apply",
-	"248": "Status effect apply",
-	"3000": "Attack Physical",
-	"3004": "Buff Positive Effect",
-	"3005": "Buff Negative Effect",
-	"3006": "Buff Increase Damage",
-	"3010": "Buff Mental Effect",
-	"3027": "Buff Atk Up",
-	"3030": "Buff Np Damage Up",
-	"3045": "Buff Immobilize",
-	"3066": "Buff Sleep",
-	"4007": "Noble Phantasm"
+	"246": {
+		"name": "Player spawn",
+		"counter_traits": []
+	},
+	"247": {
+		"name": "Skill apply",
+		"counter_traits": []
+	},
+	"248": {
+		"name": "Status effect apply",
+		"counter_traits": []
+	},
+	"3000": {
+		"name": "Attack Physical",
+		"counter_traits": []
+	},
+	"3004": {
+		"name": "Buff Positive Effect",
+		"counter_traits": []
+	},
+	"3005": {
+		"name": "Buff Negative Effect",
+		"counter_traits": []
+	},
+	"3006": {
+		"name": "Buff Increase Damage",
+		"counter_traits": []
+	},
+	"3010": {
+		"name": "Buff Mental Effect",
+		"counter_traits": []
+	},
+	"3027": {
+		"name": "Buff Atk Up",
+		"counter_traits": []
+	},
+	"3030": {
+		"name": "Buff Np Damage Up",
+		"counter_traits": []
+	},
+	"3045": {
+		"name": "Buff Immobilize",
+		"counter_traits": []
+	},
+	"3066": {
+		"name": "Buff Sleep",
+		"counter_traits": []
+	},
+	"4007": {
+		"name": "Noble Phantasm",
+		"counter_traits": []
+	}
 }
