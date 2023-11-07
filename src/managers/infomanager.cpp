@@ -194,7 +194,8 @@ namespace managers {
 	TraitInfo::TraitInfo(traits::Trait _id, json& info) :
 		id(_id)
 		, name(info["name"])
-		, counter_traits(traits::make(info.value("counter_traits", std::unordered_set<traits::inner_type>())))
+		, same_category_traits(traits::make(info.value("same_category_traits", std::unordered_set<traits::inner_type>())))
+		, enemy_traits(traits::make(info.value("enemy_traits", std::unordered_set<traits::inner_type>())))
 	{}
 
 } // skills

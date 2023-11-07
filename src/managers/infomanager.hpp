@@ -31,7 +31,8 @@ namespace managers {
 		TraitInfo(TraitInfo const&) = delete;
 		const traits::Trait id;
 		const std::string name;
-		const traits::tr_set counter_traits;
+		const traits::tr_set same_category_traits;
+		const traits::tr_set enemy_traits;
 	};
 	
 	/**
