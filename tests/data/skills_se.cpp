@@ -2,6 +2,7 @@
 #include <unordered_set>
 
 #include "../../src/managers/infomanager.hpp"
+#include "../leaks.hpp"
 
 using std::shared_ptr;
 using traits::Trait;
@@ -10,6 +11,7 @@ using dataStorage::DataStorage;
 
 namespace data_jsons {
 	TEST(skills, general) {
+		MemoryLeakDetector _;
 		InfoManager* manager = InfoManager::getManager();
 		for (auto const& [key, skill_info] : manager->skills) {
 
@@ -49,6 +51,7 @@ namespace data_jsons {
 	}
 	
 	TEST(se_traits, general) {
+		MemoryLeakDetector _;
 		InfoManager* manager = InfoManager::getManager();
 		for (auto const& [key, seinfo] : manager->se) {
 			for (Trait const& trait : seinfo->activation_traits) {
