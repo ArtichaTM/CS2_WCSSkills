@@ -41,6 +41,7 @@ set(includes
 )
 
 set(status_effects
+	${src}/status_effects/skill.cpp
 	${src}/status_effects/se.cpp
 	${src}/status_effects/leftovers.cpp
 )

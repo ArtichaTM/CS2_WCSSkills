@@ -5,6 +5,7 @@ using events::Event;
 using events::ReturnEvent;
 using managers::SkillInfo;
 using stateff::Leftover;
+using std::make_shared;
 
 
 WCSPlayer::WCSPlayer(float level, std::vector<managers::SkillInfo*> selected_skills) :
@@ -23,11 +24,17 @@ WCSPlayer::WCSPlayer(float level, std::vector<managers::SkillInfo*> selected_ski
 }
 
 WCSPlayer::~WCSPlayer() {
-
+	if (skills_activated[0] != nullptr) {
+		events::ReturnEvent output = deactivateSkills(shared_ptr<Event>(new Event{}));
+	}
 }
 
 ReturnEvent WCSPlayer::deactivateSkills(shared_ptr<Event> const& e) {
 	traits.clear();
+	for (unsigned short i = 0; i < SKILLS_MAX; i++) {
+		delete skills_selected[i];
+		skills_selected[i] = nullptr;
+	}
 	return ReturnEvent::PASS;
 }
 

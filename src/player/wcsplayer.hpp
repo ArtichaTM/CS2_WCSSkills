@@ -15,6 +15,7 @@ class WCSPlayer;
 #include "../traits/traits.hpp"
 #include "../status_effects/se.hpp"
 #include "../status_effects/leftovers.hpp"
+#include "../status_effects/skill.hpp"
 #include "../events/event.hpp"
 
 
@@ -27,6 +28,7 @@ public:
 	float level;
 	std::unordered_multimap<unsigned int, std::shared_ptr<stateff::StatusEffect>> status_effects;
 	managers::SkillInfo* skills_selected[SKILLS_MAX];
+	stateff::Skill* skills_activated[SKILLS_MAX];
 	dataStorage::DoubleLinkedList<stateff::Leftover> leftovers;
 	
 	[[nodiscard]] events::ReturnEvent activateSkills(std::shared_ptr<events::Event> const&);
