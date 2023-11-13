@@ -10,23 +10,23 @@
 	},
 	"3000": {
 		"name": "Attack Physical",
-		"mutual_exclusive_category": [ 3001, 3002 ]
+		"mutual_exclusive_category": [ 2 ]
 	},
 	"3001": {
 		"name": "Attack Projectile",
-		"mutual_exclusive_category": [ 3000, 3002 ]
+		"mutual_exclusive_category": [ 2 ]
 	},
 	"3002": {
 		"name": "Attack Magical",
-		"mutual_exclusive_category": [ 3000, 3002 ]
+		"mutual_exclusive_category": [ 2 ]
 	},
 	"3004": {
 		"name": "Buff Positive Effect",
-		"mutual_exclusive_category": [ 3005 ]
+		"mutual_exclusive_category": [ 1 ]
 	},
 	"3005": {
 		"name": "Buff Negative Effect",
-		"mutual_exclusive_category": [ 3004 ]
+		"mutual_exclusive_category": [ 1 ]
 	},
 	"3006": {
 		"name": "Buff Increase Damage"
@@ -51,36 +51,37 @@
 	},
 	"300": {
 		"name": "Alignment: Lawful",
-		"mutual_exclusive_category": [ 301, 302 ],
+		"mutual_exclusive_category": [ 3 ],
 		"enemy_traits": [ 301, 302 ]
 	},
 	"301": {
 		"name": "Alignment: Chaotic",
-		"mutual_exclusive_category": [ 300, 302 ],
+		"mutual_exclusive_category": [ 3 ],
 		"enemy_traits": [ 300, 302 ]
 	},
 	"302": {
 		"name": "Alignment: Neutral",
-		"mutual_exclusive_category": [ 301, 302 ],
+		"mutual_exclusive_category": [ 3 ],
 		"enemy_traits": [ 301, 302 ]
 	},
 	"303": {
 		"name": "Alignment: Good",
-		"mutual_exclusive_category": [ 304, 305 ],
+		"mutual_exclusive_category": [ 4 ],
 		"enemy_traits": [ 304, 305 ]
 	},
 	"304": {
 		"name": "Alignment: Evil",
-		"mutual_exclusive_category": [ 303, 305 ],
+		"mutual_exclusive_category": [ 4 ],
 		"enemy_traits": [ 303, 305 ]
 	},
 	"305": {
 		"name": "Alignment: Balanced",
-		"mutual_exclusive_category": [ 303, 304 ],
+		"mutual_exclusive_category": [ 4 ],
 		"enemy_traits": [ 303, 304 ]
 	},
 	"306": {
 		"name": "Alignment: Madness",
-		"mutual_exclusive_category": [ 300, 301, 302, 303, 304, 305 ]
+		"mutual_exclusive_category": [ 3, 4 ],
+		"enemy_traits": [ 300, 301, 302, 303, 304, 305 ]
 	}
 }
