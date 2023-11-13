@@ -37,7 +37,12 @@ namespace data_jsons {
 				ASSERT_TRUE(arguments->contains("Times") || arguments->contains("Duration"))
 					<< "Skill "
 					<< key
-					<< " doesn't contain \"Times\" or \"Duration\" argument, which required ";
+					<< " doesn't contain \"Times\" or \"Duration\" argument, which required";
+
+				ASSERT_TRUE(arguments->contains("Target"))
+					<< "Skill "
+					<< key
+					<< " doesn't contain \"Target\" argument, which required";
 
 				unsigned int* effect_id = arguments->at("Id")->getData<unsigned int>();
 				ASSERT_TRUE(manager->se.contains(*effect_id))

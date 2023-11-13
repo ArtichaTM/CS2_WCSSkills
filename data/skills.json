@@ -4,11 +4,12 @@
 				"Description": "Increase damage to enemys by any means",
 				"Menu_Description": "Increases attack by {}% for {} seconds",
 				"Effects": [
-						{
-								"Id": 126,
-								"Duration": 20.0,
-								"Multiplier": 1.0
-						}
+					{
+						"Id": 126,
+						"Duration": 20.0,
+						"Multiplier": 1.0,
+						"Target": "Self"
+					}
 				]
 		},
 		"NP Strength Up": {
@@ -17,9 +18,10 @@
 				"Menu_Description": "Increases Noble Phantasm damage by {}% for {} time(-s)",
 				"Effects": [
 						{
-								"Id": 138,
-								"Times": 1,
-								"Multiplier": 1.0
+							"Id": 138,
+							"Times": 1,
+							"Multiplier": 1.0,
+							"Target": "Self"
 						}
 				]
 		}
