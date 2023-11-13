@@ -75,7 +75,7 @@ namespace managers {
 	SkillInfo::SkillInfo(se_map& se, json& info) :
 			name(info["Name"]),
 			description(info["Description"]),
-			menu_description(info["Menu_Description"]),
+			menu_description(info["Menu Description"]),
 			effects(),
 			traits()
 	{
