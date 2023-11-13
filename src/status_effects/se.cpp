@@ -69,3 +69,5 @@ namespace stateff {
 		}
 	}
 } // stateff
+
+EDATA_SIMPLE_DEFINE(stateff::SE_target, SE_target)

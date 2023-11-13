@@ -81,7 +81,9 @@ namespace dataStorage {
 		Float, Double, LongDouble,
 		String, DataS, VectorS,
 		WCSP,
-		SEInfo, SkillSE, SkillInfo
+		SEInfo, SkillSE, SkillInfo,
+		SE_target,
+
 	};
 	
 	class EData;

@@ -11,6 +11,12 @@ namespace stateff {
 #include "../events/event.hpp"
 
 namespace stateff {
+
+	enum SE_target {
+		Self, Enemy, Teammate,	// Solo
+		Team, EnemyTeam,		// Teams
+		TeamExceptSelf,			// Except self
+	};
 	
 	class StatusEffect {
 	public:
