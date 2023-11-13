@@ -79,7 +79,7 @@ set(t_includes
 
 
 set(t_data
-	${tests}/data/skills_se.cpp
+	${tests}/data/skills_se_traits.cpp
 )
 
 set(TestWCSSkills_compile
