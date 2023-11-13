@@ -99,5 +99,5 @@ target_link_libraries(    WCSSkills PRIVATE nlohmann_json::nlohmann_json)
 include(GoogleTest)
 gtest_discover_tests(TestWCSSkills)
 
-target_compile_definitions(WCSSkills PRIVATE DATA_DIR="${CMAKE_CURRENT_LIST_DIR}")
-target_compile_definitions(TestWCSSkills PRIVATE DATA_DIR="${CMAKE_CURRENT_LIST_DIR}")
+target_compile_definitions(WCSSkills PRIVATE CMAKE_DATA_DIR="${CMAKE_CURRENT_LIST_DIR}")
+target_compile_definitions(TestWCSSkills PRIVATE CMAKE_DATA_DIR="${CMAKE_CURRENT_LIST_DIR}")
