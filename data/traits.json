@@ -1,4 +1,19 @@
 {
+	"200": {
+		"name": "Attribute: Sky"
+	},
+	"201": {
+		"name": "Attribute: Earth"
+	},
+	"202": {
+		"name": "Attribute: Human"
+	},
+	"203": {
+		"name": "Attribute: Star"
+	},
+	"204": {
+		"name": "Attribute: Beast"
+	},
 	"246": {
 		"name": "Player spawn"
 	},
@@ -7,6 +22,89 @@
 	},
 	"248": {
 		"name": "Status effect apply"
+	},
+	"300": {
+		"name": "Alignment: Lawful",
+		"mutual_exclusive_category": [ 3 ],
+		"enemy_traits": [ 301, 302 ]
+	},
+	"301": {
+		"name": "Alignment: Chaotic",
+		"mutual_exclusive_category": [ 3 ],
+		"enemy_traits": [ 300, 302 ]
+	},
+	"302": {
+		"name": "Alignment: Neutral",
+		"mutual_exclusive_category": [ 3 ],
+		"enemy_traits": [ 301, 302 ]
+	},
+	"303": {
+		"name": "Alignment: Good",
+		"mutual_exclusive_category": [ 4 ],
+		"enemy_traits": [ 304, 305 ]
+	},
+	"304": {
+		"name": "Alignment: Evil",
+		"mutual_exclusive_category": [ 4 ],
+		"enemy_traits": [ 303, 305 ]
+	},
+	"305": {
+		"name": "Alignment: Balanced",
+		"mutual_exclusive_category": [ 4 ],
+		"enemy_traits": [ 303, 304 ]
+	},
+	"306": {
+		"name": "Alignment: Madness",
+		"mutual_exclusive_category": [ 3, 4 ],
+		"enemy_traits": [ 300, 301, 302, 303, 304, 305 ]
+	},
+	"1001": {
+		"name": "Human"
+	},
+	"1002": {
+		"name": "Undead"
+	},
+	"1003": {
+		"name": "Artificial Demon"
+	},
+	"1004": {
+		"name": "Demon Beast"
+	},
+	"1100": {
+		"name": "Soldier"
+	},
+	"1101": {
+		"name": "Human"
+	},
+	"1102": {
+		"name": "Skeleton"
+	},
+	"1103": {
+		"name": "Zombie"
+	},
+	"1104": {
+		"name": "Ghost"
+	},
+	"1105": {
+		"name": "Automate"
+	},
+	"1106": {
+		"name": "Golem"
+	},
+	"1107": {
+		"name": "Spell Book"
+	},
+	"1108": {
+		"name": "Homunculus"
+	},
+	"1110": {
+		"name": "Lamia"
+	},
+	"2731": {
+		"name": "Existence Outside The Domain"
+	},
+	"2847": {
+		"name": "Levitating"
 	},
 	"3000": {
 		"name": "Attack Physical",
@@ -46,42 +144,22 @@
 	"3066": {
 		"name": "Buff Sleep"
 	},
+	"4001": {
+		"name": "Arts"
+	},
+	"4002": {
+		"name": "Buster"
+	},
+	"4003": {
+		"name": "Quick"
+	},
 	"4007": {
 		"name": "Noble Phantasm"
 	},
-	"300": {
-		"name": "Alignment: Lawful",
-		"mutual_exclusive_category": [ 3 ],
-		"enemy_traits": [ 301, 302 ]
+	"4101": {
+		"name": "AOE NP"
 	},
-	"301": {
-		"name": "Alignment: Chaotic",
-		"mutual_exclusive_category": [ 3 ],
-		"enemy_traits": [ 300, 302 ]
-	},
-	"302": {
-		"name": "Alignment: Neutral",
-		"mutual_exclusive_category": [ 3 ],
-		"enemy_traits": [ 301, 302 ]
-	},
-	"303": {
-		"name": "Alignment: Good",
-		"mutual_exclusive_category": [ 4 ],
-		"enemy_traits": [ 304, 305 ]
-	},
-	"304": {
-		"name": "Alignment: Evil",
-		"mutual_exclusive_category": [ 4 ],
-		"enemy_traits": [ 303, 305 ]
-	},
-	"305": {
-		"name": "Alignment: Balanced",
-		"mutual_exclusive_category": [ 4 ],
-		"enemy_traits": [ 303, 304 ]
-	},
-	"306": {
-		"name": "Alignment: Madness",
-		"mutual_exclusive_category": [ 3, 4 ],
-		"enemy_traits": [ 300, 301, 302, 303, 304, 305 ]
+	"4102": {
+		"name": "Single target NP"
 	}
 }
