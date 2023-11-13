@@ -24,6 +24,13 @@ using nlohmann::json;
 namespace managers {
 	class InfoManagerRecreating : public std::exception {};
 
+	/**
+	 * Contains information about specific trait. Usually it's:
+	 * • Mutual exclusive traits: this traits cames from one category and can't be included in the same set
+	 * • Enemy traits: this traits can't be in the same set because they directly opposite
+	 * 
+	 * There's no validators for this outside debug mode, so they carries only information matter
+	 */
 	class TraitInfo {
 		friend InfoManager;
 		explicit TraitInfo(traits::Trait, json&);
@@ -31,7 +38,7 @@ namespace managers {
 		TraitInfo(TraitInfo const&) = delete;
 		const traits::Trait id;
 		const std::string name;
-		const traits::tr_set same_category_traits;
+		const traits::tr_set mutual_exclusive_category;
 		const traits::tr_set enemy_traits;
 	};
 	
