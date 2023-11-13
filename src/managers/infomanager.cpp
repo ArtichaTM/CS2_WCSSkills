@@ -92,8 +92,8 @@ namespace managers {
 	ReturnEvent SkillInfo::applySkill(WCSPlayer* target, unsigned short& index) {
 		auto skillActivateE = make_shared<Event>(traits::tr_set{247});
 		
-		skillActivateE->setConstData("target", target         );
-		skillActivateE->setConstData("skill",  this           );
+		skillActivateE->setConstData("target", target);
+		skillActivateE->setConstData("skill",  this  );
 		skillActivateE->setData<true>("slot", new unsigned short(index));
 
 		if constexpr (force) {
