@@ -3,7 +3,7 @@
 
 #include <functional>
 #include <vector>
-#include <nlohmann/json.hpp>
+#include "json.hpp"
 #include "exceptions.hpp"
 
 #ifdef DEBUG

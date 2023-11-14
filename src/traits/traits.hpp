@@ -2,7 +2,7 @@
 #define WCSSKILLS_TRAITS_HPP
 
 #include <unordered_set>
-#include <nlohmann/json.hpp>
+#include "../includes/json.hpp"
 
 
 namespace traits {

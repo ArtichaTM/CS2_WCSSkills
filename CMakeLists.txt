@@ -14,10 +14,6 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-include(FetchContent)
-FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz)
-FetchContent_MakeAvailable(json)
-
 set(src src)
 
 set(traits 
@@ -94,8 +90,7 @@ add_executable(TestWCSSkills
 	${TestWCSSkills_compile}
 )
 
-target_link_libraries(TestWCSSkills GTest::gtest_main nlohmann_json::nlohmann_json)
-target_link_libraries(    WCSSkills PRIVATE nlohmann_json::nlohmann_json)
+target_link_libraries(TestWCSSkills GTest::gtest_main)
 
 include(GoogleTest)
 gtest_discover_tests(TestWCSSkills)

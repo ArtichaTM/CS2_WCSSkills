@@ -5,3 +5,4 @@ out
 .vs
 
 CMakeSettings.json
+build/
