@@ -30,11 +30,8 @@ namespace dataStorage {
 		auto ed = dataStorage::EData(true);
 		float* value = new float(50.0);
 		ASSERT_FLOAT_EQ(*value, 50.0);
-		std::cout << "\nSeting data";
 		ed.setData<float>(value);
-		std::cout << "\nDeleting first time";
 		ed.deleteData<float>();
-		std::cout << "\nDeleting second time";
 		ASSERT_THROW(ed.deleteData<float>(), dataStorage::WrongType);
 	}
 
