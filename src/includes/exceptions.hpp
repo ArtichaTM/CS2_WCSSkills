@@ -7,10 +7,9 @@
 class CustomException : public std::exception {
 public:
     explicit CustomException(char[]);
+    explicit CustomException(const char[]);
     explicit CustomException();
-    explicit CustomException(std::basic_string<char>&);
-    explicit CustomException(std::basic_string<char>);
-    char* message;
+    const char* message;
     [[nodiscard]] char const* what() const noexcept;
 };
 

@@ -107,8 +107,8 @@ namespace dataStorage {
 		if (this->dtype == DataType::None) {
 			this->dtype = targetType;
 		} else if (this->dtype != targetType) {
-			throw WrongType{(char *) "Awaited type " + to_string(targetType) +
-							", EData stores " + to_string(dtype) + '.'};
+			throw WrongType(("Awaited type " + to_string(targetType) +
+							", EData stores " + to_string(dtype) + '.').c_str());
 		} else {
 			this->clearData();
 		}
@@ -117,17 +117,17 @@ namespace dataStorage {
 
 	template<typename T>
 	void EData::setConstData(const T *) {
-		throw WrongType("No specialization created for type " + to_string(*typeid(T).name()) + '.');
+		throw WrongType(("No specialization created for type " + to_string(*typeid(T).name()) + '.').c_str());
 	}
 	
 	template<typename T>
 	void EData::setData(T *) {
-		throw WrongType("No specialization created for type " + to_string(*typeid(T).name()) + '.');
+		throw WrongType(("No specialization created for type " + to_string(*typeid(T).name()) + '.').c_str());
 	}
 
 	template<typename T>
 	void EData::deleteData() {
-		throw WrongType("No specialization created for type " + to_string(*typeid(T).name()) + '.');
+		throw WrongType(("No specialization created for type " + to_string(*typeid(T).name()) + '.').c_str());
 	}
 
 	template<>
