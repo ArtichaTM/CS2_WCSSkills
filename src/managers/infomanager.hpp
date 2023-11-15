@@ -10,6 +10,8 @@ namespace managers {
 	class InfoManager;
 	
 	class NoSuchSkill : public CustomException { using CustomException::CustomException; };
+	class InfoManagerRecreating : public CustomException { using CustomException::CustomException; };
+	class InfoManagerReclosing : public CustomException { using CustomException::CustomException; };
 }
 
 #include <vector>
@@ -22,7 +24,6 @@ namespace managers {
 using nlohmann::json;
 
 namespace managers {
-	class InfoManagerRecreating : public std::exception {};
 
 	/**
 	 * Contains information about specific trait. Usually it's:

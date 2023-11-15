@@ -1,7 +1,7 @@
 #include <fstream>
 #include <vector>
 #include "infomanager.hpp"
-#include "../includes/paths.hpp"
+#include "../paths/paths.hpp"
 
 using namespace events;
 using namespace traits;
@@ -19,14 +19,24 @@ namespace managers {
 	InfoManager* InfoManager::instance = nullptr;
 
 	void InfoManager::init() {
-		assert(!instance);
+//#ifdef CMAKE
+		if (instance) {
+			throw InfoManagerRecreating("Trying to init already initialized InfoManager");
+			return;
+		}
 		instance = new InfoManager();
+//#endif // CMAKE
 	}
 
 	void InfoManager::close() {
-		assert(instance);
+//#ifdef CMAKE
+		if (!instance) {
+			throw InfoManagerReclosing("Trying to close already closed InfoManager");
+			return;
+		}
 		delete instance;
 		instance = nullptr;
+//#endif // CMAKE
 	}
 	
 	InfoManager* InfoManager::getManager() {
@@ -34,9 +44,20 @@ namespace managers {
 	}
 
 	InfoManager::InfoManager() : se(), skills(), traits() {
-#ifdef CMAKE
+#ifndef CMAKE
 		// Status effects
-		std::ifstream f = std::ifstream(paths::SE);
+		std::ifstream f = std::ifstream(Paths::getInstance()->se);
+		/*json basicInfo = json::parse(f);
+		se.reserve(basicInfo.size());
+		assert(basicInfo.is_array());
+		for (auto& el : basicInfo) {
+			assert(el.is_array());
+			se.emplace(el.at(0), new SEInfo(el));
+		}*/
+		f.close();
+#else
+		// Status effects
+		std::ifstream f = std::ifstream(Paths::getInstance()->se);
 		json basicInfo = json::parse(f);
 		se.reserve(basicInfo.size());
 		assert(basicInfo.is_array());
@@ -45,9 +66,9 @@ namespace managers {
 			se.emplace(el.at(0), new SEInfo(el));
 		}
 		f.close();
-		
+
 		// Skills
-		f = std::ifstream(paths::SKILLS);
+		f = std::ifstream(Paths::getInstance()->skills);
 		basicInfo = json::parse(f);
 		skills.reserve(basicInfo.size());
 		assert(basicInfo.is_object());
@@ -55,9 +76,9 @@ namespace managers {
 			skills.emplace(key, new SkillInfo(se, value));
 		}
 		f.close();
-		
+
 		// Traits
-		f = std::ifstream(paths::TRAITS);
+		f = std::ifstream(Paths::getInstance()->traits);
 		basicInfo = json::parse(f);
 		traits.reserve(basicInfo.size());
 		for (auto& [key2, value] : basicInfo.items()) {
@@ -65,7 +86,7 @@ namespace managers {
 			traits[key] = new TraitInfo(key, value);
 		}
 		f.close();
-#endif
+#endif CMAKE
 	}
 
 	InfoManager::~InfoManager() {

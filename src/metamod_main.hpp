@@ -20,15 +20,18 @@
 #include <iplayerinfo.h>
 #include <sh_vector.h>
 
-class SamplePlugin : public ISmmPlugin, public IMetamodListener
+class WCSSkills : public ISmmPlugin, public IMetamodListener
 {
+	static ISmmAPI* ismm;
 public:
 	bool Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool late);
 	bool Unload(char *error, size_t maxlen);
 	bool Pause(char *error, size_t maxlen);
 	bool Unpause(char *error, size_t maxlen);
 	void AllPluginsLoaded();
-public: //hooks
+	ISmmAPI* getISmmAPI();
+
+	//hooks
 	void OnLevelInit( char const *pMapName,
 				 char const *pMapEntities,
 				 char const *pOldLevel,
@@ -44,18 +47,18 @@ public: //hooks
 	void Hook_OnClientConnected( CPlayerSlot slot, const char *pszName, uint64 xuid, const char *pszNetworkID, const char *pszAddress, bool bFakePlayer );
 	bool Hook_ClientConnect( CPlayerSlot slot, const char *pszName, uint64 xuid, const char *pszNetworkID, bool unk1, CBufferString *pRejectReason );
 	void Hook_ClientCommand( CPlayerSlot nSlot, const CCommand &_cmd );
-public:
-	const char *GetAuthor();
-	const char *GetName();
-	const char *GetDescription();
-	const char *GetURL();
-	const char *GetLicense();
-	const char *GetVersion();
-	const char *GetDate();
-	const char *GetLogTag();
+
+	const char* GetAuthor();
+	const char* GetName();
+	const char* GetDescription();
+	const char* GetURL();
+	const char* GetLicense();
+	const char* GetVersion();
+	const char* GetDate();
+	const char* GetLogTag();
 };
 
-extern SamplePlugin g_SamplePlugin;
+extern WCSSkills g_WCSSkills;
 
 PLUGIN_GLOBALVARS();
 

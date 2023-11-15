@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include "includes/paths.hpp"
+#include "paths/paths.hpp"
 #include "managers/infomanager.hpp"
 #include "events/event.hpp"
 #include "includes/doublelinkedlist.hpp"
@@ -69,10 +69,10 @@ void tests() {
 
 
 int main() {
+	Paths::init();
 	events::EventManager::init();
 	functions::Functions::init();
 	managers::InfoManager::init();
-	tests();
 	events::EventManager::close();
 	functions::Functions::close();
 	managers::InfoManager::close();

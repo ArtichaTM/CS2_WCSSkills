@@ -46,6 +46,10 @@ set(managers
 	${src}/managers/infomanager.cpp
 )
 
+set (paths
+	${src}/paths/paths.cpp
+)
+
 set(player
 	${src}/player/wcsplayer.cpp
 )
@@ -56,6 +60,7 @@ set(WCSSkills_compile
 	${traits}
 	${events}
 	${managers}
+	${paths}
 	${status_effects}
 	${skills}
 	${player}
@@ -91,9 +96,8 @@ add_executable(TestWCSSkills
 )
 
 target_link_libraries(TestWCSSkills GTest::gtest_main)
+target_compile_definitions(WCSSkills PRIVATE CMAKE_DATA_DIR="${CMAKE_CURRENT_LIST_DIR}" CMAKE=1)
+target_compile_definitions(TestWCSSkills PRIVATE CMAKE_DATA_DIR="${CMAKE_CURRENT_LIST_DIR}" CMAKE=1)
 
 include(GoogleTest)
 gtest_discover_tests(TestWCSSkills)
-
-target_compile_definitions(WCSSkills PRIVATE CMAKE_DATA_DIR="${CMAKE_CURRENT_LIST_DIR}" CMAKE=1)
-target_compile_definitions(TestWCSSkills PRIVATE CMAKE_DATA_DIR="${CMAKE_CURRENT_LIST_DIR}" CMAKE=1)
