@@ -66,7 +66,6 @@ bool WCSSkills::Load(PluginId id, ISmmAPI* ismm, char* error, size_t maxlen, boo
 		return false;
 	}
 	
-
 	PLUGIN_SAVEVARS();
 
 	GET_V_IFACE_CURRENT(GetEngineFactory, engine, IVEngineServer, INTERFACEVERSION_VENGINESERVER);
@@ -242,5 +241,3 @@ const char* WCSSkills::GetURL()
 {
 	return "https://github.com/ArtichaTM/CS2_WCSSkills";
 }
-
-//#endif
