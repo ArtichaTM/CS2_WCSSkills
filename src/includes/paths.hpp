@@ -7,7 +7,11 @@
 
 namespace paths {
     using namespace std::filesystem;
+#ifdef CMAKE
     const static path MAIN_DIR = path(CMAKE_DATA_DIR);
+#else
+    const static path MAIN_DIR = path();
+#endif
     const static path DATA_DIR = MAIN_DIR / path("data");
     const static path SKILLS = DATA_DIR / path("skills.json");
     const static path SE = DATA_DIR / path("se.json");

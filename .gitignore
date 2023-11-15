@@ -6,3 +6,4 @@ out
 
 CMakeSettings.json
 build/
+/Build.cmd

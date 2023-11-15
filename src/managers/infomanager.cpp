@@ -34,6 +34,7 @@ namespace managers {
 	}
 
 	InfoManager::InfoManager() : se(), skills(), traits() {
+#ifdef CMAKE
 		// Status effects
 		std::ifstream f = std::ifstream(paths::SE);
 		json basicInfo = json::parse(f);
@@ -64,6 +65,7 @@ namespace managers {
 			traits[key] = new TraitInfo(key, value);
 		}
 		f.close();
+#endif
 	}
 
 	InfoManager::~InfoManager() {
