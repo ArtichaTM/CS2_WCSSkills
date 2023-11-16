@@ -202,42 +202,12 @@ bool WCSSkills::Unpause(char* error, size_t maxlen)
 	return true;
 }
 
-const char* WCSSkills::GetLicense()
-{
-	return "MIT";
-}
-
-const char* WCSSkills::GetVersion()
-{
-	return "0.1.0.0";
-}
-
-const char* WCSSkills::GetDate()
-{
-	return __DATE__;
-}
-
-const char* WCSSkills::GetLogTag()
-{
-	return "WCSS";
-}
-
-const char* WCSSkills::GetAuthor()
-{
-	return "Articha";
-}
-
-const char* WCSSkills::GetDescription()
-{
-	return "Warcraft mod based on skills";
-}
-
-const char* WCSSkills::GetName()
-{
-	return "WCSSkills";
-}
-
-const char* WCSSkills::GetURL()
-{
-	return "https://github.com/ArtichaTM/CS2_WCSSkills";
-}
+// Constants
+const char* WCSSkills:: GetLicense		(){ return "MIT"										;}
+const char* WCSSkills:: GetVersion		(){ return "0.1.0.0"									;}
+const char* WCSSkills:: GetDate			(){ return __DATE__										;}
+const char* WCSSkills:: GetLogTag		(){ return "WCSS"										;}
+const char* WCSSkills:: GetAuthor		(){ return "Articha"									;}
+const char* WCSSkills:: GetDescription	(){ return "Warcraft mod based on skills"				;}
+const char* WCSSkills:: GetName			(){ return "WCSSkills"									;}
+const char* WCSSkills:: GetURL			(){ return "https://github.com/ArtichaTM/CS2_WCSSkills"	;}
