@@ -34,6 +34,7 @@ set(functions
 set(includes
 	${src}/includes/exceptions.cpp
 	${src}/includes/datastorage.cpp
+	${src}/includes/ticker.cpp
 )
 
 set(status_effects
@@ -77,6 +78,7 @@ set(tests tests)
 set(t_includes
 	${tests}/includes/datastorage.cpp
 	${tests}/includes/dolili.cpp
+	${tests}/includes/ticker.cpp
 )
 
 
@@ -93,7 +95,7 @@ set(TestWCSSkills_compile
 
 add_executable(TestWCSSkills
 	${TestWCSSkills_compile}
-)
+ "src/includes/ticker.cpp")
 
 target_link_libraries(TestWCSSkills GTest::gtest_main)
 target_compile_definitions(WCSSkills PRIVATE CMAKE_DATA_DIR="${CMAKE_CURRENT_LIST_DIR}" CMAKE=1)
