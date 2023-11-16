@@ -23,6 +23,7 @@ public:
     const std::filesystem::path skills;
     const std::filesystem::path se;
     const std::filesystem::path traits;
+    const std::filesystem::path database;
 
     static void init();
     static void close();
