@@ -43,10 +43,13 @@ namespace utilities {
 	class Ticker {
 		unsigned short int counter = 0;
 	public:
+		~Ticker();
 #ifdef USHRT_MAX
+		const unsigned int size = USHRT_MAX + 1;
 		TickerContainer* values[USHRT_MAX+1];
 #else
-		TickerContainer values[655356];
+		const unsigned int size = 0xffff;
+		TickerContainer* values[0xffff];
 #endif
 		class DelayOverflow : public CustomException { using CustomException::CustomException; };
 

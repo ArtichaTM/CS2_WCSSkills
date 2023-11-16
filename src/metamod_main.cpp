@@ -62,7 +62,6 @@ bool WCSSkills::Load(PluginId id, ISmmAPI* ismm, char* error, size_t maxlen, boo
 		managers::InfoManager::init();
 	}
 	catch (managers::InfoManagerRecreating& e) {
-		//META_CONPRINTF("InfoManager re-creation!\n");
 		return false;
 	}
 	
@@ -132,39 +131,38 @@ ISmmAPI* WCSSkills::getISmmAPI(){
 
 void WCSSkills::Hook_ClientActive(CPlayerSlot slot, bool bLoadGame, const char* pszName, uint64 xuid)
 {
-	//META_CONPRINTF("Hook_ClientActive(%d, %d, \"%s\", %d)\n", slot, bLoadGame, pszName, xuid);
+	META_CONPRINTF("Hook_ClientActive(%d, %d, \"%s\", %d)\n", slot, bLoadGame, pszName, xuid);
 }
 
 void WCSSkills::Hook_ClientCommand(CPlayerSlot slot, const CCommand& args)
 {
-	//META_CONPRINTF("Hook_ClientCommand(%d, \"%s\")\n", slot, args.GetCommandString());
+	META_CONPRINTF("Hook_ClientCommand(%d, \"%s\")\n", slot, args.GetCommandString());
 }
 
 void WCSSkills::Hook_ClientSettingsChanged(CPlayerSlot slot)
 {
-	//META_CONPRINTF("Hook_ClientSettingsChanged(%d)\n", slot);
+	META_CONPRINTF("Hook_ClientSettingsChanged(%d)\n", slot);
 }
 
 void WCSSkills::Hook_OnClientConnected(CPlayerSlot slot, const char* pszName, uint64 xuid, const char* pszNetworkID, const char* pszAddress, bool bFakePlayer)
 {
-	//META_CONPRINTF("Hook_OnClientConnected(%d, \"%s\", %d, \"%s\", \"%s\", %d)\n", slot, pszName, xuid, pszNetworkID, pszAddress, bFakePlayer);
+	META_CONPRINTF("Hook_OnClientConnected(%d, \"%s\", %d, \"%s\", \"%s\", %d)\n", slot, pszName, xuid, pszNetworkID, pszAddress, bFakePlayer);
 }
 
 bool WCSSkills::Hook_ClientConnect(CPlayerSlot slot, const char* pszName, uint64 xuid, const char* pszNetworkID, bool unk1, CBufferString* pRejectReason)
 {
-	//META_CONPRINTF("Hook_ClientConnect(%d, \"%s\", %d, \"%s\", %d, \"%s\")\n", slot, pszName, xuid, pszNetworkID, unk1, pRejectReason->ToGrowable()->Get());
-
+	META_CONPRINTF("Hook_ClientConnect(%d, \"%s\", %d, \"%s\", %d, \"%s\")\n", slot, pszName, xuid, pszNetworkID, unk1, pRejectReason->ToGrowable()->Get());
 	RETURN_META_VALUE(MRES_IGNORED, true);
 }
 
 void WCSSkills::Hook_ClientPutInServer(CPlayerSlot slot, char const* pszName, int type, uint64 xuid)
 {
-	//META_CONPRINTF("Hook_ClientPutInServer(%d, \"%s\", %d, %d, %d)\n", slot, pszName, type, xuid);
+	META_CONPRINTF("Hook_ClientPutInServer(%d, \"%s\", %d, %d, %d)\n", slot, pszName, type, xuid);
 }
 
 void WCSSkills::Hook_ClientDisconnect(CPlayerSlot slot, int reason, const char* pszName, uint64 xuid, const char* pszNetworkID)
 {
-	//META_CONPRINTF("Hook_ClientDisconnect(%d, %d, \"%s\", %d, \"%s\")\n", slot, reason, pszName, xuid, pszNetworkID);
+	META_CONPRINTF("Hook_ClientDisconnect(%d, %d, \"%s\", %d, \"%s\")\n", slot, reason, pszName, xuid, pszNetworkID);
 }
 
 void WCSSkills::Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
@@ -184,12 +182,12 @@ void WCSSkills::OnLevelInit(char const* pMapName,
 	bool loadGame,
 	bool background)
 {
-	//META_CONPRINTF("OnLevelInit(%s)\n", pMapName);
+	META_CONPRINTF("OnLevelInit(%s)\n", pMapName);
 }
 
 void WCSSkills::OnLevelShutdown()
 {
-	//META_CONPRINTF("OnLevelShutdown()\n");
+	META_CONPRINTF("OnLevelShutdown()\n");
 }
 
 bool WCSSkills::Pause(char* error, size_t maxlen)

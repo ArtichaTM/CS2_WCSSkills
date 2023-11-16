@@ -1,8 +1,9 @@
 #include <gtest/gtest.h>
 
-using namespace std;
-
 #include "../../src/includes/ticker.hpp"
+#include "../leaks.hpp"
+
+using namespace std;
 
 namespace utilities {
 	struct MockTickReceiver {
@@ -47,9 +48,18 @@ namespace utilities {
 		unsigned char v_char = 0;
 		int v_int = 0;
 		for (; v_int < 5000000; v_int++, v_char++) {
-			ASSERT_EQ(v_char, v_int%256);
+			ASSERT_EQ(v_char, v_int % 256);
 		}
 	}
+
+	void ticker_malloc_free(unsigned char tickrate) {
+		Ticker* t = new Ticker(tickrate);
+		delete t;
+	}
+
+	TEST(ticker, close_open_32 ) { ticker_malloc_free(32 ); }
+	TEST(ticker, close_open_64 ) { ticker_malloc_free(64 ); }
+	TEST(ticker, close_open_128) { ticker_malloc_free(128); }
 
 	TEST(ticker_calculations, ticks) {
 		Ticker* t64 = new Ticker(64);
@@ -94,27 +104,38 @@ namespace utilities {
 
 	TEST(std_preparations, std_function) {
 		MockTickReceiver receiver;
-		std::function<void()> func = std::bind(&(MockTickReceiver::onTick), &receiver);
+		std::function<void()> func = std::bind(&MockTickReceiver::onTick, &receiver);
 		ASSERT_EQ(receiver.called, 0);
 		func();
 		ASSERT_EQ(receiver.called, 1);
 	}
 
 	void test_call(unsigned char tickrate) {
-		Ticker* ticker = new Ticker(64);
+		MemoryLeakDetector _;
+		Ticker* ticker = new Ticker(tickrate);
 		MockTickReceiver receiver;
 
-		ticker->addTask(&receiver, &(MockTickReceiver::onTick), 1.0f);
-		unsigned short pre_one_second = ticker->tickrate - 1;
+		ticker->addTask(&receiver, &MockTickReceiver::onTick, 1.0f);
+		unsigned short pre_one_second = tickrate - 1;
 		for (unsigned short i = 0; i < pre_one_second; i++) {
 			ticker->tick();
 		}
 		ASSERT_EQ(receiver.called, 0);
 		ticker->tick();
 		ASSERT_EQ(receiver.called, 1);
+
+		delete ticker;
 	}
 
 	TEST(ticker_delayed_call, 32 ) { test_call(32 ); }
 	TEST(ticker_delayed_call, 64 ) { test_call(64 ); }
 	TEST(ticker_delayed_call, 128) { test_call(128); }
+
+	TEST(ticker, unused_registered_call) {
+		MemoryLeakDetector _;
+		Ticker* ticker = new Ticker(64);
+		MockTickReceiver receiver;
+		ticker->addTask(&receiver, &MockTickReceiver::onTick, 1.0f);
+		delete ticker;
+	}
 }

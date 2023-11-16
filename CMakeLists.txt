@@ -95,11 +95,19 @@ set(TestWCSSkills_compile
 
 add_executable(TestWCSSkills
 	${TestWCSSkills_compile}
- "src/includes/ticker.cpp")
+)
 
 target_link_libraries(TestWCSSkills GTest::gtest_main)
-target_compile_definitions(WCSSkills PRIVATE CMAKE_DATA_DIR="${CMAKE_CURRENT_LIST_DIR}" CMAKE=1)
-target_compile_definitions(TestWCSSkills PRIVATE CMAKE_DATA_DIR="${CMAKE_CURRENT_LIST_DIR}" CMAKE=1)
+target_compile_definitions(WCSSkills PRIVATE
+	CMAKE_DATA_DIR="${CMAKE_CURRENT_LIST_DIR}"
+	CMAKE=1
+	META_CONPRINTF=printf
+)
+target_compile_definitions(TestWCSSkills PRIVATE
+	CMAKE_DATA_DIR="${CMAKE_CURRENT_LIST_DIR}"
+	CMAKE=1
+	META_CONPRINTF=printf
+)
 
 include(GoogleTest)
 gtest_discover_tests(TestWCSSkills)

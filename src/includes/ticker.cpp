@@ -6,7 +6,16 @@ using namespace utilities;
 
 utilities::TickerContainer::TickerContainer(std::function<void()> func) : tick_function(func) {}
 
-void TickerContainer::operator ()	() const { tick_function(); }
+void TickerContainer::operator()() const { tick_function(); }
+
+utilities::Ticker::~Ticker()
+{
+	for (unsigned int i = 0; i < this->size; i++) {
+		if (values[i]) {
+			delete values[i];
+		}
+	}
+}
 
 Ticker::Ticker(unsigned char _tickrate) :
 	counter(),
@@ -51,5 +60,5 @@ std::size_t	utilities::Ticker::getMaxTicks() {
 
 }
 
-float		utilities::Ticker::getMaxSeconds()	{ return static_cast<float>(this->getMaxTicks()) / tickrate;}
-float		utilities::Ticker::getMaxMinutes()	{ return this->getMaxSeconds()/60;							}
+float utilities::Ticker::getMaxSeconds() { return static_cast<float>(this->getMaxTicks()) / tickrate;}
+float utilities::Ticker::getMaxMinutes() { return this->getMaxSeconds()/60;							 }

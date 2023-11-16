@@ -55,7 +55,7 @@ namespace managers {
 			se.emplace(el.at(0), new SEInfo(el));
 		}*/
 		f.close();
-#else
+#else // CMAKE
 		// Status effects
 		std::ifstream f = std::ifstream(Paths::getInstance()->se);
 		json basicInfo = json::parse(f);
@@ -86,7 +86,7 @@ namespace managers {
 			traits[key] = new TraitInfo(key, value);
 		}
 		f.close();
-#endif CMAKE
+#endif // CMAKE
 	}
 
 	InfoManager::~InfoManager() {
