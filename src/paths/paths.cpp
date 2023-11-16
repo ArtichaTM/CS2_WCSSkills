@@ -18,13 +18,21 @@ Paths::Paths(std::filesystem::path _main_dir) :
 	std::fstream f_se(skills.c_str());
 	std::fstream f_traits(skills.c_str());
 
-	if (!f_skills.good()) {
+	bool good_skills = f_skills.good();
+	bool good_se = f_se.good();
+	bool good_traits = f_traits.good();
+
+	f_skills.close();
+	f_se.close();
+	f_traits.close();
+
+	if (!good_skills) {
 		throw WrongDataLocation("Can't open skills.json");
 	}
-	else if (!f_se.good()) {
+	else if (!good_se) {
 		throw WrongDataLocation("Can't open se.json");
 	}
-	else if (!f_traits.good()) {
+	else if (!good_traits) {
 		throw WrongDataLocation("Can't open traits.json");
 	}
 }
@@ -52,7 +60,9 @@ void Paths::close() {
 }
 
 Paths* Paths::getInstance() {
-	if (!_instance) init();
+	if (!_instance) {
+		throw PathsIsNotInitialized();
+	}
 	return _instance;
 }
 

@@ -13,6 +13,7 @@ protected:
     static Paths* _instance;
     Paths(Paths const&) = delete;
 public:
+    class PathsIsNotInitialized : public CustomException { using CustomException::CustomException; };
     class WrongDataLocation : public CustomException { using CustomException::CustomException; };
     class PathsRecreating : public CustomException { using CustomException::CustomException; };
     class PathsReclosing : public CustomException { using CustomException::CustomException; };
