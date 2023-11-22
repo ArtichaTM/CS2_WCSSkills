@@ -281,8 +281,12 @@ namespace dataStorage {
         assert(target != nullptr);
         if (target == head) {
             head = head->eraseReturnNext();
+            if (!head)
+                tail = nullptr;
         } else if (target == tail) {
             tail = tail->eraseReturnPrevious();
+            if (!tail)
+                head = nullptr;
         } else {
             target->erase();
         }
