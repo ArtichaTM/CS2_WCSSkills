@@ -21,6 +21,7 @@ public:
     const std::filesystem::path main_dir;
     const std::filesystem::path data_dir;
     const std::filesystem::path sql_folder;
+    const std::filesystem::path json_folder;
     
     const std::filesystem::path skills;
     const std::filesystem::path se;
