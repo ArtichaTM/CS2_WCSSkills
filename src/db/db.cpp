@@ -88,6 +88,7 @@ namespace utilities {
 			}
 			index++;
 		}
+		return ret;
 	}
 	 
 	int DB::create_tables()

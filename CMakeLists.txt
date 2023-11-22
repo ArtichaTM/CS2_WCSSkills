@@ -18,7 +18,6 @@ set(src src)
 
 set(db
 	${src}/db/sqlite3/sqlite3.c
-	${src}/db/sqlite3/shell.c
 	${src}/db/db.cpp
 )
 
