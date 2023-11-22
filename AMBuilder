@@ -15,8 +15,11 @@ def find_all_sources(path):
             for string in find_all_sources(something):
                 output.append(f"{something.name}/{string}")
         else:
-            if not something.name.endswith('.cpp'):
+            if not (something.name.endswith('.c') or something.name.endswith('.cpp')):
                 continue
+            if something.name.endswith('main.cpp'):
+                if something.name != 'metamod_main.cpp':
+                    continue
             output.append(something.name)
     return output
 
@@ -42,9 +45,10 @@ for sdk_name in MMSPlugin.sdks:
 
     if cxx.target.arch == 'x86':
       binary.sources += ['sourcehook/sourcehook_hookmangen.cpp']
+    
+    binary.sources += [f"src/{i}" for i in find_all_sources(current_file)]
+    
     nodes = builder.Add(binary)
     MMSPlugin.binaries += [nodes]
-
-    binary.sources += [f"src/{i}" for i in find_all_sources(current_file)]
     
   break
