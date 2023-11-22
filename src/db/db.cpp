@@ -34,7 +34,7 @@ namespace utilities {
 		// step to 1st row of data
 		if (SQLITE_ROW != (ret = sqlite3_step(statement))) // see documentation, this can return more values as success
 		{
-			printf("Failed to step: %d, %s\n", ret, sqlite3_errmsg(db));
+			META_CONPRINTF("Failed to step: %d, %s\n", ret, sqlite3_errmsg(db));
 			return nullptr;
 		}
 		return statement;

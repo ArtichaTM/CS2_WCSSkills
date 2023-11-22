@@ -34,8 +34,6 @@ for sdk_name in MMSPlugin.sdks:
     if not current_file.exists():
         raise RuntimeError(f"Can't find src folder. Searching in: {current_file.parent.absolute()}")
 
-    binary.sources += [f"src/{i}" for i in find_all_sources(current_file)]
-
     if sdk_name in ['dota', 'cs2']:
       binary.sources += [
       os.path.join(sdk.path, 'tier1', 'convar.cpp'),
@@ -46,5 +44,7 @@ for sdk_name in MMSPlugin.sdks:
       binary.sources += ['sourcehook/sourcehook_hookmangen.cpp']
     nodes = builder.Add(binary)
     MMSPlugin.binaries += [nodes]
+
+    binary.sources += [f"src/{i}" for i in find_all_sources(current_file)]
     
   break
