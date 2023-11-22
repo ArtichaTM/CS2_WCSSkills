@@ -4,6 +4,9 @@
 #include "db.hpp"
 #include "../paths/paths.hpp"
 
+#ifndef META_CONPRINTF
+#define META_CONPRINTF
+#endif
 
 using std::filesystem::path;
 using std::make_unique;
@@ -39,7 +42,7 @@ namespace utilities {
 		}
 		return statement;
 	}
-
+	
 	template<>
 	int DB::query<false>(char* query, sqlite3_stmt*& statement)
 	{
