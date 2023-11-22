@@ -201,15 +201,15 @@ namespace managers {
 			}
 		}
 		
-		wcsp->status_effects.insert({
-			this->seInfo->id,
+		wcsp->status_effects.insertAfter(
+			wcsp->status_effects.tail,
 			std::make_shared<StatusEffect>(
 				wcsp,
 				this->seInfo,
 				this->arguments,
 				event->getData<float>("multiplier")
 			)
-		});
+		);
 		
 		return event->result;
 	}

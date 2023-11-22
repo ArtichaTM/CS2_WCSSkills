@@ -27,6 +27,7 @@ public:
 	traits::tr_set traits;
 	unsigned short level;
 	unsigned int xp;
+	dataStorage::DoubleLinkedList<std::shared_ptr<stateff::StatusEffect>> status_effects;
 	managers::SkillInfo* skills_selected[SKILLS_MAX];
 	stateff::Skill* skills_activated[SKILLS_MAX];
 	dataStorage::DoubleLinkedList<stateff::Leftover> leftovers;
