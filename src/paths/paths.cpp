@@ -24,23 +24,28 @@ Paths::Paths(std::filesystem::path _main_dir) :
 	std::fstream f_skills(skills.c_str());
 	std::fstream f_se(skills.c_str());
 	std::fstream f_traits(skills.c_str());
+	std::fstream f_create_tables_sql(create_tables_sql.c_str());
 
 	bool good_skills = f_skills.good();
 	bool good_se = f_se.good();
 	bool good_traits = f_traits.good();
+	bool good_create_tables_sql = f_create_tables_sql.good();
 
 	f_skills.close();
 	f_se.close();
 	f_traits.close();
 
 	if (!good_skills) {
-		throw WrongDataLocation("Can't open skills.json");
+		throw WrongDataLocation("Can't open json/skills.json");
 	}
 	else if (!good_se) {
-		throw WrongDataLocation("Can't open se.json");
+		throw WrongDataLocation("Can't open json/se.json");
 	}
 	else if (!good_traits) {
-		throw WrongDataLocation("Can't open traits.json");
+		throw WrongDataLocation("Can't open json/traits.json");
+	}
+	else if (!good_create_tables_sql) {
+		throw WrongDataLocation("Can't open sql/create_tables.sql");
 	}
 }
 
