@@ -54,8 +54,8 @@ namespace dataStorage {
 		ASSERT_EQ(dolili.size(), 0);
 		ASSERT_EQ(dolili.head, nullptr);
 
-		unsigned char overflow_char = DOLILI_UNSIGNED_CHAR_NUMBER;
-		unsigned char inserted_values[] = { 150, 1, 0, 0, DOLILI_UNSIGNED_CHAR_NUMBER, 10 };
+		unsigned char overflow_char = static_cast<unsigned char>(DOLILI_UNSIGNED_CHAR_NUMBER);
+		unsigned char inserted_values[] = { 150, 1, 0, 0, static_cast<unsigned char>(DOLILI_UNSIGNED_CHAR_NUMBER), 10};
 		dolili.insertAfter(nullptr, inserted_values[0]);
 		for (unsigned char i = 1; i < sizeof(inserted_values); i++) {
 			dolili.insertAfter(dolili.tail, inserted_values[i]);
