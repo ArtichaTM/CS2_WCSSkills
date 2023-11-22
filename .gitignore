@@ -1,5 +1,5 @@
 # Custom ignores
-data/sqlite
+data/database.db
 out
 
 .vs

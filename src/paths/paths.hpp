@@ -20,10 +20,14 @@ public:
 
     const std::filesystem::path main_dir;
     const std::filesystem::path data_dir;
+    const std::filesystem::path sql_folder;
+    
     const std::filesystem::path skills;
     const std::filesystem::path se;
     const std::filesystem::path traits;
+    
     const std::filesystem::path database;
+    const std::filesystem::path create_tables_sql;
 
     static void init();
     static void close();

@@ -16,6 +16,12 @@ FetchContent_MakeAvailable(googletest)
 
 set(src src)
 
+set(db
+	${src}/db/sqlite3/sqlite3.c
+	${src}/db/sqlite3/shell.c
+	${src}/db/db.cpp
+)
+
 set(traits 
 	${src}/traits/traits.cpp
 )
@@ -56,6 +62,7 @@ set(player
 )
 
 set(WCSSkills_compile
+	${db}
 	${functions}
 	${includes}
 	${traits}

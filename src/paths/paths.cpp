@@ -13,7 +13,9 @@ Paths::Paths(std::filesystem::path _main_dir) :
 	skills(data_dir / std::filesystem::path("skills.json")),
 	se(data_dir / std::filesystem::path("se.json")),
 	traits(data_dir / std::filesystem::path("traits.json")),
-	database(data_dir / std::filesystem::path("database.db"))
+	database(data_dir / std::filesystem::path("database.db")),
+	sql_folder(data_dir / std::filesystem::path("sql")),
+	create_tables_sql(sql_folder / std::filesystem::path("create_tables.sql"))
 {
 	std::fstream f_skills(skills.c_str());
 	std::fstream f_se(skills.c_str());
