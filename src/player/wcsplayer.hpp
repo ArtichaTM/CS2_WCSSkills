@@ -22,11 +22,11 @@ class WCSPlayer;
 class WCSPlayer {
 public:
 	WCSPlayer(WCSPlayer const&) = delete;
-	WCSPlayer(float level, std::vector<managers::SkillInfo*> selected_skills);
+	WCSPlayer(unsigned short level, unsigned short xp, std::vector<managers::SkillInfo*> selected_skills);
 	~WCSPlayer();
 	traits::tr_set traits;
-	float level;
-	std::unordered_multimap<unsigned int, std::shared_ptr<stateff::StatusEffect>> status_effects;
+	unsigned short level;
+	unsigned int xp;
 	managers::SkillInfo* skills_selected[SKILLS_MAX];
 	stateff::Skill* skills_activated[SKILLS_MAX];
 	dataStorage::DoubleLinkedList<stateff::Leftover> leftovers;

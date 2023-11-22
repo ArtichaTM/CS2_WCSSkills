@@ -111,7 +111,7 @@ namespace managers {
 		std::vector<std::shared_ptr<SkillSE>> effects;
 
 		template<bool force = false>
-		[[nodiscard]] events::ReturnEvent applySkill(WCSPlayer*, unsigned short&);
+		[[nodiscard]] events::ReturnEvent applySkill(WCSPlayer*, unsigned char&);
 	};
 	
 

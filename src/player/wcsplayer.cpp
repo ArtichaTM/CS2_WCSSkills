@@ -8,11 +8,13 @@ using stateff::Leftover;
 using std::make_shared;
 
 
-WCSPlayer::WCSPlayer(float level, std::vector<managers::SkillInfo*> selected_skills) :
+WCSPlayer::WCSPlayer(unsigned short level, unsigned short xp, std::vector<managers::SkillInfo*> selected_skills) :
 	traits(),
 	level(level),
+	xp(xp),
 	status_effects(),
-	leftovers()
+	leftovers(),
+	skills_activated()
 {
 	unsigned short i = 0;
 	for (; i < selected_skills.size(); i++) {
@@ -31,7 +33,7 @@ WCSPlayer::~WCSPlayer() {
 
 ReturnEvent WCSPlayer::deactivateSkills(shared_ptr<Event> const& e) {
 	traits.clear();
-	for (unsigned short i = 0; i < SKILLS_MAX; i++) {
+	for (unsigned char i = 0; i < SKILLS_MAX; i++) {
 		delete skills_selected[i];
 		skills_selected[i] = nullptr;
 	}
@@ -39,7 +41,7 @@ ReturnEvent WCSPlayer::deactivateSkills(shared_ptr<Event> const& e) {
 }
 
 ReturnEvent WCSPlayer::activateSkills(shared_ptr<Event> const& e) {
-	for (unsigned short i = 0; i < SKILLS_MAX; i++) {
+	for (unsigned char i = 0; i < SKILLS_MAX; i++) {
 		SkillInfo* skill_info = skills_selected[i];
 		if (skill_info) {
 			ReturnEvent answer = skill_info->applySkill(this, i);
@@ -49,7 +51,7 @@ ReturnEvent WCSPlayer::activateSkills(shared_ptr<Event> const& e) {
 }
 
 ReturnEvent WCSPlayer::spawn(const shared_ptr<events::Event>& e) {
-	for (unsigned short i = 0; i < SKILLS_MAX; i++) {
+	for (unsigned char i = 0; i < SKILLS_MAX; i++) {
 		SkillInfo* skill_info = this->skills_selected[i];
 		if (!skill_info) {
 			break;
