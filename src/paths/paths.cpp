@@ -36,16 +36,16 @@ Paths::Paths(std::filesystem::path _main_dir) :
 	f_traits.close();
 
 	if (!good_skills) {
-		throw WrongDataLocation("Can't open json/skills.json");
+		throw WrongDataLocation("WDL1");
 	}
 	else if (!good_se) {
-		throw WrongDataLocation("Can't open json/se.json");
+		throw WrongDataLocation("WDL2");
 	}
 	else if (!good_traits) {
-		throw WrongDataLocation("Can't open json/traits.json");
+		throw WrongDataLocation("WDL3");
 	}
 	else if (!good_create_tables_sql) {
-		throw WrongDataLocation("Can't open sql/create_tables.sql");
+		throw WrongDataLocation("WDL4");
 	}
 }
 

@@ -47,3 +47,26 @@ SE considered to be same and working in the same way, except in CS2 even status 
 Duration of SE can be 2 times:
 * Turns: In CS2 implemented as time. 1 turn in F/GO considered as 5-10 seconds in CS2. This value can be changed based on SE/skill effects
 * Times: status effect or skill will trigger on specific event. Usually all skills of category are event-based. Usually ported from F/GO as is
+## Error codes:
+Sometimes plugin raises exceptions, but metamod allows only 7 symbols to write in error char[]. So, here are transcriptions of errors:
+* WDL1: Can't open file data/json/skills.json
+* WDL2: Can't open file data/json/se.json
+* WDL3: Can't open file data/json/traits.json
+* WDL4: Can't open file data/sql/create_tables.sql
+* IMR1: Trying to init already initialized InfoManager
+* IMR2: Trying to close already closed InfoManager
+* DB00: General query fault. In normal circumstances can't be raised to console, because usually catched in code
+* DB01: Failed to initialize sqlite3 library. Can occur when something wrong with SQLite3 library
+* DB02: Failed to open conn. Can occur, when path to database (data/database.db) blocker somehow
+* DB03: Failed to prepare check tables statement
+* DB04: Failed to read tables. Occurs when WCSS trying to list all created tables, but return unexpected
+* DB05: Can't open file data/sql/create_tables.sql
+* DB06: File data/sql/create_tables.sql larger than expected (usually 4096 symbols)
+* DB07: Failed to prepare insert values. Can occur when insert data is invalid
+* FUNCS1: Trying to get function without functions initialization (folder src/functions)
+* FUNCS2: Trying to get function that doesn't exist. Occur, when function number mentioned in json files, but didn't defined in source code
+* T_DO0: Ticker delay overflow. Raised by src/includes/ticker when something trying to delay task by amount exceeding maximum limit
+
+
+Notes:
+* Difference between WDL4 and DB05: WDL4 raised when file doesn't exist at all, while DB05 raised when file can't be read

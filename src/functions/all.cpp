@@ -37,8 +37,7 @@ namespace functions {
     Functions* Functions::get() {
 #ifdef DEBUG
         if (!instance) {
-            throw CustomException("There's no functions manager instance."
-                "May be Functions::init() function call missing?");
+            throw CustomException("FUNCS0");
         }
 #endif
         return instance;

@@ -31,13 +31,13 @@ namespace utilities {
 		int ret;
 		if (SQLITE_OK != (ret = sqlite3_prepare_v2(db, query, -1, &statement, NULL)))
 		{
-			META_CONPRINTF("Failed to prepare insert: %d, %s\n", ret, sqlite3_errmsg(db));
+			META_CONPRINTF("DB08");
 			return nullptr;
 		}
-		// step to 1st row of data
-		if (SQLITE_ROW != (ret = sqlite3_step(statement))) // see documentation, this can return more values as success
+
+		if (SQLITE_ROW != (ret = sqlite3_step(statement)))
 		{
-			META_CONPRINTF("Failed to step: %d, %s\n", ret, sqlite3_errmsg(db));
+			META_CONPRINTF("DB08");
 			return nullptr;
 		}
 		return statement;
@@ -49,7 +49,7 @@ namespace utilities {
 		int ret;
 		if (SQLITE_OK != (ret = sqlite3_prepare_v2(db, query, -1, &statement, NULL)))
 		{
-			META_CONPRINTF("Failed to prepare query: %d, %s\n", ret, sqlite3_errmsg(db));
+			META_CONPRINTF("DB00");
 			return ret;
 		}
 		ret = sqlite3_step(statement);
@@ -104,7 +104,7 @@ namespace utilities {
 			sprintf(*buffer, "SELECT name FROM sqlite_master WHERE type='table';");
 			if (SQLITE_OK != (ret = sqlite3_prepare_v2(db, *buffer, -1, &statement, NULL)))
 			{
-				META_CONPRINTF("Failed to prepare check tables statement");
+				META_CONPRINTF("DB03");
 				break;
 			}
 
@@ -113,7 +113,7 @@ namespace utilities {
 				break;
 			}
 			else if (ret != SQLITE_DONE) {
-				META_CONPRINTF("Failed to read tables");
+				META_CONPRINTF("DB04");
 				break;
 			}
 
@@ -131,14 +131,14 @@ namespace utilities {
 			else if (infile.fail()) {
 				// Error
 				infile.close();
-				sprintf(*buffer, "Can't open create_tables.sql");
+				sprintf(*buffer, "DB05");
 				META_CONPRINTF(*buffer);
 				throw DBSQLFileError(*buffer);
 			}
 			else {
 				// FIle is larger
 				infile.close();
-				sprintf(*buffer, "create_tables.sql unexpectedly larger than 4096 chars");
+				sprintf(*buffer, "DB06");
 				META_CONPRINTF(*buffer);
 				throw DBSQLFileError(*buffer);
 			}
@@ -167,7 +167,7 @@ namespace utilities {
 			// initialize engine
 			if (SQLITE_OK != (ret = sqlite3_initialize()))
 			{
-				META_CONPRINTF("Failed to initialize library: %d\n", ret);
+				META_CONPRINTF("DB01");
 				break;
 			}
 
@@ -177,7 +177,7 @@ namespace utilities {
 				SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE,
 				NULL
 			))) {
-				META_CONPRINTF("Failed to open conn from %s: %d\n", Paths::getInstance()->database.string().c_str(), ret);
+				META_CONPRINTF("DB02");
 				break;
 			}
 

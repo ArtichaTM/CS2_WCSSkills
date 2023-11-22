@@ -26,7 +26,7 @@ Ticker::Ticker(unsigned char _tickrate) :
 unsigned char utilities::Ticker::addTask(std::function<void()> func, float delay)
 {
 	if (this->getMaxSeconds() < delay) {
-		throw DelayOverflow();
+		throw DelayOverflow("T_DO0");
 	}
 
 	// Calculates target tick

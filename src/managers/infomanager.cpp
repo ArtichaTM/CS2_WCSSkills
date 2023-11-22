@@ -21,7 +21,7 @@ namespace managers {
 	void InfoManager::init() {
 //#ifdef CMAKE
 		if (instance) {
-			throw InfoManagerRecreating("Trying to init already initialized InfoManager");
+			throw InfoManagerRecreating("IMR1");
 			return;
 		}
 		instance = new InfoManager();
@@ -31,7 +31,7 @@ namespace managers {
 	void InfoManager::close() {
 //#ifdef CMAKE
 		if (!instance) {
-			throw InfoManagerReclosing("Trying to close already closed InfoManager");
+			throw InfoManagerReclosing("IMR2");
 			return;
 		}
 		delete instance;
@@ -176,7 +176,7 @@ namespace managers {
 			throw CustomException("Wrong info type");
 		}
 		if (!(*funcManager)->contains(func_name)) {
-			throw CustomException("Can't find specific function in functions list");
+			throw CustomException("FUNCS2");
 		}
 #endif
 		return (*funcManager)->at(func_name);
