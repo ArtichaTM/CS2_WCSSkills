@@ -29,10 +29,6 @@ namespace dataStorage {
         DoubleLinkedListNode<T>* insertBefore(DoubleLinkedListNode<T>*);
         DoubleLinkedListNode<T>* insertAfter(T&);
         DoubleLinkedListNode<T>* insertBefore(T&);
-    //    template<typename... Args, typename std::enable_if<std::is_constructible<T, Args...>::value>::type = true>
-    //    DoubleLinkedListNode<T>* insertAfter(Args&&...);
-    //    template<typename... Args, typename std::enable_if<std::is_constructible<T, Args...>::value>::type = true>
-    //    DoubleLinkedListNode<T>* insertBefore(Args&&...);
         
         DoubleLinkedListNode<T>* eraseReturnNext() noexcept; // Deletes current node
         DoubleLinkedListNode<T>* eraseReturnPrevious() noexcept; // Deletes current node
@@ -57,8 +53,8 @@ namespace dataStorage {
         
         unsigned int size() noexcept;
         
-        DoubleLinkedListNode<T>* findNode(std::function<bool(T)>) const noexcept;
-        DoubleLinkedListNode<T>* findNodeReverse(std::function<bool(T)>) const noexcept;
+        DoubleLinkedListNode<T>* findNode(std::function<bool(const T)>) const noexcept;
+        DoubleLinkedListNode<T>* findNodeReverse(std::function<bool(const T)>) const noexcept;
         
         void forEach(std::function<void(DoubleLinkedListNode<T>*)>) const noexcept; // Erases forbidden
         void forEachReverse(std::function<void(DoubleLinkedListNode<T>*)>) const noexcept; // Erases forbidden
@@ -68,10 +64,6 @@ namespace dataStorage {
         void insertBefore(DoubleLinkedListNode<T>*, T&&);
         void insertAfter(DoubleLinkedListNode<T>*, T&);
         void insertBefore(DoubleLinkedListNode<T>*, T&);
-    //    template<typename... Args, typename std::enable_if<std::is_constructible<T, Args...>::value>::type = true>
-    //    void insertAfter(DoubleLinkedListNode<T>*, Args&&...);
-    //    template<typename... Args, typename std::enable_if<std::is_constructible<T, Args...>::value>::type = true>
-    //    void insertBefore(DoubleLinkedListNode<T>*, Args&&...);
         
         void erase(DoubleLinkedListNode<T>*);
         template<typename... Args>
@@ -119,14 +111,6 @@ namespace dataStorage {
         return insertBefore(new DoubleLinkedListNode<T>(new_node_data));
     }
     
-    //template<typename T>
-    //template<typename... Args, typename std::enable_if<std::is_constructible<T, Args...>::value>::type>
-    //DoubleLinkedListNode<T> *DoubleLinkedListNode<T>::insertAfter(Args&&... args) { return insertAfter(T(args...)); }
-    //
-    //template<typename T>
-    //template<typename... Args, typename std::enable_if<std::is_constructible<T, Args...>::value>::type>
-    //DoubleLinkedListNode<T>* DoubleLinkedListNode<T>::insertBefore(Args&&... args) { return insertBefore(T(args...)); }
-    
     
     template<typename T>
     void DoubleLinkedListNode<T>::erase() noexcept {
@@ -163,7 +147,7 @@ namespace dataStorage {
     
     template<typename T>
     DoubleLinkedListNode<T>* DoubleLinkedList<T>::findNode
-    (std::function<bool(T)> function) const noexcept {
+    (std::function<bool(const T)> function) const noexcept {
         auto* current_node = head;
         while (current_node) {
             if (function(current_node->data)) return current_node;
@@ -175,7 +159,7 @@ namespace dataStorage {
     
     template<typename T>
     DoubleLinkedListNode<T>* DoubleLinkedList<T>::findNodeReverse
-    (std::function<bool(T)> function) const noexcept  {
+    (std::function<bool(const T)> function) const noexcept  {
         auto* current_node = tail;
         while (current_node) {
             if (function(current_node->data)) return current_node;
@@ -248,13 +232,13 @@ namespace dataStorage {
     (DoubleLinkedListNode<T>* target, T&& _data) {
         if (_size == 0) {
             assert(target == nullptr);
-            head = tail = new DoubleLinkedListNode<T>(std::forward<T>(_data));
+            head = tail = new DoubleLinkedListNode<T>(_data);
         } else if (target==head) {
             assert(target != nullptr);
-            head = head->insertBefore(std::forward<T>(_data));
+            head = head->insertBefore(_data);
         } else {
             assert(target != nullptr);
-            target->insertBefore(std::forward<T>(_data));
+            target->insertBefore(_data);
         }
         _size++;
     }
@@ -284,21 +268,13 @@ namespace dataStorage {
             head = tail = new DoubleLinkedListNode<T>(_data);
         } else if (target==head) {
             assert(target != nullptr);
-            head = head->insertBefore(std::forward<T>(_data));
+            head = head->insertBefore(_data);
         } else {
             assert(target != nullptr);
-            target->insertBefore(std::forward<T>(_data));
+            target->insertBefore(_data);
         }
         _size++;
     }
-    
-    //template<typename T>
-    //template<typename... Args, typename std::enable_if<std::is_constructible<T, Args...>::value>::type>
-    //void DoubleLinkedList<T>::insertAfter(DoubleLinkedListNode<T>* t, Args&&... args) { return insertAfter(t, T(args...)); }
-    //
-    //template<typename T>
-    //template<typename... Args, typename std::enable_if<std::is_constructible<T, Args...>::value>::type>
-    //void DoubleLinkedList<T>::insertBefore(DoubleLinkedListNode<T>* t, Args&&... args) { return insertBefore(t, T(args...)); }
     
     template<typename T>
     void DoubleLinkedList<T>::erase(DoubleLinkedListNode<T>* target) {
