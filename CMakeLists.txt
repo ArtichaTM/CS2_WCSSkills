@@ -14,6 +14,10 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
+
+#
+# Sources
+#
 set(src src)
 
 set(db
@@ -73,12 +77,9 @@ set(WCSSkills_compile
 	${player}
 )
 
-add_executable(WCSSkills
-	${WCSSkills_compile}
-	${src}/main.cpp
-)
-
-
+#
+# Tests
+#
 set(tests tests)
 
 set(t_includes
@@ -105,6 +106,13 @@ set(TestWCSSkills_compile
 	${tests}/main.cpp
 )
 
+#
+# Finalization
+#
+add_executable(WCSSkills
+	${WCSSkills_compile}
+	${src}/main.cpp
+)
 add_executable(TestWCSSkills
 	${TestWCSSkills_compile}
 )
