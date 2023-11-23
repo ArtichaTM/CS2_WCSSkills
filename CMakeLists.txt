@@ -82,17 +82,20 @@ set(WCSSkills_compile
 #
 set(tests tests)
 
-set(t_includes
-	${tests}/includes/datastorage.cpp
-	${tests}/includes/dolili.cpp
-	${tests}/includes/ticker.cpp
-)
-
 
 set(t_data
 	${tests}/data/skills_se_traits.cpp
 )
 
+set(t_events
+	${tests}/events/event.cpp
+)
+
+set(t_includes
+	${tests}/includes/datastorage.cpp
+	${tests}/includes/dolili.cpp
+	${tests}/includes/ticker.cpp
+)
 
 set(t_player
 	${tests}/player/wcsp.cpp
@@ -100,8 +103,9 @@ set(t_player
 
 set(TestWCSSkills_compile
 	${WCSSkills_compile}
-	${t_includes}
 	${t_data}
+	${t_events}
+	${t_includes}
 	${t_player}
 	${tests}/main.cpp
 )
