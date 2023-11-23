@@ -6,9 +6,12 @@
 #include <iplayerinfo.h>
 #include <sh_vector.h>
 
+#include "includes/ticker.hpp"
+
 class WCSSkills : public ISmmPlugin, public IMetamodListener
 {
 	static ISmmAPI* ismm;
+	static utilities::Ticker* ticker;
 public:
 	bool Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool late);
 	bool Unload(char *error, size_t maxlen);
