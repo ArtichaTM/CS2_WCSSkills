@@ -83,7 +83,7 @@ namespace dataStorage {
 		WCSP,
 		SEInfo, SkillSE, SkillInfo,
 		SE_target,
-
+		DoLiLi
 	};
 	
 	class EData;
