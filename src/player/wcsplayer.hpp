@@ -22,6 +22,7 @@ class WCSPlayer;
 class WCSPlayer {
 public:
 	WCSPlayer(WCSPlayer const&) = delete;
+	WCSPlayer() = delete;
 	WCSPlayer(unsigned short level, unsigned short xp, std::vector<managers::SkillInfo*> selected_skills);
 	~WCSPlayer();
 	traits::tr_set traits;

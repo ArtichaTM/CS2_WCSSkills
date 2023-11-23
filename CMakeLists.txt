@@ -92,10 +92,16 @@ set(t_data
 	${tests}/data/skills_se_traits.cpp
 )
 
+
+set(t_player
+	${tests}/player/wcsp.cpp
+)
+
 set(TestWCSSkills_compile
 	${WCSSkills_compile}
 	${t_includes}
 	${t_data}
+	${t_player}
 	${tests}/main.cpp
 )
 
