@@ -19,24 +19,20 @@ namespace managers {
 	InfoManager* InfoManager::instance = nullptr;
 
 	void InfoManager::init() {
-//#ifdef CMAKE
 		if (instance) {
 			throw InfoManagerRecreating("IMR1");
 			return;
 		}
 		instance = new InfoManager();
-//#endif // CMAKE
 	}
 
 	void InfoManager::close() {
-//#ifdef CMAKE
 		if (!instance) {
 			throw InfoManagerReclosing("IMR2");
 			return;
 		}
 		delete instance;
 		instance = nullptr;
-//#endif // CMAKE
 	}
 	
 	InfoManager* InfoManager::getManager() {
@@ -44,18 +40,6 @@ namespace managers {
 	}
 
 	InfoManager::InfoManager() : se(), skills(), traits() {
-#ifndef CMAKE
-		// Status effects
-		std::ifstream f = std::ifstream(Paths::getInstance()->se);
-		/*json basicInfo = json::parse(f);
-		se.reserve(basicInfo.size());
-		assert(basicInfo.is_array());
-		for (auto& el : basicInfo) {
-			assert(el.is_array());
-			se.emplace(el.at(0), new SEInfo(el));
-		}*/
-		f.close();
-#else // CMAKE
 		// Status effects
 		std::ifstream f = std::ifstream(Paths::getInstance()->se);
 		json basicInfo = json::parse(f);
@@ -86,7 +70,6 @@ namespace managers {
 			traits[key] = new TraitInfo(key, value);
 		}
 		f.close();
-#endif // CMAKE
 	}
 
 	InfoManager::~InfoManager() {
