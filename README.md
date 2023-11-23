@@ -66,6 +66,7 @@ Sometimes plugin raises exceptions, but metamod allows only 7 symbols to write i
 * FUNCS1: Trying to get function without functions initialization (folder src/functions)
 * FUNCS2: Trying to get function that doesn't exist. Occur, when function number mentioned in json files, but didn't defined in source code
 * T_DO0: Ticker delay overflow. Raised by src/includes/ticker when something trying to delay task by amount exceeding maximum limit
+* DS1: Trying to EData.clear() DoubleLinkedList. EData can not deduce template type, so deleting it forbidden
 
 
 Notes:

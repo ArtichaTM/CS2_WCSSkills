@@ -9,6 +9,7 @@
 #include <memory>
 #include "../includes/exceptions.hpp"
 #include "../includes/datastorage.hpp"
+#include "../includes/doublelinkedlist.hpp"
 
 namespace events {
 	enum ReturnEvent {
@@ -18,9 +19,11 @@ namespace events {
 	class SettingsModify : public CustomException { using CustomException::CustomException; };
 	class SetDataModify : public CustomException { using CustomException::CustomException; };
 	class Event;
-	typedef std::function<ReturnEvent(std::shared_ptr<Event>&)> eventReceiver;
-	typedef std::vector<eventReceiver> vectorofEventReceivers;
 	class EventManager;
+	class Function;
+
+	typedef std::function<void(std::shared_ptr<Event>)> EventReceiver;
+	typedef dataStorage::DoubleLinkedList<Function*> vectorofFunctions;
 }
 
 namespace functions {
@@ -93,26 +96,38 @@ namespace events {
 			return changeData(func);
 		}
 	};
-	
+
+	class Function {
+		EventReceiver inner_function;
+	public:
+		Function() = delete;
+		Function(const Function&&) = delete;
+		Function(Function&&) = delete;
+		Function(EventReceiver);
+
+		void operator()(std::shared_ptr<Event>);
+	};
+
 	class EventManager {
-		std::unordered_map<traits::tr_set, vectorofEventReceivers>* registered_events;
-		std::queue<std::shared_ptr<Event>>* lateRunEvents;
+		std::unordered_map<traits::tr_set, vectorofFunctions*>* registered_events = new std::unordered_map<traits::tr_set, vectorofFunctions*>();
+		dataStorage::DoubleLinkedList<std::shared_ptr<Event>>* lateRunEvents = new dataStorage::DoubleLinkedList<std::shared_ptr<Event>>;
 		void iterateOverEvents();
 		static EventManager* instance;
 		volatile bool iterating = false;
 		EventManager();
 		~EventManager();
 	public:
+		class NotInitialized : public CustomException { using CustomException::CustomException; };
+
+
 		static void init();
 		static void close();
+		static bool initialized();
 		static EventManager* getManager();
-		void registerForEvent(traits::tr_set const& activation_traits, eventReceiver&);
-		void unregisterForEvent(traits::tr_set const& activation_traits, eventReceiver&);
-		void registerForEvent(traits::tr_set const& activation_traits, eventReceiver&&);
-		void unregisterForEvent(traits::tr_set const& activation_traits, eventReceiver&&);
+		Function* registerForEvent(traits::tr_set const& activation_traits, EventReceiver);
+		void unregisterForEvent(traits::tr_set const& activation_traits, Function*);
 
-		void fireEvent(std::shared_ptr<Event>&);
-		void fireEvent(std::shared_ptr<Event>&&);
+		void fireEvent(std::shared_ptr<Event>);
 		
 		bool receiversExist(traits::tr_set const& activation_traits);
 	};

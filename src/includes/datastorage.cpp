@@ -97,6 +97,9 @@ namespace dataStorage {
 				delete (dataStorage::VectorStorage *) data;
 				break;
 			}
+			case DoLiLi: {
+				throw WrongType("DS1");
+			}
 		}
 		dtype = dataStorage::None;
 	}
@@ -233,6 +236,8 @@ namespace dataStorage {
 }
 
 EDATA_SIMPLE_DEFINE(bool, Bool)
+EDATA_SIMPLE_DEFINE(char, UnsignedShort)
+EDATA_SIMPLE_DEFINE(unsigned char, UnsignedShort)
 EDATA_SIMPLE_DEFINE(short, Short)
 EDATA_SIMPLE_DEFINE(unsigned short, UnsignedShort)
 EDATA_SIMPLE_DEFINE(int, Int)
@@ -250,6 +255,8 @@ EDATA_SIMPLE_DEFINE(dataStorage::VectorStorage, DataS)
 
 #include "doublelinkedlist.hpp"
 EDATA_SIMPLE_DEFINE(dataStorage::DoubleLinkedList<bool					>, DoLiLi)
+EDATA_SIMPLE_DEFINE(dataStorage::DoubleLinkedList<char					>, DoLiLi)
+EDATA_SIMPLE_DEFINE(dataStorage::DoubleLinkedList<unsigned char			>, DoLiLi)
 EDATA_SIMPLE_DEFINE(dataStorage::DoubleLinkedList<short					>, DoLiLi)
 EDATA_SIMPLE_DEFINE(dataStorage::DoubleLinkedList<unsigned short		>, DoLiLi)
 EDATA_SIMPLE_DEFINE(dataStorage::DoubleLinkedList<int					>, DoLiLi)

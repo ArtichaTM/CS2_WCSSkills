@@ -11,92 +11,86 @@ using dataStorage::DataStorage;
 using dataStorage::make;
 
 namespace events {
-	namespace {
-		template<typename T, typename... U>
-		size_t getAddress(function<T(U...)> f) {
-			typedef T(fnType)(U...);
-			auto** fnPointer = f.template target<fnType*>();
-			return (size_t) *fnPointer;
-		}
-	}
-
 	class NoSuchReceiver : public std::exception {
 	public:
 		[[nodiscard]] const char * what() const noexcept override {
 			return "There's no such receiver registered to unregister it";
 		}
 	};
+
+
+	Function::Function(EventReceiver receiver) : inner_function(receiver) {}
+	void Function::operator()(std::shared_ptr<Event> e) { return inner_function(e); }
 	
+
 	EventManager* EventManager::instance = nullptr;
 	
-	void EventManager::registerForEvent(const tr_set& activation_traits, eventReceiver& eventF) {
+	Function* EventManager::registerForEvent(const tr_set& activation_traits, EventReceiver eventF) {
 		if (!this->registered_events->contains(activation_traits)) {
-			this->registered_events->insert({activation_traits, vectorofEventReceivers()});
+			this->registered_events->insert({activation_traits, new vectorofFunctions()});
 		}
-		this->registered_events->at(activation_traits).push_back(eventF);
+		auto dolili = this->registered_events->at(activation_traits);
+		Function* func = new Function(eventF);
+		dolili->insertAfter(dolili->tail, func);
+		return func;
 	}
 
-	void EventManager::unregisterForEvent(const tr_set& activation_traits, eventReceiver& eventF) {
+	void EventManager::unregisterForEvent(const tr_set& activation_traits, Function* eventF) {
 		if (!this->registered_events->contains(activation_traits)) {
 			throw NoSuchReceiver();
 		}
-		vectorofEventReceivers eventRegisteredReceivers = this->registered_events->at(activation_traits);
-		for (auto iter = eventRegisteredReceivers.begin(); iter != eventRegisteredReceivers.end(); ++iter) {
-			if ((*iter).target_type() != eventF.target_type()) continue;
-			if (getAddress(*iter) != getAddress(eventF)) continue;
-			eventRegisteredReceivers.erase(iter);
-			return;
+		vectorofFunctions* functions = this->registered_events->at(activation_traits);
+		dataStorage::DoubleLinkedListNode<Function*>* eventRecNode = functions->findNode([&](Function* receiver) {
+			return &(*receiver) == &(*eventF);
+		});
+		if (!eventRecNode) {
+			throw NoSuchReceiver();
 		}
-		throw NoSuchReceiver();
-	}
-	
-	void EventManager::registerForEvent(const tr_set& activation_traits, eventReceiver&& eventF) {
-		registerForEvent(activation_traits, eventF);
-	}
-
-	void EventManager::unregisterForEvent(const tr_set& activation_traits, eventReceiver&& eventF) {
-		unregisterForEvent(activation_traits, eventF);
+		functions->erase(eventRecNode);
+		if (!functions->size()) {
+			delete functions;
+			this->registered_events->erase(activation_traits);
+		}
+		delete eventF;
 	}
 
 	void EventManager::iterateOverEvents() {
-		lateRunEvents->front()->initialEvent = true;
+		lateRunEvents->head->data->initialEvent = true;
 		iterating = true;
-		while (!this->lateRunEvents->empty()) {
-			std::shared_ptr<Event> event = this->lateRunEvents->front();
-			this->lateRunEvents->pop();
+		do {
+			std::shared_ptr<Event> event = this->lateRunEvents->head->data;
 			if (!this->registered_events->contains(event->activation_traits)) {
 				continue;
 			}
-			vectorofEventReceivers functions = this->registered_events->at(event->activation_traits);
-			for (const eventReceiver& eventF : functions) {
-				eventF.operator()(event);
-				if (event->result != events::ReturnEvent::PASS) {
-					continue;
+			vectorofFunctions* functions = this->registered_events->at(event->activation_traits);
+			dataStorage::DoubleLinkedListNode<Function*>* eventF = functions->head;
+			while (eventF) {
+				(*(eventF->data))(event);
+				if (event->result != PASS) {
+					break;
 				}
+				eventF = eventF->getNext();
 			}
-		}
+			this->lateRunEvents->erase(this->lateRunEvents->head);
+		} while (this->lateRunEvents->head);
 		iterating = false;
 	}
 	
-	void EventManager::fireEvent(std::shared_ptr<Event>& event) {
-		this->lateRunEvents->push(event);
+	void EventManager::fireEvent(std::shared_ptr<Event> event) {
+		lateRunEvents->insertAfter(lateRunEvents->tail, event);
 		if (!iterating) this->iterateOverEvents();
-	}
-	
-	void EventManager::fireEvent(std::shared_ptr<Event>&& event) {
-		fireEvent(event);
 	}
 	
 	bool EventManager::receiversExist(const tr_set& activation_traits) {
 		return this->registered_events->contains(activation_traits);
 	}
 
-	EventManager::EventManager() {
-		this->registered_events = new unordered_map<tr_set, vectorofEventReceivers>;
-		this->lateRunEvents = new queue<std::shared_ptr<Event>>;
-	}
+	EventManager::EventManager() {}
 
 	EventManager::~EventManager() {
+		for (auto iter = registered_events->begin(); iter != registered_events->end(); iter++) {
+			delete (*iter).second;
+		}
 		delete this->registered_events;
 		delete this->lateRunEvents;
 	}
@@ -111,10 +105,12 @@ namespace events {
 		delete instance;
 		instance = nullptr;
 	}
+
+	bool EventManager::initialized() { return instance != nullptr; }
 	
 	EventManager* EventManager::getManager() {
 		if (!EventManager::instance) {
-			EventManager::instance = new EventManager();
+			throw EventManager::NotInitialized();
 		}
 		return EventManager::instance;
 	}
@@ -122,6 +118,9 @@ namespace events {
 	Event::Event(tr_set traits) : activation_traits(std::move(traits)), data{ new DataStorage() } {}
 	Event::Event(tr_set traits, DataStorage* eData) : activation_traits(std::move(traits)), data{ eData } {}
 	Event::~Event() {
+		for (auto& [key, value] : *data) {
+			delete value;
+		}
 		delete data;
 	}
 	Event::Event(std::initializer_list<traits::Trait> ilist) : activation_traits(ilist), data{ new DataStorage() } {}

@@ -34,6 +34,8 @@ namespace dataStorage {
         DoubleLinkedListNode<T>* eraseReturnPrevious() noexcept; // Deletes current node
         void erase() noexcept;  // Deletes current node
     public:
+        DoubleLinkedListNode<T>* getNext() const;
+        DoubleLinkedListNode<T>* getPrevious() const;
         T data;
         friend DoubleLinkedList<T>;
     };
@@ -131,6 +133,17 @@ namespace dataStorage {
         auto* n = previous;
         erase();
         return n;
+    }
+
+
+    template<typename T>
+    DoubleLinkedListNode<T>* DoubleLinkedListNode<T>::getNext() const {
+        return this->next;
+    }
+    
+    template<typename T>
+    DoubleLinkedListNode<T>* DoubleLinkedListNode<T>::getPrevious() const {
+        return this->previous;
     }
     
     template<typename T>

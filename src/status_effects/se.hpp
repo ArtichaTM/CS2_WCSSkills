@@ -19,6 +19,9 @@ namespace stateff {
 	};
 	
 	class StatusEffect {
+	private:
+		events::Function* eventReceiver = nullptr;
+
 	public:
 		StatusEffect(
 			const WCSPlayer* _owner,
@@ -32,12 +35,10 @@ namespace stateff {
 		const managers::SEInfo* info;
 		dataStorage::DataStorage* arguments;
 		
-		events::ReturnEvent execute(std::shared_ptr<events::Event>&);
+		events::ReturnEvent execute(std::shared_ptr<events::Event>);
 		
 		[[nodiscard]] traits::tr_set getTraits() const noexcept;
 		[[nodiscard]] bool is_unremovable() const noexcept;
-	private:
-		events::eventReceiver eventReceiver;
 	};
 } // namespace stateff
 

@@ -1,6 +1,7 @@
 #include "se.hpp"
 
 #include <memory>
+#include <functional>
 
 using std::shared_ptr;
 using traits::tr_set;
@@ -9,8 +10,9 @@ using events::EventManager;
 using events::ReturnEvent;
 using dataStorage::DataStorage;
 
+using namespace std;
+
 namespace stateff {
-	
 	StatusEffect::StatusEffect
 	(
 		const WCSPlayer* _owner,
@@ -19,8 +21,9 @@ namespace stateff {
 		const float* multiplier
 	)
 	: owner(_owner), info(_info), arguments(new DataStorage(*_arguments)),
-	eventReceiver([&](shared_ptr<Event> e) { return execute(e); })
+		eventReceiver(EventManager::getManager()->registerForEvent(info->activation_traits, bind(&StatusEffect::execute, this, placeholders::_1)))
 	{
+
 		auto* eventManager = EventManager::getManager();
 #ifdef DEBUG
 		if (!arguments->contains("Multiplier")) {
@@ -32,7 +35,6 @@ namespace stateff {
 			[&multiplier](float& value) mutable -> void
 			{ value *= *multiplier; }
 		);
-		eventManager->registerForEvent(info->activation_traits, eventReceiver);
 	}
 
 	StatusEffect::~StatusEffect() {
@@ -41,7 +43,7 @@ namespace stateff {
 		delete arguments;
 	}
 	
-	ReturnEvent StatusEffect::execute(shared_ptr<Event>& e) {
+	ReturnEvent StatusEffect::execute(shared_ptr<Event> e) {
 		auto* evmanager = EventManager::getManager();
 		auto effect_execute_event = std::make_shared<Event>(info->traits);
 		

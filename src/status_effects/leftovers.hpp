@@ -12,21 +12,17 @@ namespace stateff {
 namespace stateff {
 
     class Leftover {
+        events::Function* eventReceiver;
     public:
         Leftover(WCSPlayer*, short, managers::SEInfo*);
         
         const WCSPlayer* owner;
         short rounds_left;
-        managers::SEInfo* status_effect_info;
-        events::eventReceiver eventReceiver;
+        managers::SEInfo* info;
         
-        events::ReturnEvent roundStart(std::shared_ptr<events::Event>&);
+        void roundStart(std::shared_ptr<events::Event>);
     };
 
 } // stateff
-
-template<> struct std::hash<stateff::Leftover> {
-    std::size_t operator()(stateff::Leftover const& s) const noexcept;
-};
 
 #endif //WCSSKILLS_LEFTOVERS_HPP
