@@ -4,6 +4,7 @@
 
 #include "paths/paths.hpp"
 #include "managers/infomanager.hpp"
+#include "includes/ticker.hpp"
 
 SH_DECL_HOOK3_void(IServerGameDLL, GameFrame, SH_NOATTRIB, 0, bool, bool, bool);
 SH_DECL_HOOK4_void(IServerGameClients, ClientActive, SH_NOATTRIB, 0, CPlayerSlot, bool, const char*, uint64);
@@ -39,16 +40,12 @@ CGlobalVars* GetGameGlobals()
 	return g_pNetworkServerService->GetIGameServer()->GetGlobals();
 }
 
-#if 0
-// Currently unavailable, requires hl2sdk work!
-ConVar sample_cvar("sample_cvar", "42", 0);
-#endif
+//CON_COMMAND_F(sample_command, "Sample command", FCVAR_NONE)
+//{
+//	//META_CONPRINTF("Sample command called by %d. Command: %s\n", context.GetPlayerSlot(), args.GetCommandString());
+//}
 
-CON_COMMAND_F(sample_command, "Sample command", FCVAR_NONE)
-{
-	//META_CONPRINTF("Sample command called by %d. Command: %s\n", context.GetPlayerSlot(), args.GetCommandString());
-}
-
+// Error length: 7 symnbols
 PLUGIN_EXPOSE(WCSSkills, g_WCSSkills);
 bool WCSSkills::Load(PluginId id, ISmmAPI* ismm, char* error, size_t maxlen, bool late)
 {
@@ -173,14 +170,12 @@ void WCSSkills::Hook_ClientDisconnect(CPlayerSlot slot, int reason, const char* 
 	this->ismm->ConPrintf("Hook_ClientDisconnect(%d, %d, \"%s\", %d, \"%s\")\n", slot, reason, pszName, xuid, pszNetworkID);
 }
 
-void WCSSkills::Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
-{
-	/**
-	 * simulating:
-	 * ***********
-	 * true  | game is ticking
-	 * false | game is not ticking
-	 */
+/**
+ * simulating:
+ * ***********
+ * true  | game is ticking
+ * false | game is not ticking
+ */
 void WCSSkills::Hook_GameFrame(bool simulating, bool bFirstTick, bool bLastTick)
 {
 	//this->ticker

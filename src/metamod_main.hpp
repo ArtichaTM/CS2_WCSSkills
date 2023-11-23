@@ -6,6 +6,8 @@
 #include <iplayerinfo.h>
 #include <sh_vector.h>
 
+#include "../public/iserver.h"
+
 #include "includes/ticker.hpp"
 
 class WCSSkills : public ISmmPlugin, public IMetamodListener
