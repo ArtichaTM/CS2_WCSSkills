@@ -1,0 +1,2 @@
+src/db/sqlite3/* linguist-vendored
+src/includes/json.hpp -linguist-vendored
