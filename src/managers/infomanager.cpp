@@ -94,35 +94,6 @@ namespace managers {
 		}
 	}
 
-	template<bool force>
-	ReturnEvent SkillInfo::applySkill(WCSPlayer* target, unsigned char& index) {
-		auto skillActivateE = make_shared<Event>(traits::tr_set{247});
-		
-		skillActivateE->setConstData("target", target);
-		skillActivateE->setConstData("skill",  this   );
-		skillActivateE->setData<true>("slot", new unsigned short(index));
-
-		if constexpr (force) {
-			skillActivateE->setData<true>("force", new bool(true));
-		}
-		
-		EventManager::getManager()->fireEvent(skillActivateE);
-		if constexpr (!force) {
-			if (skillActivateE->result != ReturnEvent::PASS) {
-				return skillActivateE->result;
-			}
-		}
-		
-		for (shared_ptr<SkillSE> const& sse : effects) {
-			ReturnEvent output = sse->applyStatusEffect<force>(target);
-		}
-		
-		return skillActivateE->result;
-	}
-
-	template ReturnEvent SkillInfo::applySkill<false>(WCSPlayer*, unsigned char&);
-	template ReturnEvent SkillInfo::applySkill<true >(WCSPlayer*, unsigned char&);
-
 	SkillSE::SkillSE(se_map& se, json& info)
 		: seInfo(se.at(info.at("Id"))),
 		arguments(make<DataStorage>(false, info)) {}
@@ -163,38 +134,6 @@ namespace managers {
 		}
 #endif
 		return (*funcManager)->at(func_name);
-	}
-
-	template<bool force>
-	events::ReturnEvent SkillSE::applyStatusEffect(WCSPlayer* wcsp) {
-		auto* eventManager = EventManager::getManager();
-		
-		// Effect apply event
-		auto event = std::make_shared<Event>(tr_set{248});
-		event->setConstData("target", wcsp);
-		event->setConstData("seinfo", this->seInfo);
-		event->setData<true>("multiplier", new float(1.));
-		if constexpr (force) {
-			event->setData<true>("force", new bool(true));
-		}
-		eventManager->fireEvent(event);
-		if constexpr (!force) {
-			if (event->result != ReturnEvent::PASS) {
-				return event->result;
-			}
-		}
-		
-		wcsp->status_effects.insertAfter(
-			wcsp->status_effects.tail,
-			std::make_shared<StatusEffect>(
-				wcsp,
-				this->seInfo,
-				this->arguments,
-				event->getData<float>("multiplier")
-			)
-		);
-		
-		return event->result;
 	}
 
 	TraitInfo::TraitInfo(traits::Trait _id, json& info) :

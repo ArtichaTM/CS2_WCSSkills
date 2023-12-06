@@ -32,10 +32,17 @@ public:
 	managers::SkillInfo* skills_selected[SKILLS_MAX];
 	stateff::Skill* skills_activated[SKILLS_MAX];
 	dataStorage::DoubleLinkedList<stateff::Leftover> leftovers;
-	
+
+	template<bool force>
 	[[nodiscard]] events::ReturnEvent activateSkills(std::shared_ptr<events::Event> const&);
 	[[nodiscard]] events::ReturnEvent deactivateSkills(std::shared_ptr<events::Event> const&);
 	[[nodiscard]] events::ReturnEvent spawn(std::shared_ptr<events::Event> const&);
+
+	template<bool force>
+	[[nodiscard]] events::ReturnEvent applyStatusEffect(managers::SkillSE*);
+
+	template<bool force>
+	[[nodiscard]] events::ReturnEvent activateSkill(unsigned char& index);
 };
 
 

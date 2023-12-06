@@ -85,9 +85,6 @@ namespace managers {
 		~SkillSE();
 		const SEInfo* seInfo;
 		const dataStorage::DataStorage* arguments;
-
-		template<bool force = false>
-		[[nodiscard]] events::ReturnEvent applyStatusEffect(WCSPlayer*);
 	};
 
 	/**
@@ -109,9 +106,6 @@ namespace managers {
 		const std::string menu_description;
 		traits::tr_set traits;
 		std::vector<std::shared_ptr<SkillSE>> effects;
-
-		template<bool force = false>
-		[[nodiscard]] events::ReturnEvent applySkill(WCSPlayer*, unsigned char&);
 	};
 	
 
