@@ -72,7 +72,8 @@ events::ReturnEvent WCSPlayer::applyStatusEffect(managers::SkillSE* skill_se) {
 	// Effect apply event
 	auto event = std::make_shared<Event>(tr_set {248});
 	event->setConstData("target", this);
-	event->setConstData("skill_se", skill_se);
+	event->setConstData("seInfo", skill_se->seInfo);
+	event->setConstData("arguments", skill_se->arguments);
 	event->setData<true>("multiplier", new float(1.));
 	if constexpr (force) {
 		event->setData<true>("force", new bool(force));

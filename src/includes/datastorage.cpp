@@ -252,6 +252,8 @@ EDATA_SIMPLE_DEFINE(long double, LongDouble)
 EDATA_SIMPLE_DEFINE(string, String)
 EDATA_SIMPLE_DEFINE(dataStorage::DataStorage, DataS)
 EDATA_SIMPLE_DEFINE(dataStorage::VectorStorage, DataS)
+EDATA_SIMPLE_SETDATA_CONST(dataStorage::DataStorage, DataS)
+EDATA_SIMPLE_SETDATA_CONST(dataStorage::VectorStorage, DataS)
 
 #include "doublelinkedlist.hpp"
 EDATA_SIMPLE_DEFINE(dataStorage::DoubleLinkedList<bool					>, DoLiLi)
