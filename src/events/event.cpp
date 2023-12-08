@@ -59,6 +59,7 @@ namespace events {
 		iterating = true;
 		do {
 			std::shared_ptr<Event> event = this->lateRunEvents->head->data;
+			this->lateRunEvents->erase(this->lateRunEvents->head);
 			if (!this->registered_events->contains(event->activation_traits)) {
 				continue;
 			}
@@ -71,7 +72,6 @@ namespace events {
 				}
 				eventF = eventF->getNext();
 			}
-			this->lateRunEvents->erase(this->lateRunEvents->head);
 		} while (this->lateRunEvents->head);
 		iterating = false;
 	}

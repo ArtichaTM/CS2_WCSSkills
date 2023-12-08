@@ -10,8 +10,14 @@ namespace stateff {
 
 namespace stateff {
 	class Skill {
+	public:
+		Skill(Skill const&) = delete;
+		Skill() = delete;
+		Skill(managers::SkillInfo*, WCSPlayer*, unsigned short);
+
 		managers::SkillInfo* info;
 		WCSPlayer* owner;
+		unsigned short slot;
 	};
 }
 

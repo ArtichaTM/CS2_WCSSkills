@@ -23,6 +23,15 @@
 	"248": {
 		"name": "Status effect apply"
 	},
+	"249": {
+		"name": "Skill remove"
+	},
+	"250": {
+		"name": "Status effect remove"
+	},
+	"251": {
+		"name": "Status effect expired"
+	},
 	"300": {
 		"name": "Alignment: Lawful",
 		"mutual_exclusive_category": [ 3 ],
