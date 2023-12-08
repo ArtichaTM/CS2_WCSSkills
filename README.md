@@ -1,3 +1,5 @@
+[![CMake linux](https://github.com/ArtichaTM/CS2_WCSSkills/actions/workflows/cmake-single-platform.yml/badge.svg)](https://github.com/ArtichaTM/CS2_WCSSkills/actions/workflows/cmake-single-platform.yml)
+
 # WCSSkills
 Default Warcraft plugin for CS2 with one difference: instead of races, player can choose skills. Systems can be considered as in game [**Fate: Grand Order**](https://ru.wikipedia.org/wiki/Fate/Grand_Order)
 ## Main principles
