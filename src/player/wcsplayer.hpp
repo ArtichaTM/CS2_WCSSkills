@@ -47,15 +47,13 @@ public:
 	[[nodiscard]] events::ReturnEvent despawn(std::shared_ptr<events::Event> const&);
 
 	// Activates specific skill
-	template<bool force>
-	[[nodiscard]] events::ReturnEvent activateSkill(unsigned char& index);
+	[[nodiscard]] events::ReturnEvent applySkill(unsigned char& index);
 	
 	// Activates all skills
-	template<bool force>
-	[[nodiscard]] events::ReturnEvent activateSkills(std::shared_ptr<events::Event> const&);
+	[[nodiscard]] events::ReturnEvent applySkills(std::shared_ptr<events::Event> const&);
 
 	// Deactivates all skills
-	[[nodiscard]] events::ReturnEvent deactivateSkills(std::shared_ptr<events::Event> const&);
+	[[nodiscard]] events::ReturnEvent removeSkills(std::shared_ptr<events::Event> const&);
 
 	// Applies specific effect on player
 	template<bool force>

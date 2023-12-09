@@ -38,7 +38,7 @@ WCSPlayer::WCSPlayer(unsigned short level, unsigned short xp, std::vector<manage
 
 WCSPlayer::~WCSPlayer() {
 	if (skills_activated[0] != nullptr) {
-		events::ReturnEvent output = deactivateSkills(shared_ptr<Event>(new Event{ 249 }));
+		events::ReturnEvent output = removeSkills(shared_ptr<Event>(new Event{ 249 }));
 	}
 
 	EventManager* manager = EventManager::getManager();
@@ -48,7 +48,7 @@ WCSPlayer::~WCSPlayer() {
 
 }
 
-ReturnEvent WCSPlayer::deactivateSkills(shared_ptr<Event> const& e) {
+ReturnEvent WCSPlayer::removeSkills(shared_ptr<Event> const& e) {
 	traits.clear();
 	for (unsigned char i = 0; i < SKILLS_MAX; i++) {
 		delete skills_activated[i];
@@ -57,29 +57,24 @@ ReturnEvent WCSPlayer::deactivateSkills(shared_ptr<Event> const& e) {
 	return ReturnEvent::PASS;
 }
 
-template<bool force>
-ReturnEvent WCSPlayer::activateSkills(shared_ptr<Event> const& e) {
+ReturnEvent WCSPlayer::applySkills(shared_ptr<Event> const& e) {
 	for (unsigned char i = 0; i < SKILLS_MAX; i++) {
 		SkillInfo* skill_info = skills_selected[i];
 		if (skill_info) {
-			ReturnEvent answer = this->activateSkill<force>(i);
+			ReturnEvent answer = this->applySkill(i);
 		}
 	}
 	return ReturnEvent::PASS;
 }
 
 
-template events::ReturnEvent WCSPlayer::activateSkills<true >(std::shared_ptr<events::Event> const&);
-template events::ReturnEvent WCSPlayer::activateSkills<false>(std::shared_ptr<events::Event> const&);
-
-
 ReturnEvent WCSPlayer::spawn(const shared_ptr<events::Event>& e) {
-	return activateSkills<true>(e);
+	return applySkills(e);
 }
 
 
 ReturnEvent WCSPlayer::despawn(const shared_ptr<events::Event>& e) {
-	return this->deactivateSkills(e);
+	return this->removeSkills(e);
 }
 
 template<bool force>
@@ -114,32 +109,23 @@ events::ReturnEvent WCSPlayer::applyStatusEffect(managers::SkillSE* skill_se) {
 
 	return event->result;
 }
-template events::ReturnEvent WCSPlayer::applyStatusEffect<true >(managers::SkillSE* skill_se);
-template events::ReturnEvent WCSPlayer::applyStatusEffect<false>(managers::SkillSE* skill_se);
 
 
-template<bool force>
-events::ReturnEvent WCSPlayer::activateSkill(unsigned char& index) {
-	auto skillActivateE = make_shared<Event>(traits::tr_set{ 247 });
+events::ReturnEvent WCSPlayer::applySkill(unsigned char& index) {
+	auto skillApplyE = make_shared<Event>(traits::tr_set{ 247 });
 
-	skillActivateE->setConstData("target", this);
-	skillActivateE->setConstData("skill_info", this->skills_selected[index]);
-	skillActivateE->setData<true>("slot", new unsigned char(index));
+	skillApplyE->setConstData("target", this);
+	skillApplyE->setConstData("skill_info", this->skills_selected[index]);
+	skillApplyE->setData<true>("slot", new unsigned char(index));
 
-	if constexpr (force) {
-		skillActivateE->setData<true>("force", new bool(true));
+	EventManager::getManager()->fireEvent(skillApplyE);
+	if (skillApplyE->result != ReturnEvent::PASS) {
+		return skillApplyE->result;
 	}
 
-	EventManager::getManager()->fireEvent(skillActivateE);
-	if constexpr (!force) {
-		if (skillActivateE->result != ReturnEvent::PASS) {
-			return skillActivateE->result;
-		}
-	}
-
-	WCSPlayer* target = skillActivateE->getData<WCSPlayer>("target");
-	unsigned char* slot = skillActivateE->getData<unsigned char>("slot");
-	SkillInfo* skill_info = skillActivateE->getData<SkillInfo>("skill_info");
+	WCSPlayer* target = skillApplyE->getData<WCSPlayer>("target");
+	unsigned char* slot = skillApplyE->getData<unsigned char>("slot");
+	SkillInfo* skill_info = skillApplyE->getData<SkillInfo>("skill_info");
 
 	target->skills_activated[*slot] = new Skill(skill_info, target, *slot);
 
@@ -147,10 +133,8 @@ events::ReturnEvent WCSPlayer::activateSkill(unsigned char& index) {
 		ReturnEvent output = this->applyStatusEffect<force>(sse.get());
 	}*/
 
-	return skillActivateE->result;
+	return skillApplyE->result;
 }
-template events::ReturnEvent WCSPlayer::activateSkill<true >(unsigned char& index);
-template events::ReturnEvent WCSPlayer::activateSkill<false>(unsigned char& index);
 
 
 EDATA_SIMPLE_DEFINE_CONST(WCSPlayer, WCSP)
