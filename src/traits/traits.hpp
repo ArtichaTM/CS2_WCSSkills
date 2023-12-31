@@ -17,6 +17,8 @@ namespace traits {
         Trait(std::initializer_list<inner_type>&);
         bool operator==(inner_type) const;
         bool operator==(Trait) const;
+        bool operator<(Trait) const;
+        bool operator>(Trait) const;
     };
     
     typedef std::unordered_set<traits::Trait> tr_set;

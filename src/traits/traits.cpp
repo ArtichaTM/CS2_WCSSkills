@@ -17,6 +17,14 @@ namespace traits {
         return this->id == other.id;
     }
 
+    bool Trait::operator>(Trait other) const {
+        return this->id > other.id;
+    }
+
+    bool Trait::operator<(Trait other) const {
+        return this->id > other.id;
+    }
+
     Trait::Trait(std::initializer_list<inner_type>& list) : id(*list.begin()) {}
 
 
