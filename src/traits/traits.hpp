@@ -23,6 +23,7 @@ namespace traits {
     
     typedef std::unordered_set<traits::Trait> tr_set;
     typedef std::unordered_set<tr_set> tr_set_set;
+    typedef std::vector<traits::Trait> tr_vector;
     
     tr_set make(nlohmann::json const&);
     tr_set make(std::unordered_set<inner_type> const&);
