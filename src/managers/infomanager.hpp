@@ -16,6 +16,8 @@ namespace managers {
 
 #include <vector>
 #include <unordered_map>
+#include <bitset>
+#include "../defines.h"
 #include "../includes/json.hpp"
 #include "../traits/traits.hpp"
 #include "../player/wcsplayer.hpp"
@@ -36,8 +38,10 @@ namespace managers {
 		friend InfoManager;
 		explicit TraitInfo(traits::Trait, json&);
 	public:
+		static TRAIT_INDEX_TYPE traits_amount;
 		TraitInfo(TraitInfo const&) = delete;
 		const traits::Trait id;
+		const TRAIT_INDEX_TYPE bitwise_index;
 		const std::string name;
 		const traits::tr_set mutual_exclusive_category;
 		const traits::tr_set enemy_traits;
@@ -129,8 +133,20 @@ namespace managers {
 		std::unordered_map<std::string, SkillInfo*> skills;
 		se_map se;
 		std::unordered_map<traits::Trait, TraitInfo*> traits;
-		
+
 		static InfoManager* getManager();
+
+		TRAIT_INDEX_TYPE bit_index(traits::Trait);
+
+		template<TRAIT_INDEX_TYPE N>
+		std::bitset<N> trset_to_bitset(traits::tr_set& traits) {
+			std::bitset<N> bitset;
+			InfoManager* manager = managers::InfoManager::getManager();
+			for (auto& trait : traits) {
+				bitset[bit_index(trait)] = 1;
+			}
+			return bitset;
+		}
 	};
 } // skills
 

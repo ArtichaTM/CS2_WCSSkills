@@ -17,6 +17,7 @@ using functions::Functions;
 
 namespace managers {
 	InfoManager* InfoManager::instance = nullptr;
+	TRAIT_INDEX_TYPE TraitInfo::traits_amount = 0;
 
 	void InfoManager::init() {
 		if (instance) {
@@ -65,6 +66,13 @@ namespace managers {
 		f = std::ifstream(Paths::getInstance()->traits);
 		basicInfo = json::parse(f);
 		traits.reserve(basicInfo.size());
+		if (basicInfo.size() > TRAIT_INDEX_MAX) {
+			META_CONPRINTF(
+				"There's more traits in file that available for type, contained in TRAIT_INDEX_TYPE (%llo > %llo)",
+				basicInfo.size(),
+				TRAIT_INDEX_MAX
+			);
+		}
 		for (auto& [key2, value] : basicInfo.items()) {
 			traits::Trait key = traits::Trait(std::stoi(key2));
 			traits[key] = new TraitInfo(key, value);
@@ -76,6 +84,11 @@ namespace managers {
 		for (auto& [key, value] : traits) {
 			delete value;
 		}
+	}
+
+	TRAIT_INDEX_TYPE managers::InfoManager::bit_index(traits::Trait trait)
+	{
+		return InfoManager::getManager()->traits.at(trait)->bitwise_index;
 	}
 
 	SkillInfo::SkillInfo(se_map& se, json& info) :
@@ -141,7 +154,10 @@ namespace managers {
 		, name(info["name"])
 		, mutual_exclusive_category(traits::make(info.value("mutual_exclusive_category", std::unordered_set<traits::inner_type>())))
 		, enemy_traits(traits::make(info.value("enemy_traits", std::unordered_set<traits::inner_type>())))
-	{}
+		, bitwise_index(traits_amount)
+	{
+		traits_amount++;
+	}
 
 } // skills
 

@@ -2,11 +2,10 @@
 #define WCSSKILLS_TRAITS_HPP
 
 #include <unordered_set>
+#include "../defines.h"
 #include "../includes/json.hpp"
 
-
 namespace traits {
-
     typedef unsigned int Trait;
     namespace {
         typedef Trait inner_type;
@@ -15,7 +14,7 @@ namespace traits {
     typedef std::unordered_set<Trait> tr_set;
     typedef std::unordered_set<tr_set> tr_set_set;
     typedef std::vector<Trait> tr_vector;
-    
+
     tr_set make(nlohmann::json const&);
     tr_set make(std::unordered_set<Trait> const&);
 

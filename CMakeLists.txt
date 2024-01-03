@@ -97,6 +97,10 @@ set(t_includes
 	${tests}/includes/ticker.cpp
 )
 
+set(t_managers
+	${tests}/managers/trset_to_bitset.cpp
+)
+
 set(t_player
 	${tests}/player/wcsp.cpp
 )
@@ -106,6 +110,7 @@ set(TestWCSSkills_compile
 	${t_data}
 	${t_events}
 	${t_includes}
+	${t_managers}
 	${t_player}
 	${tests}/main.cpp
 )
