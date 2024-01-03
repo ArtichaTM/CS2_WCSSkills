@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <queue>
 #include <memory>
+#include <bitset>
 #include "../includes/exceptions.hpp"
 #include "../includes/datastorage.hpp"
 #include "../includes/doublelinkedlist.hpp"
@@ -109,7 +110,8 @@ namespace events {
 	};
 
 	class EventManager {
-		std::unordered_map<traits::tr_set, vectorofFunctions*>* registered_events = new std::unordered_map<traits::tr_set, vectorofFunctions*>();
+		//std::unordered_map<traits::tr_set, vectorofFunctions*>* registered_events = new std::unordered_map<traits::tr_set, vectorofFunctions*>();
+		std::unordered_map<std::bitset<TRAIT_INDEX_MAX>, vectorofFunctions*>* registered_events = new std::unordered_map<std::bitset<TRAIT_INDEX_MAX>, vectorofFunctions*>();
 		dataStorage::DoubleLinkedList<std::shared_ptr<Event>>* lateRunEvents = new dataStorage::DoubleLinkedList<std::shared_ptr<Event>>;
 		void iterateOverEvents();
 		static EventManager* instance;

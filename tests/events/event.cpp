@@ -38,7 +38,7 @@ namespace events {
 	void helper2(shared_ptr<Event> e) {
 		called1++;
 		EventManager* manager = EventManager::getManager();
-		shared_ptr<Event> event = shared_ptr<Event>(new Event({ 2 }));
+		shared_ptr<Event> event = shared_ptr<Event>(new Event({ 202 }));
 		float multiplier = 1.0f;
 		event->setData<false>("multiplier", &multiplier);
 		manager->fireEvent(event);
@@ -58,9 +58,9 @@ namespace events {
 		called1 = 0;
 		called2 = 0;
 		EventManager* manager = EventManager::getManager();
-		Function* func1 = manager->registerForEvent({ 1 }, &helper2);
-		Function* func2 = manager->registerForEvent({ 2 }, &helper3);
-		shared_ptr<Event> event = shared_ptr<Event>(new Event({ 1 }));
+		Function* func1 = manager->registerForEvent({ 201 }, &helper2);
+		Function* func2 = manager->registerForEvent({ 202 }, &helper3);
+		shared_ptr<Event> event = shared_ptr<Event>(new Event({ 201 }));
 		float multiplier = 1.0f;
 		event->setData<false>("multiplier", &multiplier);
 		ASSERT_EQ(called1, 0);
@@ -68,12 +68,12 @@ namespace events {
 		manager->fireEvent(event);
 		ASSERT_EQ(called1, 1);
 		ASSERT_EQ(called2, 1);
-		event->changeActivationTraits({ 2 });
+		event->changeActivationTraits({ 202 });
 		manager->fireEvent(event);
 		ASSERT_EQ(called1, 1);
 		ASSERT_EQ(called2, 2);
-		manager->unregisterForEvent({ 1 }, func1);
-		manager->unregisterForEvent({ 2 }, func2);
+		manager->unregisterForEvent({ 201 }, func1);
+		manager->unregisterForEvent({ 202 }, func2);
 	}
 	
 
@@ -82,20 +82,20 @@ namespace events {
 		called2 = 0;
 		called3 = 0;
 		EventManager* manager = EventManager::getManager();
-		Function* func1 = manager->registerForEvent({ 1 }, &helper3);
-		Function* func2 = manager->registerForEvent({ 2 }, &helper4);
-		shared_ptr<Event> event = shared_ptr<Event>(new Event({ 1 }));
+		Function* func1 = manager->registerForEvent({ 201 }, &helper3);
+		Function* func2 = manager->registerForEvent({ 202 }, &helper4);
+		shared_ptr<Event> event = shared_ptr<Event>(new Event({ 201 }));
 		float multiplier = 1.0f;
 		event->setData<false>("multiplier", &multiplier);
 		ASSERT_EQ(called2, 0);
 		manager->fireEvent(event);
 		ASSERT_EQ(called2, 1);
-		event->changeActivationTraits({ 2 });
+		event->changeActivationTraits({ 202 });
 		ASSERT_EQ(called3, 0);
 		manager->fireEvent(event);
 		ASSERT_EQ(called3, 1);
-		manager->unregisterForEvent({ 1 }, func1);
-		manager->unregisterForEvent({ 2 }, func2);
+		manager->unregisterForEvent({ 201 }, func1);
+		manager->unregisterForEvent({ 202 }, func2);
 	}
 
 	void add_new_values1(shared_ptr<Event> e) {
@@ -113,22 +113,22 @@ namespace events {
 	TEST(events, dolili_changing) {
 		MemoryLeakDetector _;
 		EventManager* manager = EventManager::getManager();
-		Function* func1 = manager->registerForEvent({ 1 }, &add_new_values1);
-		Function* func2 = manager->registerForEvent({ 2 }, &add_new_values2);
-		shared_ptr<Event> event = shared_ptr<Event>(new Event({ 1 }));
+		Function* func1 = manager->registerForEvent({ 201 }, &add_new_values1);
+		Function* func2 = manager->registerForEvent({ 202 }, &add_new_values2);
+		shared_ptr<Event> event = shared_ptr<Event>(new Event({ 201 }));
 		auto* dolili = new DoubleLinkedList<unsigned char>();
 		event->setData<false>("values", dolili);
 		ASSERT_EQ(event->getData<DoubleLinkedList<unsigned char>>("values")->size(), 0);
 		manager->fireEvent(event);
 		ASSERT_EQ(event->getData<DoubleLinkedList<unsigned char>>("values")->size(), 1);
-		event->changeActivationTraits({ 2 });
+		event->changeActivationTraits({ 202 });
 		manager->fireEvent(event);
 		ASSERT_EQ(event->getData<DoubleLinkedList<unsigned char>>("values")->size(), 2);
 		ASSERT_EQ(event->getData<DoubleLinkedList<unsigned char>>("values")->head->data, 5);
 		ASSERT_EQ(event->getData<DoubleLinkedList<unsigned char>>("values")->head->getNext()->data, 5);
 		
-		manager->unregisterForEvent({ 1 }, func1);
-		manager->unregisterForEvent({ 2 }, func2);
+		manager->unregisterForEvent({ 201 }, func1);
+		manager->unregisterForEvent({ 202 }, func2);
 		delete dolili;
 	}
 }

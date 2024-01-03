@@ -139,7 +139,7 @@ namespace managers {
 		TRAIT_INDEX_TYPE bit_index(traits::Trait);
 
 		template<TRAIT_INDEX_TYPE N>
-		std::bitset<N> trset_to_bitset(traits::tr_set& traits) {
+		std::bitset<N> trset_to_bitset(traits::tr_set const& traits) {
 			std::bitset<N> bitset;
 			InfoManager* manager = managers::InfoManager::getManager();
 			for (auto& trait : traits) {
