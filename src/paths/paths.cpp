@@ -5,26 +5,30 @@
 #include "../metamod_main.hpp"
 #endif
 
+using std::fstream;
+using std::filesystem::path;
+
+
 Paths* Paths::_instance = nullptr;
 
-Paths::Paths(std::filesystem::path _main_dir) :
+Paths::Paths(path _main_dir) :
 	main_dir(_main_dir),
-	data_dir(main_dir / std::filesystem::path("data")),
+	data_dir(main_dir / path("data")),
 	
-	json_folder(data_dir / std::filesystem::path("json")),
-	sql_folder(data_dir / std::filesystem::path("sql")),
-	database(data_dir / std::filesystem::path("database.db")),
+	json_folder(data_dir / path("json")),
+	sql_folder(data_dir / path("sql")),
+	database(data_dir / path("database.db")),
 	
-	skills(json_folder / std::filesystem::path("skills.json")),
-	se(json_folder / std::filesystem::path("se.json")),
-	traits(json_folder / std::filesystem::path("traits.json")),
+	skills(json_folder / path("skills.json")),
+	se(json_folder / path("se.json")),
+	traits(json_folder / path("traits.json")),
 	
-	create_tables_sql(sql_folder / std::filesystem::path("create_tables.sql"))
+	create_tables_sql(sql_folder / path("create_tables.sql"))
 {
-	std::fstream f_skills(skills.c_str());
-	std::fstream f_se(skills.c_str());
-	std::fstream f_traits(skills.c_str());
-	std::fstream f_create_tables_sql(create_tables_sql.c_str());
+	fstream f_skills(skills.c_str());
+	fstream f_se(se.c_str());
+	fstream f_traits(traits.c_str());
+	fstream f_create_tables_sql(create_tables_sql.c_str());
 
 	bool good_skills = f_skills.good();
 	bool good_se = f_se.good();
@@ -34,6 +38,7 @@ Paths::Paths(std::filesystem::path _main_dir) :
 	f_skills.close();
 	f_se.close();
 	f_traits.close();
+	f_create_tables_sql.close();
 
 	if (!good_skills) {
 		throw WrongDataLocation("WDL1");
@@ -54,12 +59,12 @@ void Paths::init() {
 		throw PathsRecreating();
 	}
 #ifdef CMAKE
-	_instance = new Paths(std::filesystem::path(CMAKE_DATA_DIR));
+	_instance = new Paths(path(CMAKE_DATA_DIR));
 #else
 	_instance = new Paths(
-		std::filesystem::path(g_WCSSkills.getISmmAPI()->GetBaseDir()) / 
-		std::filesystem::path("addons") / 
-		std::filesystem::path("WCSSkills")
+		path(g_WCSSkills.getISmmAPI()->GetBaseDir()) / 
+		path("addons") / 
+		path("WCSSkills")
 	);
 #endif
 }
@@ -78,5 +83,4 @@ Paths* Paths::getInstance() {
 	return _instance;
 }
 
-Paths::~Paths() {
-}
+Paths::~Paths() {}
