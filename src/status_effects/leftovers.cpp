@@ -1,6 +1,6 @@
 #include "leftovers.hpp"
 
-using namespace std;
+using std::shared_ptr;
 using managers::SEInfo;
 using events::Event;
 using events::EventManager;
@@ -11,7 +11,7 @@ namespace stateff {
             short _rounds_left,
             SEInfo* _info
     ) : owner(_owner), rounds_left(_rounds_left), info(_info), 
-    eventReceiver(EventManager::getManager()->registerForEvent(info->activation_traits, bind(&Leftover::roundStart, this, placeholders::_1))) {}
+    eventReceiver(EventManager::getManager()->registerForEvent(info->activation_traits, bind(&Leftover::roundStart, this, std::placeholders::_1))) {}
 
     void Leftover::roundStart(shared_ptr<Event> e) {
 //        owner->applyStatusEffect(owner); TODO

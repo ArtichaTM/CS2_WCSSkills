@@ -3,12 +3,15 @@
 #include "infomanager.hpp"
 #include "../paths/paths.hpp"
 
-using namespace events;
-using namespace traits;
+
 using std::make_shared;
 using std::shared_ptr;
+using std::unordered_set;
+using std::ifstream;
 using nlohmann::json;
 using nlohmann::detail::value_t;
+using traits::Trait;
+using traits::make;
 using dataStorage::DataStorage;
 using dataStorage::make;
 using stateff::StatusEffect;
@@ -42,7 +45,7 @@ namespace managers {
 
 	InfoManager::InfoManager() : se(), skills(), traits() {
 		// Status effects
-		std::ifstream f = std::ifstream(Paths::getInstance()->se);
+		ifstream f = ifstream(Paths::getInstance()->se);
 		json basicInfo = json::parse(f);
 		se.reserve(basicInfo.size());
 		assert(basicInfo.is_array());
@@ -53,7 +56,7 @@ namespace managers {
 		f.close();
 
 		// Skills
-		f = std::ifstream(Paths::getInstance()->skills);
+		f = ifstream(Paths::getInstance()->skills);
 		basicInfo = json::parse(f);
 		skills.reserve(basicInfo.size());
 		assert(basicInfo.is_object());
@@ -63,7 +66,7 @@ namespace managers {
 		f.close();
 
 		// Traits
-		f = std::ifstream(Paths::getInstance()->traits);
+		f = ifstream(Paths::getInstance()->traits);
 		basicInfo = json::parse(f);
 		traits.reserve(basicInfo.size());
 		if (basicInfo.size() > TRAIT_INDEX_MAX) {
@@ -74,7 +77,7 @@ namespace managers {
 			);
 		}
 		for (auto& [key2, value] : basicInfo.items()) {
-			traits::Trait key = traits::Trait(std::stoi(key2));
+			Trait key = Trait(std::stoi(key2));
 			traits[key] = new TraitInfo(key, value);
 		}
 		f.close();
@@ -92,7 +95,7 @@ namespace managers {
 		}
 	}
 
-	TRAIT_INDEX_TYPE managers::InfoManager::bit_index(traits::Trait trait)
+	TRAIT_INDEX_TYPE managers::InfoManager::bit_index(Trait trait)
 	{
 		return InfoManager::getManager()->traits.at(trait)->bitwise_index;
 	}
@@ -159,8 +162,8 @@ namespace managers {
 	TraitInfo::TraitInfo(traits::Trait _id, json& info) :
 		id(_id)
 		, name(info["name"])
-		, mutual_exclusive_category(traits::make(info.value("mutual_exclusive_category", std::unordered_set<traits::inner_type>())))
-		, enemy_traits(traits::make(info.value("enemy_traits", std::unordered_set<traits::inner_type>())))
+		, mutual_exclusive_category(make(info.value("mutual_exclusive_category", unordered_set<traits::inner_type>())))
+		, enemy_traits(make(info.value("enemy_traits", unordered_set<traits::inner_type>())))
 		, bitwise_index(traits_amount)
 	{
 		traits_amount++;

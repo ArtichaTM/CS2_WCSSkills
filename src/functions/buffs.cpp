@@ -1,8 +1,7 @@
 #include "buffs.hpp"
 
-using namespace std;
-using namespace events;
-using namespace dataStorage;
+using events::ReturnEvent;
+using dataStorage::DataStorage;
 
 namespace functions::buffs {
     ReturnEvent upAtk(shared_ptr<Event> e, DataStorage& arguments) {

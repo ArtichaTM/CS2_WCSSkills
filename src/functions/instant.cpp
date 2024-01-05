@@ -1,8 +1,9 @@
 #include "instant.hpp"
 
-using namespace dataStorage;
-using namespace events;
-using namespace std;
+using std::shared_ptr;
+using dataStorage::DataStorage;
+using events::ReturnEvent;
+using events::Event;
 
 namespace functions::instant {
     ReturnEvent forceInstantDeath(shared_ptr<Event> e, DataStorage& arguments) {
