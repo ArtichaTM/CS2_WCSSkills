@@ -68,8 +68,6 @@ namespace dataStorage {
         void insertBefore(DoubleLinkedListNode<T>*, T&);
         
         void erase(DoubleLinkedListNode<T>*);
-        template<typename... Args>
-        void erase(DoubleLinkedListNode<T>*, Args...);
     };
     
     template<typename T>
@@ -304,13 +302,6 @@ namespace dataStorage {
             target->erase();
         }
         _size--;
-    }
-    
-    template<typename T>
-    template<typename... Args>
-    void DoubleLinkedList<T>::erase(DoubleLinkedListNode<T>* target, Args... args) {
-        erase(target);
-        erase(args...);
     }
 }
 

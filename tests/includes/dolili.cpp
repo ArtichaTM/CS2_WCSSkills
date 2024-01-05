@@ -32,7 +32,8 @@ namespace dataStorage {
 		node2 = dolili.findNodeReverse([&](auto set)->bool { return set.contains(12); });
 		ASSERT_TRUE(node) << "nDid not found node1!";
 		ASSERT_TRUE(node2) << "nDid not found node2!";
-		dolili.erase(node, node2);
+		dolili.erase(node);
+		dolili.erase(node2);
 
 		while (dolili.size()) dolili.erase(dolili.head);
 	}
