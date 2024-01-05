@@ -1,5 +1,7 @@
 #include "buffs.hpp"
 
+using std::shared_ptr;
+using events::Event;
 using events::ReturnEvent;
 using dataStorage::DataStorage;
 
