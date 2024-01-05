@@ -1,7 +1,8 @@
-#include "se.hpp"
-
 #include <memory>
 #include <functional>
+
+#include "se.hpp"
+#include "../includes/ticker.hpp"
 
 using std::shared_ptr;
 using traits::tr_set;
@@ -10,21 +11,22 @@ using events::EventManager;
 using events::ReturnEvent;
 using dataStorage::DataStorage;
 
-using namespace std;
+using std::shared_ptr;
+using events::EventManager;
+using utilities::Ticker;
 
 namespace stateff {
 	StatusEffect::StatusEffect
 	(
-		const WCSPlayer* _owner,
+		WCSPlayer* _owner,
 		const managers::SEInfo* _info,
 		const DataStorage* _arguments,
 		const float* multiplier
 	)
 	: owner(_owner), info(_info), arguments(new DataStorage(*_arguments)),
-		eventReceiver(EventManager::getManager()->registerForEvent(info->activation_traits, bind(&StatusEffect::execute, this, placeholders::_1)))
+		eventReceiver(EventManager::getManager()->registerForEvent(info->activation_traits,
+			bind(&StatusEffect::execute, this, std::placeholders::_1)))
 	{
-
-		auto* eventManager = EventManager::getManager();
 #ifdef DEBUG
 		if (!arguments->contains("Multiplier")) {
 			throw CustomException("There's no multplier in arguments. Wrong effect info?");
@@ -35,12 +37,27 @@ namespace stateff {
 			[&multiplier](float& value) mutable -> void
 			{ value *= *multiplier; }
 		);
+
+		if (arguments->contains("Duration")) {
+			Ticker* ticker = Ticker::getMainTicker();
+			ticker->addTask(
+				this, &StatusEffect::expire,
+				*(arguments->at("Duration")->getData<float>())
+			);
+		}
 	}
 
 	StatusEffect::~StatusEffect() {
-		auto* eventManager = events::EventManager::getManager();
+		auto* eventManager = EventManager::getManager();
 		eventManager->unregisterForEvent(eventReceiver);
 		delete arguments;
+	}
+
+	void StatusEffect::expire() {
+		auto* node = this->owner->status_effects.findNode(
+			[&](shared_ptr<StatusEffect> eff) { return eff.get() == this; }
+		);
+		this->owner->status_effects.erase(node);
 	}
 	
 	ReturnEvent StatusEffect::execute(shared_ptr<Event> e) {

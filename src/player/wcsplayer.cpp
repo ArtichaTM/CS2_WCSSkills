@@ -78,17 +78,14 @@ ReturnEvent WCSPlayer::despawn(const shared_ptr<events::Event>& e) {
 }
 
 template<bool force>
-events::ReturnEvent WCSPlayer::applyStatusEffect(managers::SkillSE* skill_se) {
+events::ReturnEvent WCSPlayer::applyStatusEffect(shared_ptr<Event> event) {
 	auto* eventManager = EventManager::getManager();
 
 	// Effect apply event
-	auto event = std::make_shared<Event>(tr_set {248});
-	event->setConstData("target", this);
-	event->setConstData("seInfo", skill_se->seInfo);
-	event->setConstData("arguments", skill_se->arguments);
-	event->setData<true>("multiplier", new float(1.));
+	if (!event->hasData("target")) event->setConstData("target", this);
+	if (!event->hasData("multiplier")) event->setData<true>("multiplier", new float(1.));
 	if constexpr (force) {
-		event->setData<true>("force", new bool(force));
+		if (!event->hasData("force")) event->setData<true>("force", new bool(force));
 	}
 	eventManager->fireEvent(event);
 	if constexpr (!force) {
@@ -101,8 +98,8 @@ events::ReturnEvent WCSPlayer::applyStatusEffect(managers::SkillSE* skill_se) {
 		this->status_effects.tail,
 		std::make_shared<StatusEffect>(
 			this,
-			skill_se->seInfo,
-			skill_se->arguments,
+			event->getData("seInfo"),
+			event->getData("arguments"),
 			event->getData<float>("multiplier")
 		)
 	);

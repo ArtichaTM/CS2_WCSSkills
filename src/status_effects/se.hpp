@@ -22,16 +22,17 @@ namespace stateff {
 	private:
 		events::Function* eventReceiver = nullptr;
 
+		void expire();
 	public:
 		StatusEffect(
-			const WCSPlayer* _owner,
+			WCSPlayer* _owner,
 			const managers::SEInfo* _info,
 			const dataStorage::DataStorage* arguments,
 			const float* multiplier
 		);
 		~StatusEffect();
 		
-		const WCSPlayer* owner;
+		WCSPlayer* owner;
 		const managers::SEInfo* info;
 		dataStorage::DataStorage* arguments;
 		

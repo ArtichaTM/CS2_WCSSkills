@@ -57,7 +57,7 @@ public:
 
 	// Applies specific effect on player
 	template<bool force>
-	[[nodiscard]] events::ReturnEvent applyStatusEffect(managers::SkillSE*);
+	[[nodiscard]] events::ReturnEvent applyStatusEffect(std::shared_ptr<events::Event>);
 };
 
 
