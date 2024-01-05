@@ -39,7 +39,7 @@ namespace stateff {
 
 	StatusEffect::~StatusEffect() {
 		auto* eventManager = events::EventManager::getManager();
-		eventManager->unregisterForEvent(info->activation_traits, eventReceiver);
+		eventManager->unregisterForEvent(eventReceiver);
 		delete arguments;
 	}
 	

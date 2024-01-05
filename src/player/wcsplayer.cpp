@@ -43,7 +43,7 @@ WCSPlayer::~WCSPlayer() {
 
 	EventManager* manager = EventManager::getManager();
 	if (spawn_event) {
-		manager->unregisterForEvent({ 246 }, spawn_event);
+		manager->unregisterForEvent(spawn_event);
 	}
 
 }

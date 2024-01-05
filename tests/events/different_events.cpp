@@ -47,8 +47,8 @@ namespace events {
 		ASSERT_EQ(called3, 0);
 
 		// Closing
-		manager->unregisterForEvent({ 201 }, func1);
-		manager->unregisterForEvent({ 202 }, func2);
-		manager->unregisterForEvent({ 201, 202 }, func3);
+		manager->unregisterForEvent(func1);
+		manager->unregisterForEvent(func2);
+		manager->unregisterForEvent(func3);
 	}
 }

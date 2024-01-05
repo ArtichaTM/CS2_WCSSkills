@@ -29,7 +29,7 @@ namespace events {
 		ASSERT_FLOAT_EQ(multiplier, 2);
 		manager->fireEvent(event);
 		ASSERT_FLOAT_EQ(multiplier, 3);
-		manager->unregisterForEvent({ 3001 }, func);
+		manager->unregisterForEvent(func);
 	}
 	static unsigned char called1 = 0;
 	static unsigned char called2 = 0;
@@ -72,8 +72,8 @@ namespace events {
 		manager->fireEvent(event);
 		ASSERT_EQ(called1, 1);
 		ASSERT_EQ(called2, 2);
-		manager->unregisterForEvent({ 201 }, func1);
-		manager->unregisterForEvent({ 202 }, func2);
+		manager->unregisterForEvent(func1);
+		manager->unregisterForEvent(func2);
 	}
 	
 
@@ -94,8 +94,8 @@ namespace events {
 		ASSERT_EQ(called3, 0);
 		manager->fireEvent(event);
 		ASSERT_EQ(called3, 1);
-		manager->unregisterForEvent({ 201 }, func1);
-		manager->unregisterForEvent({ 202 }, func2);
+		manager->unregisterForEvent(func1);
+		manager->unregisterForEvent(func2);
 	}
 
 	void add_new_values1(shared_ptr<Event> e) {
@@ -127,8 +127,8 @@ namespace events {
 		ASSERT_EQ(event->getData<DoubleLinkedList<unsigned char>>("values")->head->data, 5);
 		ASSERT_EQ(event->getData<DoubleLinkedList<unsigned char>>("values")->head->getNext()->data, 5);
 		
-		manager->unregisterForEvent({ 201 }, func1);
-		manager->unregisterForEvent({ 202 }, func2);
+		manager->unregisterForEvent(func1);
+		manager->unregisterForEvent(func2);
 		delete dolili;
 	}
 }

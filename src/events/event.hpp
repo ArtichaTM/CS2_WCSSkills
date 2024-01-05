@@ -102,10 +102,11 @@ namespace events {
 	class Function {
 		EventReceiver inner_function;
 	public:
+		std::bitset<TRAIT_INDEX_MAX> activation_bitset;
 		Function() = delete;
 		Function(const Function&&) = delete;
 		Function(Function&&) = delete;
-		Function(EventReceiver);
+		Function(EventReceiver, std::bitset<TRAIT_INDEX_MAX>);
 
 		void operator()(std::shared_ptr<Event>);
 	};
@@ -133,7 +134,7 @@ namespace events {
 		static bool initialized();
 		static EventManager* getManager();
 		Function* registerForEvent(traits::tr_set const& activation_traits, EventReceiver);
-		void unregisterForEvent(traits::tr_set const& activation_traits, Function*);
+		void unregisterForEvent(Function*);
 
 		void fireEvent(std::shared_ptr<Event>);
 		
