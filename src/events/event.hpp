@@ -11,6 +11,7 @@
 #include "../includes/exceptions.hpp"
 #include "../includes/datastorage.hpp"
 #include "../includes/doublelinkedlist.hpp"
+#include "../defines.h"
 
 namespace events {
 	enum ReturnEvent {
@@ -109,10 +110,14 @@ namespace events {
 		void operator()(std::shared_ptr<Event>);
 	};
 
+	namespace {
+		typedef std::unordered_map<std::bitset<TRAIT_INDEX_MAX>, vectorofFunctions*> receivers_map;
+	}
+
 	class EventManager {
 		//std::unordered_map<traits::tr_set, vectorofFunctions*>* registered_events = new std::unordered_map<traits::tr_set, vectorofFunctions*>();
-		std::unordered_map<std::bitset<TRAIT_INDEX_MAX>, vectorofFunctions*>* registered_events = new std::unordered_map<std::bitset<TRAIT_INDEX_MAX>, vectorofFunctions*>();
-		dataStorage::DoubleLinkedList<std::shared_ptr<Event>>* lateRunEvents = new dataStorage::DoubleLinkedList<std::shared_ptr<Event>>;
+		receivers_map registered_events[MAX_TRAITS_IN_TRSET];
+		dataStorage::DoubleLinkedList<std::shared_ptr<Event>>* lateRunEvents;
 		void iterateOverEvents();
 		static EventManager* instance;
 		volatile bool iterating = false;

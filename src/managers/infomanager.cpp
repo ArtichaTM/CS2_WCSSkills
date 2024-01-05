@@ -81,6 +81,12 @@ namespace managers {
 	}
 
 	InfoManager::~InfoManager() {
+		for (auto& [key, value] : skills) {
+			delete value;
+		}
+		for (auto& [key, value] : se) {
+			delete value;
+		}
 		for (auto& [key, value] : traits) {
 			delete value;
 		}
@@ -109,12 +115,13 @@ namespace managers {
 
 	SkillSE::SkillSE(se_map& se, json& info)
 		: seInfo(se.at(info.at("Id"))),
-		arguments(make<DataStorage>(false, info)) {}
+		arguments(make<DataStorage>(true, info)) {}
 
 	SkillSE::~SkillSE() {
 		for (auto& [key, value] : *(this->arguments)) {
 			delete value;
 		}
+		delete arguments;
 	}
 
 	SEInfo::SEInfo(json& info) 

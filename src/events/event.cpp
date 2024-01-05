@@ -3,6 +3,7 @@
 
 #include <utility>
 
+using std::shared_ptr;
 using std::string;
 using std::function;
 using std::unordered_map;
@@ -10,6 +11,7 @@ using std::queue;
 using std::bitset;
 using traits::tr_set;
 using dataStorage::DataStorage;
+using dataStorage::DoubleLinkedList;
 using dataStorage::make;
 using managers::InfoManager;
 
@@ -33,10 +35,10 @@ namespace events {
 		bitset<TRAIT_INDEX_MAX> traits_bitset(
 			manager->trset_to_bitset<TRAIT_INDEX_MAX>(activation_traits)
 		);
-		if (!this->registered_events->contains(traits_bitset)) {
-			this->registered_events->insert({ traits_bitset, new vectorofFunctions()});
+		if (!this->registered_events[activation_traits.size()].contains(traits_bitset)) {
+			this->registered_events[activation_traits.size()].insert({ traits_bitset, new vectorofFunctions()});
 		}
-		auto dolili = this->registered_events->at(traits_bitset);
+		auto dolili = this->registered_events[activation_traits.size()].at(traits_bitset);
 		Function* func = new Function(eventF);
 		dolili->insertAfter(dolili->tail, func);
 		return func;
@@ -47,10 +49,10 @@ namespace events {
 		bitset<TRAIT_INDEX_MAX> traits_bitset(
 			manager->trset_to_bitset<TRAIT_INDEX_MAX>(activation_traits)
 		);
-		if (!this->registered_events->contains(traits_bitset)) {
+		if (!this->registered_events[activation_traits.size()].contains(traits_bitset)) {
 			throw NoSuchReceiver();
 		}
-		vectorofFunctions* functions = this->registered_events->at(traits_bitset);
+		vectorofFunctions* functions = this->registered_events[activation_traits.size()].at(traits_bitset);
 		dataStorage::DoubleLinkedListNode<Function*>* eventRecNode = functions->findNode([&](Function* receiver) {
 			return &(*receiver) == &(*eventF);
 		});
@@ -60,7 +62,7 @@ namespace events {
 		functions->erase(eventRecNode);
 		if (!functions->size()) {
 			delete functions;
-			this->registered_events->erase(traits_bitset);
+			this->registered_events[activation_traits.size()].erase(traits_bitset);
 		}
 		delete eventF;
 	}
@@ -75,10 +77,12 @@ namespace events {
 			bitset<TRAIT_INDEX_MAX> traits_bitset(
 				manager->trset_to_bitset<TRAIT_INDEX_MAX>(event->activation_traits)
 			);
-			if (!this->registered_events->contains(traits_bitset)) {
+			if (!this->registered_events[event->activation_traits.size()].contains(traits_bitset)) {
 				continue;
 			}
-			vectorofFunctions* functions = this->registered_events->at(traits_bitset);
+			vectorofFunctions* functions = this->registered_events[
+				event->activation_traits.size()
+			].at(traits_bitset);
 			dataStorage::DoubleLinkedListNode<Function*>* eventF = functions->head;
 			while (eventF) {
 				(*(eventF->data))(event);
@@ -97,18 +101,23 @@ namespace events {
 	}
 	
 	bool EventManager::receiversExist(const tr_set& activation_traits) {
-		return this->registered_events->contains(
+		return this->registered_events[activation_traits.size()].contains(
 			InfoManager::getManager()->trset_to_bitset<TRAIT_INDEX_MAX>(activation_traits)
 		);
 	}
 
-	EventManager::EventManager() {}
+	EventManager::EventManager() : registered_events(), lateRunEvents(new DoubleLinkedList<shared_ptr<Event>>()){
+		for (unsigned char i = 0; i < MAX_TRAITS_IN_TRSET; i++) {
+			registered_events[i] = receivers_map();
+		}
+	}
 
 	EventManager::~EventManager() {
-		for (auto iter = registered_events->begin(); iter != registered_events->end(); iter++) {
-			delete (*iter).second;
+		for (unsigned char i = 0; i < MAX_TRAITS_IN_TRSET; i++) {
+			for (auto iter = registered_events[i].begin(); iter != registered_events[i].end(); iter++) {
+				delete (*iter).second;
+			}
 		}
-		delete this->registered_events;
 		delete this->lateRunEvents;
 	}
 
