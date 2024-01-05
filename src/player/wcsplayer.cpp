@@ -5,12 +5,14 @@
 using std::shared_ptr;
 using std::make_shared;
 using std::bind;
+using dataStorage::DataStorage;
 using traits::tr_set;
 using events::EventManager;
 using events::Event;
 using events::ReturnEvent;
 using managers::SkillInfo;
 using managers::SkillSE;
+using managers::SEInfo;
 using stateff::Leftover;
 using stateff::StatusEffect;
 using stateff::Skill;
@@ -96,10 +98,10 @@ events::ReturnEvent WCSPlayer::applyStatusEffect(shared_ptr<Event> event) {
 
 	this->status_effects.insertAfter(
 		this->status_effects.tail,
-		std::make_shared<StatusEffect>(
+		make_shared<StatusEffect>(
 			this,
-			event->getData("seInfo"),
-			event->getData("arguments"),
+			event->getData<SEInfo>("seInfo"),
+			event->getData<DataStorage>("arguments"),
 			event->getData<float>("multiplier")
 		)
 	);
