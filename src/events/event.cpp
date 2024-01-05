@@ -177,4 +177,6 @@ namespace events {
 		activation_traits = std::move(actTraits);
 	}
 
+	bool Event::hasData(std::string const& key) { return this->data->contains(key); }
+
 } // events

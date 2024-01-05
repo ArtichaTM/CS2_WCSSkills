@@ -57,6 +57,8 @@ namespace events {
 		
 		void changeActivationTraits(traits::tr_set);
 
+		bool hasData(std::string const& key);
+
 		template<bool autoDelete, typename T>
 		void setData(std::string const& key, T* value) {
 #ifdef DEBUG
