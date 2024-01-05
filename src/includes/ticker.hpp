@@ -42,8 +42,12 @@ namespace utilities {
 	 */
 	class Ticker {
 		unsigned short int counter = 0;
+		static Ticker* main_ticker;
 	public:
 		~Ticker();
+		Ticker(const unsigned char);
+		Ticker() = delete;
+		Ticker(const Ticker&) = delete;
 #ifdef USHRT_MAX
 		const unsigned int size = USHRT_MAX + 1;
 		TickerContainer* values[USHRT_MAX+1];
@@ -54,9 +58,6 @@ namespace utilities {
 		class DelayOverflow : public CustomException { using CustomException::CustomException; };
 
 		const unsigned char tickrate;
-		Ticker(const unsigned char);
-		Ticker() = delete;
-		Ticker(const Ticker&) = delete;
 
 		unsigned char addTask(std::function<void()>, float);
 
@@ -80,6 +81,9 @@ namespace utilities {
 		
 		// Returns maximum delay in minutes
 		float getMaxMinutes();
+
+		static Ticker* getMainTicker();
+		static void createMainTicker(unsigned char _tickrate);
 	};
 }
 

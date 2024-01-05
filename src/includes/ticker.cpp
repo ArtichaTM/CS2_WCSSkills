@@ -6,6 +6,8 @@ using std::size_t;
 using std::function;
 
 namespace utilities {
+	Ticker* Ticker::main_ticker = nullptr;
+
 	TickerContainer::TickerContainer(function<void()> func) : tick_function(func) {}
 
 	void TickerContainer::operator()() const { tick_function(); }
@@ -65,4 +67,12 @@ namespace utilities {
 	float Ticker::getMaxSeconds() { return static_cast<float>(this->getMaxTicks()) / tickrate; }
 	float Ticker::getMaxMinutes() { return this->getMaxSeconds() / 60; }
 
+
+	Ticker* Ticker::getMainTicker() {
+		return Ticker::main_ticker;
+	}
+
+	void Ticker::createMainTicker(unsigned char _tickrate) {
+		Ticker::main_ticker = new Ticker(_tickrate);
+	}
 }
