@@ -89,6 +89,7 @@ set(t_data
 
 set(t_events
 	${tests}/events/event.cpp
+	${tests}/events/different_events.cpp
 )
 
 set(t_includes

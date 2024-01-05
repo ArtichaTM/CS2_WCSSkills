@@ -9,6 +9,7 @@ using std::function;
 using std::unordered_map;
 using std::queue;
 using std::bitset;
+using std::pair;
 using traits::tr_set;
 using dataStorage::DataStorage;
 using dataStorage::DoubleLinkedList;
@@ -67,29 +68,50 @@ namespace events {
 		delete eventF;
 	}
 
+
+	void EventManager::fire_during_iteration(vectorofFunctions* functions, std::shared_ptr<Event> event) {
+		dataStorage::DoubleLinkedListNode<Function*>* eventF = functions->head;
+		while (eventF) {
+			(*(eventF->data))(event);
+			if (event->result != PASS) {
+				break;
+			}
+			eventF = eventF->getNext();
+		}
+	}
+
 	void EventManager::iterateOverEvents() {
 		lateRunEvents->head->data->initialEvent = true;
 		iterating = true;
 		InfoManager* manager(InfoManager::getManager());
 		do {
+			// Getting activation bitset
 			std::shared_ptr<Event> event = this->lateRunEvents->head->data;
+			unsigned char event_traits_amount = event->activation_traits.size();
 			this->lateRunEvents->erase(this->lateRunEvents->head);
 			bitset<TRAIT_INDEX_MAX> traits_bitset(
 				manager->trset_to_bitset<TRAIT_INDEX_MAX>(event->activation_traits)
 			);
-			if (!this->registered_events[event->activation_traits.size()].contains(traits_bitset)) {
+
+			// Checking membership of such traits
+			if (!this->registered_events[event_traits_amount].contains(traits_bitset)) {
 				continue;
 			}
-			vectorofFunctions* functions = this->registered_events[
-				event->activation_traits.size()
-			].at(traits_bitset);
-			dataStorage::DoubleLinkedListNode<Function*>* eventF = functions->head;
-			while (eventF) {
-				(*(eventF->data))(event);
-				if (event->result != PASS) {
-					break;
+
+			// Actual event firing
+			fire_during_iteration(this->registered_events[event_traits_amount].at(traits_bitset), event);
+
+			// Running through registered events of size below current
+			for (; event_traits_amount > 0; event_traits_amount--) {
+				for (auto& [i_bitset, i_receivers] : registered_events[event_traits_amount-1]) {
+					if (
+						i_bitset.count()
+						!=
+						(traits_bitset & i_bitset).count()
+						) continue;
+					assert(true);
+					fire_during_iteration(i_receivers, event);
 				}
-				eventF = eventF->getNext();
 			}
 		} while (this->lateRunEvents->head);
 		iterating = false;

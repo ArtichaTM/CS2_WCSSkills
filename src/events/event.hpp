@@ -119,6 +119,7 @@ namespace events {
 		receivers_map registered_events[MAX_TRAITS_IN_TRSET];
 		dataStorage::DoubleLinkedList<std::shared_ptr<Event>>* lateRunEvents;
 		void iterateOverEvents();
+		void fire_during_iteration(vectorofFunctions*, std::shared_ptr<Event>);
 		static EventManager* instance;
 		volatile bool iterating = false;
 		EventManager();
